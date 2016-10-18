@@ -12,7 +12,6 @@
 
 	<context:component-scan base-package="co.simplon.kif.web" />
 
-	<mvc:annotation-driven />
 
 	<bean id="viewResolver"
 		  class="org.springframework.web.servlet.view.UrlBasedViewResolver">
@@ -21,4 +20,8 @@
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+	
+	<mvc:resources mapping="/ressources/**" location="/ressources/" />
+	
+	<mvc:annotation-driven />
 </beans>
