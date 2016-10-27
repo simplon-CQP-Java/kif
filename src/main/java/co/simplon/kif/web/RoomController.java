@@ -13,36 +13,44 @@ import co.simplon.kif.core.model.Room;
 import co.simplon.kif.core.service.RoomService;
 
 @Controller
-@RequestMapping
+@RequestMapping("/rooms")
 public class RoomController {
 	@Autowired
 	private RoomService roomService;
 
-	@RequestMapping("/room")
+	@RequestMapping
 	public ModelAndView getList(ModelMap model) {
 		List<Room> roomList = roomService.getAll();
-		model.addAttribute("roomList", roomList);
-		return new ModelAndView("room", model);
+		model.addAttribute("rooms", roomList);
+		return new ModelAndView("rooms/rooms", model);
 	}
 
 	@RequestMapping("/roomById")
 	public ModelAndView getById(@RequestParam("id") Integer id, ModelMap model) {
+		if (id == null) {
+			return new ModelAndView("redirect:/rooms");
+		}
 		Room room = roomService.findById(id);
 		model.addAttribute("room", room);
-		return new ModelAndView("search-room", model);
+		return new ModelAndView("rooms/search", model);
 	}
 
-	@RequestMapping("/addRoom")
-	public ModelAndView addRoom(@RequestParam("name") String name, @RequestParam("places") Integer places,
-			String description) {
+	@RequestMapping("/add")
+	public ModelAndView addRoom(@RequestParam("name") String name, @RequestParam("places") Integer places, String description) {
+		if (name == null || places == null || description == null) {
+			return new ModelAndView("redirect:/rooms");
+		}
 		Room room = new Room(name, places, description);
 		roomService.addOrUpdate(room);
-		return new ModelAndView("redirect:/room");
+		return new ModelAndView("redirect:/rooms");
 	}
 
-	@RequestMapping("/deleteRoom")
+	@RequestMapping("/delete")
 	public ModelAndView deleteRoom(@RequestParam("id") Integer id, ModelMap model) {
+		if (id == null) {
+			return new ModelAndView("redirect:/rooms");
+		}
 		roomService.delete(id);
-		return new ModelAndView("redirect:/room");
+		return new ModelAndView("redirect:/rooms");
 	}
 }

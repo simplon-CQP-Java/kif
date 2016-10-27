@@ -12,36 +12,44 @@ import co.simplon.kif.core.service.ComputerService;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping
+@RequestMapping("/computers")
 public class ComputerController {
 	@Autowired
 	private ComputerService computerService;
 
-	@RequestMapping("/computer")
+	@RequestMapping
 	public ModelAndView getComputerList(ModelMap model) {
 		List<Computer> computerList = computerService.getAll();
-		model.addAttribute("computerList", computerList);
-		return new ModelAndView("computer", model);
+		model.addAttribute("computers", computerList);
+		return new ModelAndView("computers/computers", model);
 	}
 
 	@RequestMapping("/computerById")
 	public ModelAndView getById(@RequestParam("id") Integer id, ModelMap model) {
+		if (id == null) {
+			return new ModelAndView("redirect:/computers");
+		}
 		Computer computer = computerService.findById(id);
 		model.addAttribute("computer", computer);
-		return new ModelAndView("search-pc", model);
+		return new ModelAndView("computers/search", model);
 	}
 
-	@RequestMapping("/addComputer")
-	public ModelAndView addComputer(@RequestParam("brand") String brand, @RequestParam("model") String model,
-			Integer serial) {
+	@RequestMapping("/add")
+	public ModelAndView addComputer(@RequestParam("brand") String brand, @RequestParam("model") String model, Integer serial) {
+		if (brand == null || model == null || serial == null) {
+			return new ModelAndView("redirect:/computers");
+		}
 		Computer computer = new Computer(brand, model, serial);
 		computerService.addOrUpdate(computer);
-		return new ModelAndView("redirect:/computer");
+		return new ModelAndView("redirect:/computers");
 	}
 
-	@RequestMapping("/deleteComputer")
+	@RequestMapping("/delete")
 	public ModelAndView deleteComputer(@RequestParam("id") Integer id, ModelMap model) {
+		if (id == null) {
+			return new ModelAndView("redirect:/computers");
+		}
 		computerService.delete(id);
-		return new ModelAndView("redirect:/computer");
+		return new ModelAndView("redirect:/computers");
 	}
 }
