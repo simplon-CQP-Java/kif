@@ -4,13 +4,18 @@
 
 <t:genericpage>
     <jsp:attribute name="header">
-      <%@ include file="WEB-INF/jsp/include/menu.jsp" %>
+      <%@ include file="/WEB-INF/jsp/include/menu.jsp" %>
     </jsp:attribute>
     
     <jsp:attribute name="footer">
-      <%@ include file="WEB-INF/jsp/include/footer.jsp" %>
+      <%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
     </jsp:attribute>
     <jsp:body>
-        <p>Hi I'm the heart of the message</p>
+    	<div class="row">
+			<div class="jumbotron">
+				<h1>KIF Projet</h1>
+				<p>Gestion de salles et ordinateurs</p>
+			</div>
+		</div>
     </jsp:body>
 </t:genericpage>

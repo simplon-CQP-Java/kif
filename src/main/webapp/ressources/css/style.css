@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+
+form {
+	margin-bottom: 0;
+}
+
+/* Remove bootstrap styles */
+
+/* Remove radius */
+.navbar, .jumbotron {
+	border-radius: 0 !important;
+}
+
+/* Remove margins */
+.list-group, .navbar {
+	margin-bottom: 0;
+}
