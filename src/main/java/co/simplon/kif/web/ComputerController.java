@@ -30,6 +30,9 @@ public class ComputerController {
 			return new ModelAndView("redirect:/computers");
 		}
 		Computer computer = computerService.findById(id);
+		if (computer == null) {
+			model.addAttribute("id", id);			
+		}
 		model.addAttribute("computer", computer);
 		return new ModelAndView("computers/search", model);
 	}

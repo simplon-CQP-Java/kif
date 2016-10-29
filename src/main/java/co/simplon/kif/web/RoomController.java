@@ -31,6 +31,9 @@ public class RoomController {
 			return new ModelAndView("redirect:/rooms");
 		}
 		Room room = roomService.findById(id);
+		if (room == null) {			
+			model.addAttribute("id", id);
+		}
 		model.addAttribute("room", room);
 		return new ModelAndView("rooms/search", model);
 	}
