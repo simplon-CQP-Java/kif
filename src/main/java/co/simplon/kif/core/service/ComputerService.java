@@ -9,7 +9,6 @@ import java.util.List;
 
 @Repository
 public class ComputerService {
-
 	@Autowired
 	public ComputerRepository computerRepository;
 
@@ -28,5 +27,4 @@ public class ComputerService {
 	public void delete(Integer id) {
 		computerRepository.delete(id);
 	}
-
 }
