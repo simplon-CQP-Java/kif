@@ -3,11 +3,11 @@ import co.simplon.kif.core.model.Computer;
 import co.simplon.kif.core.repository.ComputerRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Repository
+@Service
 public class ComputerService {
 	@Autowired
 	public ComputerRepository computerRepository;

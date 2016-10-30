@@ -3,12 +3,12 @@ package co.simplon.kif.core.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import co.simplon.kif.core.model.Room;
 import co.simplon.kif.core.repository.RoomRepository;
 
-@Repository
+@Service
 public class RoomService {
 	@Autowired
 	public RoomRepository roomRepository;
