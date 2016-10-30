@@ -39,7 +39,7 @@
 		        <div class="alert alert-danger">
 		        	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
   					<span class="sr-only">Error:</span>
-		        	Aucun ordrinateur trouvé avec l'identifiant ${id}
+		        	Aucun ordinateur trouvé avec l'identifiant ${id}
 		        </div>
 		    </c:otherwise>
 		</c:choose>

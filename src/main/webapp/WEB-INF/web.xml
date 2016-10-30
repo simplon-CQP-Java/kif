@@ -5,7 +5,7 @@
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	id="mis" version="2.5">
 
-  <display-name>Réservation de salles, ordinateurs - KIF</display-name>
+  <display-name>Reservation de salles, ordinateurs - KIF</display-name>
 
   <!-- Chargement du contexte Spring MVC -->
   <servlet>

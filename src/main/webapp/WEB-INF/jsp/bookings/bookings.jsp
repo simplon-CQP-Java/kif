@@ -26,7 +26,7 @@
 					  	</div>
 						<div class="panel-body">
 						    <ul class="list-group">
-							   	<li class="list-group-item">Salle : ${booking.roomName}</li>
+							   	<li class="list-group-item">Identifiant de la salle : ${booking.roomId}</li>
 							   	<li class="list-group-item">Identifiant de l'ordinateur : ${booking.computerId}</li>
 							   	<li class="list-group-item">Date de début : ${booking.start}</li>
 							   	<li class="list-group-item">Date de fin : ${booking.end}</li>
@@ -42,7 +42,7 @@
 				<form method="get" action="/bookings/book">
 					<div class="form-group">
 					    <label for="book-room-input">Identidiant de la salle</label>
-						<input name="roomId" placeholder="Salle" type="text" class="form-control" id="book-room-input">
+						<input name="roomId" placeholder="Identifiant de la salle" type="text" class="form-control" id="book-room-input">
 					</div>
 					<div class="form-group">
 					    <label for="book-computer-input">Identifiant de l'ordinateur</label>

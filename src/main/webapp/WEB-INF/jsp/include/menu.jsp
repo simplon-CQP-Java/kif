@@ -15,6 +15,7 @@
 	      	<li><a href="/computers">Ordinateurs</a></li>
 		  	<li><a href="/rooms">Salles</a></li>
 		  	<li><a href="/bookings">Réservations</a></li>
+		  	<li><a href="/users">Utilisateurs</a></li>
 		  </ul>
 	  </div>
 	</div>
