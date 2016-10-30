@@ -59,18 +59,16 @@
 					</div>
 					<button type="submit" class="btn btn-success">Ajouter</button>
 				</form>
-			
+				
+				<div class="page-header">
+					<h5>Rechercher une salle par son identifiant</h5>
+				</div>
 				<form method="get" action="/rooms/roomById">
-					<div class="page-header">
-						<h5>Rechercher une salle par son identifiant</h5>
+					<div class="form-group">
+					    <label for="room-by-id-input">Id</label>
+						<input name="id" placeholder="Id" type="number" class="form-control" id="room-by-id-input">
 					</div>
-					<div>
-						<div class="form-group">
-						    <label for="room-by-id-input">Id</label>
-							<input name="id" placeholder="Id" type="number" class="form-control" id="room-by-id-input">
-						</div>
-						<button type="submit" class="btn btn-primary">Rechercher</button>
-					</div>
+					<button type="submit" class="btn btn-primary">Rechercher</button>
 				</form>
 			</div>
     	</div>

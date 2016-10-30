@@ -14,6 +14,7 @@
 	      <ul class="nav navbar-nav">
 	      	<li><a href="/computers">Ordinateurs</a></li>
 		  	<li><a href="/rooms">Salles</a></li>
+		  	<li><a href="/bookings">Réservations</a></li>
 		  </ul>
 	  </div>
 	</div>

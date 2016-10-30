@@ -59,18 +59,16 @@
 					</div>
 					<button type="submit" class="btn btn-success">Ajouter</button>
 				</form>
-			
+		
+				<div class="page-header">
+					<h5>Rechercher un ordinateur par son identifiant</h5>
+				</div>
 				<form method="get" action="/computers/computerById">
-					<div class="page-header">
-						<h5>Rechercher un ordinateur par son identifiant</h5>
+					<div class="form-group">
+					    <label for="computer-by-id-input">Id</label>
+						<input name="id" placeholder="Id" type="number" class="form-control" id="computer-by-id-input">
 					</div>
-					<div>
-						<div class="form-group">
-						    <label for="computeur-by-id-input">Id</label>
-							<input name="id" placeholder="Id" type="number" class="form-control" id="computeur-by-id-input">
-						</div>
-						<button type="submit" class="btn btn-primary">Rechercher</button>
-					</div>
+					<button type="submit" class="btn btn-primary">Rechercher</button>
 				</form>
 			</div>
     	</div>
