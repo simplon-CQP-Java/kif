@@ -32,6 +32,12 @@
 							   	<li class="list-group-item">Date de fin : ${booking.end}</li>
 							</ul>
 						</div>
+						<div class="panel-footer">
+							<form action="/bookings/delete">
+								<input name="id" value="${booking.id}" type="hidden" />
+								<button type="submit" class="btn btn-danger">Supprimer</button>
+							</form>
+						</div>
 					</div>
 				</c:forEach>
 			</div>
@@ -41,24 +47,43 @@
 				</div>
 				<form method="get" action="/bookings/book">
 					<div class="form-group">
-					    <label for="book-room-input">Identidiant de la salle</label>
-						<input name="roomId" placeholder="Identifiant de la salle" type="text" class="form-control" id="book-room-input">
+					    <label for="add-room-select">Sélectionner une salle</label>
+						<select name="roomId" class="form-control" id="add-room-select">
+							<c:forEach items="${rooms}" var="room">
+								<option value="${room.id}">${room.name}</option>
+							</c:forEach>
+						</select>
 					</div>
 					<div class="form-group">
-					    <label for="book-computer-input">Identifiant de l'ordinateur</label>
-						<input name="computerId" placeholder="Identifiant de l'ordinateur" type="text" class="form-control" id="book-computer-input">
+					    <label for="add-computer-select">Sélectionner un ordinateur</label>
+						<select name="computerId" class="form-control" id="add-computer-select">
+							<c:forEach items="${computers}" var="computer">
+								<option value="${computer.id}">${computer.brand} - ${computer.model}</option>
+							</c:forEach>
+						</select>
 					</div>
 					<div class="form-group">
 					    <label for="book-start-input">Date de début</label>
-						<input name="start" placeholder="Date de début" type="datetime-local" class="form-control" id="book-start-input">
+						<div class="input-group date" id="book-start">
+			                <input type='text' name="start" class="form-control" placeholder="Date de début" id="book-start-input" />
+			                <span class="input-group-addon">
+			                    <span class="glyphicon glyphicon-calendar"></span>
+			                </span>
+			            </div>
 					</div>
 					<div class="form-group">
 					    <label for="book-end-input">Date de fin</label>
-						<input name="end" placeholder="Date de fin" type="datetime-local" class="form-control" id="book-end-input">
+						<div class="input-group date" id="book-end">
+			                <input type='text' name="end" class="form-control" placeholder="Date de fin" id="book-end-input" />
+			                <span class="input-group-addon">
+			                    <span class="glyphicon glyphicon-calendar"></span>
+			                </span>
+			            </div>
 					</div>
 					<button type="submit" class="btn btn-primary">Réserver</button>
 				</form>
 			</div>
 		</div>
+		<script type="text/javascript" src="/ressources/js/bookings.js"></script>
 	</jsp:body>
 </t:genericpage>
