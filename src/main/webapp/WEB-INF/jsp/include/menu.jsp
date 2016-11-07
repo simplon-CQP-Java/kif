@@ -16,6 +16,7 @@
 		  	<li><a href="/rooms">Salles</a></li>
 		  	<li><a href="/bookings">Réservations</a></li>
 		  	<li><a href="/users">Utilisateurs</a></li>
+		  	<li><a href="/admin">Admin</a></li>
 		  </ul>
 	  </div>
 	</div>
