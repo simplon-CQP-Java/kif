@@ -40,8 +40,8 @@ public class BookingController {
 
   @RequestMapping("/book")
   public ModelAndView addBooking(
-		  @RequestParam("roomId") String roomId,
-		  @RequestParam("computerId") String computerId,
+		  @RequestParam("roomId") Integer roomId,
+		  @RequestParam("computerId") Integer computerId,
 		  @RequestParam("start") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm") Date start,
 		  @RequestParam("end") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm") Date end) {
     Date createdAt = new Date();

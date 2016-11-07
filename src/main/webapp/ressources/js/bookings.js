@@ -1,5 +1,4 @@
 $(document).ready(function() {
-  console.log( "ready!" );
   $('#book-start').datetimepicker({
 	  format: "YYYY-MM-DD HH:mm"
       //sideBySide: true,

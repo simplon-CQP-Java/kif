@@ -12,8 +12,8 @@ public class Booking {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
-  private String roomId;
-  private String computerId;
+  private Integer roomId;
+  private Integer computerId;
   private Date start;
   private Date End;
   private Date createdAt;
@@ -22,7 +22,7 @@ public class Booking {
     super();
   }
 
-  public Booking(String roomId, String computerId, Date start, Date end, Date createdAt) {
+  public Booking(Integer roomId, Integer computerId, Date start, Date end, Date createdAt) {
     super();
     this.roomId = roomId;
     this.computerId = computerId;
@@ -35,19 +35,19 @@ public class Booking {
     return id;
   }
 
-  public String getroomId() {
+  public Integer getRoomId() {
     return roomId;
   }
 
-  public void setroomId(String roomId) {
+  public void setRoomId(Integer roomId) {
     this.roomId = roomId;
   }
 
-  public String getComputerId() {
+  public Integer getComputerId() {
     return computerId;
   }
 
-  public void setComputerId(String computerId) {
+  public void setComputerId(Integer computerId) {
     this.computerId = computerId;
   }
 
