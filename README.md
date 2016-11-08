@@ -6,6 +6,23 @@ Simply clone the repository :
 git clone https://github.com/simplon-CQP-Java/kif.git && cd kif
 ```
 
+### Hand launch
+Maven clean
+```
+mvn clean
+```
+
+Launch with tomcat
+```
+mvn tomcat7:run
+```
+
+### Launch with make
+Run the following command
+```
+make dev
+```
+
 Maven clean
 ```
 mvn clean
