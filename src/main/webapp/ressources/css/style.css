@@ -7,7 +7,7 @@ form {
 /* Remove bootstrap styles */
 
 /* Remove radius */
-.navbar, .jumbotron {
+.jumbotron, .form-control, .btn, .navbar-inverse, .input-group-addon {
 	border-radius: 0 !important;
 }
 

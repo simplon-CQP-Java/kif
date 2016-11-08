@@ -1,4 +1,5 @@
-<nav id="menu" class="nav navbar-default">
+<%@ page contentType="text/html;" pageEncoding="UTF-8"%>
+<nav id="menu" class="nav navbar-inverse">
 	<div class="container-fluid">
 	    <!-- Brand and toggle get grouped for better mobile display -->
 	    <div class="navbar-header">
@@ -14,7 +15,7 @@
 	      <ul class="nav navbar-nav">
 	      	<li><a href="/computers">Ordinateurs</a></li>
 		  	<li><a href="/rooms">Salles</a></li>
-		  	<li><a href="/bookings">Réservations</a></li>
+		  	<li><a href="/bookings">RÃ©servations</a></li>
 		  	<li><a href="/users">Utilisateurs</a></li>
 		  </ul>
 	  </div>
