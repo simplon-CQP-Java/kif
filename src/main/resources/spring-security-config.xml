@@ -5,6 +5,7 @@
     http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.1.xsd">
 
     <http auto-config="true"  >
+    <intercept-url pattern="/ressources/**" access="permitAll"/>
         <intercept-url pattern="/users" access="hasAuthority('ADMIN')" />
         <intercept-url pattern="/users/add" access="permitAll" />
         <intercept-url pattern="/users/delete" access="hasAuthority('ADMIN')" />

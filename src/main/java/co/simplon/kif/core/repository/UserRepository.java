@@ -7,5 +7,4 @@ import co.simplon.kif.core.model.User;
 
 @Resource
 public interface UserRepository extends JpaRepository<User, Integer> {
-	User findOneByUsername(String username);
 }

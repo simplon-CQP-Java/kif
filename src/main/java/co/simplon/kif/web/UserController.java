@@ -37,21 +37,20 @@ public class UserController {
   }
 
   @RequestMapping("/add")
-  public ModelAndView addUser(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("confirmPassword") String confirmPassword, String email, Role role) {
-    if (username != null && password != null && confirmPassword != null && email != null && role != null) {
+  public ModelAndView addUser(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("confirmPassword") String confirmPassword, Role role) {
+    if (username != null && password != null && confirmPassword != null && role != null) {
       if (password.equals(confirmPassword)) {
-    	  userService.addOrUpdate(username, password, email, role);
+    	  userService.addOrUpdate(username, password, role);
       }
     }
     return new ModelAndView("redirect:/users");
   }
 
   @RequestMapping("/delete")
-  public ModelAndView deleteRoom(@RequestParam("id") Integer id, ModelMap model) {
+  public ModelAndView deleteUser(@RequestParam("id") Integer id, ModelMap model) {
     if (id != null) {
       userService.delete(id);
     }
     return new ModelAndView("redirect:/users");
   }
-
 }

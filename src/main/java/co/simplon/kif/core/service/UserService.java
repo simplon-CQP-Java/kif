@@ -3,7 +3,7 @@ package co.simplon.kif.core.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Example;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,9 +15,8 @@ import co.simplon.kif.core.repository.UserRepository;
 public class UserService {
   @Autowired
   public UserRepository userRepository;
-  
+
   @Autowired
-  @Qualifier("passwordEncoder")
   private PasswordEncoder passwordEncoder;
 
   @Transactional(readOnly = true)
@@ -28,13 +27,14 @@ public class UserService {
   public User findById(Integer id) {
     return userRepository.findOne(id);
   }
-  
+
   public User findByUsername(String username) {
-	return userRepository.findOneByUsername(username);
+	Example<User> userExample = Example.of(new User(username, null, null, null));
+    return userRepository.findOne(userExample);
   }
 
-  public User addOrUpdate(String username, String password, String email, User.Role role) {
-    return userRepository.save(new User(username, passwordEncoder.encode(password), email, role));
+  public User addOrUpdate(String username, String password, User.Role role) {
+    return userRepository.save(new User(username, passwordEncoder.encode(password), role, true));
   }
 
   public void delete(Integer id) {
