@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <head>
@@ -27,7 +27,6 @@
 					  	<div class="panel-body">
 					    <ul class="list-group">
 					    	<li class="list-group-item">Nom : ${user.username}</li>
-						   	<li class="list-group-item">Email : ${user.email}</li>
 						   	<li class="list-group-item">Rôle : ${user.role}</li>
 					    </ul>
 					  	</div>
@@ -56,10 +55,6 @@
 					<div class="form-group">
 					    <label for="add-confirm-password-input">Confirmer votre mot de passe</label>
 						<input name="confirmPassword" placeholder="Mot de passe" type="password" class="form-control" id="add-confirm-password-input">
-					</div>
-					<div class="form-group">
-					    <label for="add-email-input">Email</label>
-						<input name="email" placeholder="Email" type="email" class="form-control" id="add-email-input">
 					</div>
 					<div class="form-group">
 					    <label for="add-role-input">Rôle</label>

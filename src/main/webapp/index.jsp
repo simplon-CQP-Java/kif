@@ -6,7 +6,7 @@
     <jsp:attribute name="header">
       <%@ include file="/WEB-INF/jsp/include/menu.jsp" %>
     </jsp:attribute>
-    
+
     <jsp:attribute name="footer">
       <%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
     </jsp:attribute>
