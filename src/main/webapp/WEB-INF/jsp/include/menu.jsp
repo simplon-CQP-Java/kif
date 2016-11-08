@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <nav id="menu" class="nav navbar-inverse">
 	<div class="container-fluid">
 	    <!-- Brand and toggle get grouped for better mobile display -->
