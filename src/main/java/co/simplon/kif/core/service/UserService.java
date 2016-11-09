@@ -3,7 +3,9 @@ package co.simplon.kif.core.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Example;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +15,10 @@ import co.simplon.kif.core.repository.UserRepository;
 
 @Service
 public class UserService {
+	@Autowired
+	@Qualifier("daoAuthenticationProvider")
+	private AuthenticationProvider authenticationProvider;
+	
   @Autowired
   public UserRepository userRepository;
 
@@ -28,7 +34,7 @@ public class UserService {
     return userRepository.findOne(id);
   }
 
-  public User findByUsername(String username) {
+  public User findOneByUsername(String username) {
 	Example<User> userExample = Example.of(new User(username, null, null, null));
     return userRepository.findOne(userExample);
   }

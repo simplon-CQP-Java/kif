@@ -25,7 +25,7 @@
             </div>
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <button type="submit" class="btn btn-success">Connexion</button>
-            <a href="/users/register" class="pull-right">Inscription</a>
+            <a href="/register" class="pull-right">Inscription</a>
           </form>
         </div>
       </div>

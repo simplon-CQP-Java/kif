@@ -18,6 +18,11 @@ public class IndexController {
 	  return new ModelAndView("users/loginForm");
 	}
 	
+	@RequestMapping(path = "/register")
+	public ModelAndView registerForm(ModelMap model) {
+	  return new ModelAndView("users/registerForm");
+	}
+	
 	@RequestMapping(value = "/logout")
     public ModelAndView logoutPage(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

@@ -2,6 +2,7 @@ package co.simplon.kif.core.model;
 
 import javax.persistence.*;
 
+
 @Entity
 public class User {
   public enum Role {
