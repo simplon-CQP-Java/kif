@@ -38,8 +38,8 @@ public class AdminService {
 	  }
 
 	  //impossible de changer le role d'un admin
-	  public Admin addOrUpdate(String username, String password, String email) {
-	    return adminRepo.save(new Admin(username, passwordEncoder.encode(password), email));
+	  public Admin addOrUpdate(String username, String password, String email, User.Role role) {
+	    return adminRepo.save(new Admin(username, passwordEncoder.encode(password), email, role));
 	  }
 
 	  public void delete(Integer id) {

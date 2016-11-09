@@ -6,9 +6,8 @@ public class Admin extends User {
 		super();
 	}
 
-	public Admin(String username, String password, String email) {
-		super(username, password, email);
-		this.role = User.Role.ADMIN;
+	public Admin(String username, String password, String email,Role role) {
+		super(username, password, email,role);
 	}
 	
 }
