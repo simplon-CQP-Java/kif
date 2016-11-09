@@ -6,14 +6,16 @@
 
     <http auto-config="true"  >
     <intercept-url pattern="/ressources/**" access="permitAll"/>
+    <!--
         <intercept-url pattern="/users" access="hasAuthority('ADMIN')" />
         <intercept-url pattern="/users/add" access="permitAll" />
-        <intercept-url pattern="/users/delete" access="hasAuthority('ADMIN')" />
+    -->
         <intercept-url pattern="/**" access="permitAll" />
         <form-login login-page="/login"
                      username-parameter="username"
                      password-parameter="password"
-                     authentication-failure-url="/accessDenied" />
+                     authentication-failure-url="/accessDenied"
+                     default-target-url="/" />
         <csrf/>
     </http>
 
