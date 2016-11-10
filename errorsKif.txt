@@ -1,0 +1,5 @@
+port used
+kill $(ps -aef |grep java | grep apache |awk '{print $2}')
+
+index.jsp 404
+Build your projects classpath. Goto property of your Project then Select =>Java Build Path => Order and Export. Select All classpaths.

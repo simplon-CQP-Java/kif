@@ -12,12 +12,13 @@
 	      <a class="navbar-brand" href="/">KIF</a>
 	    </div>
 	    <div class="collapse navbar-collapse" id="navbar-menu">
+
 	      <ul class="nav navbar-nav">
 	      	<li><a href="/computers">Ordinateurs</a></li>
 		  	<li><a href="/rooms">Salles</a></li>
 		  	<li><a href="/bookings">Réservations</a></li>
 		  	<li><a href="/users">Utilisateurs</a></li>
-		  </ul>
+		  	 </ul>
 	  </div>
 	</div>
 </nav>
