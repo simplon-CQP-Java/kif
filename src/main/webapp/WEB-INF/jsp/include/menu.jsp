@@ -27,7 +27,7 @@
 	          	  Login
 	          	</security:authorize>
 				<security:authorize access="isAuthenticated()">
-
+					<security:authentication property="name" />
 				</security:authorize>
 	          	<span class="caret"></span>
 	          </a>
