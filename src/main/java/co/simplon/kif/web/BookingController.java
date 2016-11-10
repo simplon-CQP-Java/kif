@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,7 +48,12 @@ public class BookingController {
     Date createdAt = new Date();
     if (roomId != null && computerId != null && start != null && end != null) {
 	    Booking booking = new Booking(roomId, computerId, start, end, createdAt);
-	    bookingService.addOrUpdate(booking);
+	    try {
+	    	bookingService.addOrUpdate(booking);
+	    } catch(UsernameNotFoundException e) {
+	    	System.out.println("UsernameNotFoundException " + e);
+	        return new ModelAndView("accessDenied");
+	    }
     }
     return new ModelAndView("redirect:/bookings");
   }

@@ -19,31 +19,31 @@ public class UserService {
 	@Qualifier("daoAuthenticationProvider")
 	private AuthenticationProvider authenticationProvider;
 	
-  @Autowired
-  public UserRepository userRepository;
+	@Autowired
+	public UserRepository userRepository;
 
-  @Autowired
-  private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
-  @Transactional(readOnly = true)
-  public List<User> getAll() {
-    return userRepository.findAll();
-  }
+	@Transactional(readOnly = true)
+	public List<User> getAll() {
+		return userRepository.findAll();
+	}
 
-  public User findById(Integer id) {
-    return userRepository.findOne(id);
-  }
+	public User findById(Integer id) {
+		return userRepository.findOne(id);
+	}
 
-  public User findOneByUsername(String username) {
-	Example<User> userExample = Example.of(new User(username, null, null, null));
-    return userRepository.findOne(userExample);
-  }
+	public User findOneByUsername(String username) {
+		Example<User> userExample = Example.of(new User(username, null, null, null));
+		return userRepository.findOne(userExample);
+	}	
 
-  public User addOrUpdate(String username, String password, User.Role role) {
-    return userRepository.save(new User(username, passwordEncoder.encode(password), role, true));
-  }
+	public User addOrUpdate(String username, String password, User.Role role) {
+		return userRepository.save(new User(username, passwordEncoder.encode(password), role, true));
+	}
 
-  public void delete(Integer id) {
-    userRepository.delete(id);
-  }
+	public void delete(Integer id) {
+		userRepository.delete(id);
+	}
 }

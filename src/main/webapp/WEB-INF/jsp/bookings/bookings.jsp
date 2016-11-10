@@ -26,6 +26,7 @@
 					  	</div>
 						<div class="panel-body">
 						    <ul class="list-group">
+						    	<li class="list-group-item">Identifiant de l'utilisateur : ${booking.createdBy}</li>
 							   	<li class="list-group-item">Identifiant de la salle : ${booking.roomId}</li>
 							   	<li class="list-group-item">Identifiant de l'ordinateur : ${booking.computerId}</li>
 							   	<li class="list-group-item">Date de début : ${booking.start}</li>
