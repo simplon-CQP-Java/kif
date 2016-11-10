@@ -5,7 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.data.jpa.repository.JpaRepository;
 import co.simplon.kif.core.model.Admin;
 
-@Resource
-public interface AdminRepository extends JpaRepository<Admin, Integer>{
-	Admin  findOneByUsername(String username);
-}
+//@Resource
+//public interface AdminRepository extends JpaRepository<Admin, Integer>{
+//	Admin  findOneByUsername(String username);
+//}
