@@ -1,7 +1,7 @@
 
 @CHARSET "UTF-8";
 
-div#computers-search, div#rooms-search, div#users-search, div#login, #div#register {
+div#computers-search, div#rooms-search, div#users-search, div#login, div#register {
 	margin-top: 15px;
 }
 
@@ -12,11 +12,20 @@ form {
 /* Remove bootstrap styles */
 
 /* Remove radius */
-.jumbotron, .form-control, .btn, .navbar-inverse, .input-group-addon, .dropdown-menu, .list-group-item, .panel, .alert {
+.jumbotron, .form-control, .btn, .navbar-inverse, .input-group-addon, .dropdown-menu,
+.list-group-item, .panel, .alert, .modal-content {
 	border-radius: 0 !important;
 }
 
 /* Remove margins */
 .list-group, .navbar {
 	margin-bottom: 0;
+}
+
+/* Modals */
+.modal {
+	
+}
+.modal .modal-footer form {
+	display: inline;
 }

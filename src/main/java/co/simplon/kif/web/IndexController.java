@@ -3,6 +3,7 @@ package co.simplon.kif.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -15,12 +16,20 @@ import org.springframework.web.servlet.ModelAndView;
 public class IndexController {
 	@RequestMapping(path = "/login")
 	public ModelAndView loginForm(ModelMap model) {
-	  return new ModelAndView("users/loginForm");
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+			return new ModelAndView("redirect:/");
+		}
+		return new ModelAndView("users/loginForm");
 	}
 	
 	@RequestMapping(path = "/register")
 	public ModelAndView registerForm(ModelMap model) {
-	  return new ModelAndView("users/registerForm");
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+			return new ModelAndView("redirect:/");
+		}
+		return new ModelAndView("users/registerForm");
 	}
 	
 	@RequestMapping(value = "/logout")
@@ -34,6 +43,6 @@ public class IndexController {
 	
 	@RequestMapping(value = "/accessDenied")
 	public String accessDeniedPage(ModelMap model) {
-	  return "accessDenied";
+		return "accessDenied";
 	}
 }
