@@ -31,10 +31,21 @@
 					    </ul>
 					  	</div>
 					  	<div class="panel-footer">
-						  	<form action="/users/delete">
-								<input name="id" value="${user.id}" type="hidden" />
-								<button type="submit" class="btn btn-danger">Supprimer</button>
-							</form>
+					  		<a href="/users/userById?id=${user.id}" class="btn btn-primary">
+					  			Modifier
+					  		</a>
+						    <c:if test="${user.enabled == 'true'}">
+						       <form action="/users/delete">
+									<input name="id" value="${user.id}" type="hidden" />
+									<button type="submit" class="btn btn-danger">Supprimer</button>
+								</form>
+						    </c:if>
+						    <c:if test="${user.enabled == 'false'}">
+						        <form action="/users/active">
+									<input name="id" value="${user.id}" type="hidden" />
+									<button type="submit" class="btn btn-success">Activer</button>
+								</form>
+						    </c:if>
 					  	</div>
 					</div>
 				</c:forEach>

@@ -23,9 +23,6 @@ form {
 }
 
 /* Modals */
-.modal {
-	
-}
-.modal .modal-footer form {
+.modal .modal-footer form, .panel .panel-footer form, form.inline {
 	display: inline;
 }

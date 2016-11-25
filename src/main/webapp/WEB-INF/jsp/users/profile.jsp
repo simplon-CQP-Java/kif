@@ -19,7 +19,7 @@
       <%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
     </jsp:attribute>
     <jsp:body>
-   		<div id="user-edit" class="row">
+   		<div id="profile" class="row">
         	<div class="jumbotron">
 			  	<h3>
 			  		<security:authorize access="isAuthenticated()">
@@ -67,7 +67,7 @@
 				</form>
 			</div>
 		</div>
-		<div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="confirmDelete">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
@@ -86,7 +86,7 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <form method="get" action="/users/edit/delete">
+		        <form method="get" action="/users/delete">
 					<input name="id" value="${user.id}" type="hidden" >
 					<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
 						Oui, supprimer mon compte

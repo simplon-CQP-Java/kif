@@ -11,7 +11,6 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +45,19 @@ public class UserController {
 		model.addAttribute("users", userList);
 		return new ModelAndView("users/users", model);
 	}
+	
+	@RequestMapping("/userById")
+	public ModelAndView userById(@RequestParam("id") Integer id, ModelMap model) {
+		System.out.println("id " + id);
+		if (id == null) {
+			return new ModelAndView("redirect:/users", model);
+		}
+		User user = userService.findById(id);
+		if (user != null) {
+			model.addAttribute("user", user);
+		}
+		return new ModelAndView("users/user", model);
+	}
 
 	@RequestMapping("/userByUsername")
 	public ModelAndView getById(@RequestParam("username") String username, ModelMap model) {
@@ -67,13 +79,13 @@ public class UserController {
 		return new ModelAndView("redirect:/users");
 	}
 
-	@RequestMapping("/edit")
-	public ModelAndView edit(ModelMap model) {
+	@RequestMapping("/profil")
+	public ModelAndView profile(ModelMap model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (!(auth instanceof AnonymousAuthenticationToken)) {
 			User user = userService.findOneByUsername(auth.getName());
 			model.addAttribute("user", user);
-			return new ModelAndView("users/edit", model);
+			return new ModelAndView("users/profile", model);
 		}
 		return new ModelAndView("redirect:/login");
 	}
@@ -83,7 +95,7 @@ public class UserController {
 			HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (username == null) {
-			return new ModelAndView("redirect:/users/edit", model);
+			return new ModelAndView("redirect:/users/profil", model);
 		}
 		User user = new User();
 		if (user != null && !(auth instanceof AnonymousAuthenticationToken)) {
@@ -92,7 +104,7 @@ public class UserController {
 			User newUser = userService.addOrUpdate(user);
 			customLoginService.autoLogin(newUser);
 		}
-		return new ModelAndView("redirect:/users/edit", model);
+		return new ModelAndView("redirect:/users/profil", model);
 	}
 	
 	@RequestMapping("/edit/password")
@@ -100,17 +112,17 @@ public class UserController {
 			@RequestParam("newPassword") String newPassword, @RequestParam("confirmNewPassword") String confirmNewPassword,
 			ModelMap model, HttpServletRequest request, HttpServletResponse response) {
 		if (password == null || newPassword == null || confirmNewPassword == null || id == null) {
-			return new ModelAndView("redirect:/users/edit", model);
+			return new ModelAndView("redirect:/users/profil", model);
 		}
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (newPassword.equals(confirmNewPassword) == false) {
 			System.out.println("Passwords are not equals");
-			return new ModelAndView("redirect:/users/edit", model);
+			return new ModelAndView("redirect:/users/profil", model);
 		}
 		User user = userService.findById(id);
 		if (passwordEncoder.matches(password, user.getPassword()) == false) {
 			System.out.println("Invalid password");
-			return new ModelAndView("redirect:/users/edit", model);
+			return new ModelAndView("redirect:/users/profil", model);
 		}
 		if (user != null && !(auth instanceof AnonymousAuthenticationToken)) {
 	        user.setPassword(passwordEncoder.encode(newPassword));
@@ -118,19 +130,28 @@ public class UserController {
 			customLoginService.autoLogin(newUser);
 		}
 		//model.addAttribute("user", user);
-		return new ModelAndView("redirect:/users/edit", model);
+		return new ModelAndView("redirect:/users/profil", model);
 	}
 
-	@RequestMapping("/edit/delete")
-	public ModelAndView setDisable(@RequestParam("id") Integer id, ModelMap model, HttpServletRequest request, HttpServletResponse response) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	@RequestMapping("/delete")
+	public ModelAndView setDisable(@RequestParam("id") Integer id, ModelMap model) {
 		if (id != null) {
-			userService.delete(id);
-			new SecurityContextLogoutHandler().logout(request, response, auth);
+			User user = userService.findById(id);
+			user.setDisable();
+			userService.addOrUpdate(user);
 		}
 		return new ModelAndView("redirect:/");
 	}
-  
+	
+	@RequestMapping("/active")
+	public ModelAndView setEnable(@RequestParam("id") Integer id, ModelMap model) {
+		if (id != null) {
+			User user = userService.findById(id);
+			user.setEnabled(true);
+			userService.addOrUpdate(user);
+		}
+		return new ModelAndView("redirect:/");
+	}
 	@RequestMapping("/register")
 	public ModelAndView registerUser(HttpServletRequest request, @RequestParam("username") String username, @RequestParam("password") String password, 
 		  @RequestParam("confirmPassword") String confirmPassword, ModelMap model) {
@@ -151,10 +172,5 @@ public class UserController {
 			}
 		}
 		return new ModelAndView("redirect:/", model);
-	}
-
-	@RequestMapping("/delete")
-	public ModelAndView deleteUser(@RequestParam("id") Integer id, ModelMap model) {
-		return new ModelAndView("redirect:/users");
 	}
 }

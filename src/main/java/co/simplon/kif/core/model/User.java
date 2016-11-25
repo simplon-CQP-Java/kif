@@ -1,6 +1,12 @@
 package co.simplon.kif.core.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 
 @Entity
@@ -43,6 +49,10 @@ public class User {
 	public Integer getId() {
 		return id;
 	}
+	
+	public Boolean getEnabled() {
+		return enabled;
+	}
 
 	public String getUsername() {
 		return username;
@@ -71,4 +81,8 @@ public class User {
   	public void setId(Integer id) {
   		this.id = id;
   	}
+
+	public void setDisable() {
+		this.enabled = false;
+	}
 }
