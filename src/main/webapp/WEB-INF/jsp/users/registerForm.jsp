@@ -29,6 +29,7 @@
               <input name="confirmPassword" type="password" id="register-confirm-password" class="form-control" placeholder="Mot de passe" />
             </div>
             <button type="submit" class="btn btn-success">Inscription</button>
+            <a href="/login" class="pull-right">Connexion</a>
           </form>
         </div>
       </div>
