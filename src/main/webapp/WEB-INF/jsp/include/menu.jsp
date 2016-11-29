@@ -1,4 +1,4 @@
-<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;" pageEncoding="UTF-8"%>
 <nav id="menu" class="nav navbar-inverse">
 	<div class="container-fluid">
 	    <!-- Brand and toggle get grouped for better mobile display -->
@@ -13,13 +13,13 @@
 	    </div>
 	    <div class="collapse navbar-collapse" id="navbar-menu">
 
-	      <ul class="nav navbar-nav">
-	      	<li><a href="/computers">Ordinateurs</a></li>
+	      	<ul class="nav navbar-nav">
+	      		<li><a href="/computers">Ordinateurs</a></li>
 		  	<li><a href="/rooms">Salles</a></li>
 		  	<li><a href="/bookings">Réservations</a></li>
 		  	<li><a href="/users">Utilisateurs</a></li>
-		  	<li><a href="/users">Admin</a></li>
-		  	 </ul>
+		  	<li><a href="/admin">Admin</a></li>
+		 </ul>
 	  </div>
 	</div>
 </nav>
