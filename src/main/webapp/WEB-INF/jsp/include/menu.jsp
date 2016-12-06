@@ -32,6 +32,7 @@
 	          	<span class="caret"></span>
 	          </a>
 	          <ul class="dropdown-menu">
+	          	<li><a href="/contact">Contact</a></li>
 				<security:authorize access="!isAuthenticated()">
 					<li><a href="/login">Connexion</a></li>
 					<li><a href="/register">Inscription</a></li>

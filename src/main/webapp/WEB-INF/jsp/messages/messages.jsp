@@ -41,7 +41,7 @@
 								<button type="submit" class="btn btn-danger">Supprimer</button>
 							</form>
 							<div class="collapse" id="quick-reply">
-								<form action="/messages/${message.id}/reply" method="get">
+								<form action="/replies/add" method="get">
 	    								<input type="hidden" value="${message.id}" name="id">
 	    								<div class="form-group">
 									    	<label for="add-reply">Message</label>
