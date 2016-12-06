@@ -55,9 +55,9 @@ public class MessageController {
 		}
 		Message message = messageService.findById(id);
 		if (message != null) {
-			List<Reply> replys = replyService.getReplies(id);
+			List<Reply> replies = replyService.getReplies(id);
 			model.addAttribute("message", message);
-			model.addAttribute("replys", replys);
+			model.addAttribute("replies", replies);
 		}
 		return new ModelAndView("messages/message", model);
 	}

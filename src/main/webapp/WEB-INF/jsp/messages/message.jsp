@@ -24,7 +24,7 @@
 						<p>${message.content}</p>
 						<h3>Réponses</h3>
 						<ul class="list-group">
-							<c:forEach items="${replys}" var="reply">
+							<c:forEach items="${replies}" var="reply">
 								<li class="list-group-item">${reply.userId} - ${reply.content}</li>
 							</c:forEach>
 						</ul>
