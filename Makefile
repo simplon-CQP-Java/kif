@@ -1,5 +1,6 @@
 BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 
+
 mergeOnMaster:
 	git checkout master
 	git pull
