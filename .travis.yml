@@ -1,4 +1,4 @@
-language: java
+language: oraclejdk8
 
 script: mvn install -DskipTests=true
 
