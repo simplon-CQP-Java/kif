@@ -1,7 +1,9 @@
 language: java
 
-script: mvn install
+script: mvn install -DskipTests=true
 
-notification:
-	email:
-	 - fab-oger@live.fr
+notifications:
+  email:
+    - fab-oger@live.fr
+    - iris.courrina@gmail.com
+    - lemaire_kevin@hotmail.fr
