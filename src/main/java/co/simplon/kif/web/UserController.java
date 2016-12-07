@@ -99,17 +99,15 @@ public class UserController {
 			if (id == null) return new ModelAndView("redirect:/users", model);
 			return new ModelAndView("redirect:/users/userById?id=" + id, model);
 		}
-		User user = new User();
-		if (user != null && !(auth instanceof AnonymousAuthenticationToken)) {
-			user = userService.findOneByUsername(auth.getName());
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+			User user = userService.findById(id);
 	        user.setUsername(username);
 	        user.setRole(role);
 	        // Check if password, newPassword, confirmNewPassword are filled then changePassword
 	        if (password != null && newPassword != null && confirmNewPassword != null) {
 	        	user = changePassword(user, password, newPassword, confirmNewPassword);
 	        }
-			User newUser = userService.addOrUpdate(user);
-			customLoginService.autoLogin(newUser);
+			userService.updateUser(user);
 		}
 		return new ModelAndView("redirect:/users/userById?id=" + id, model);
 	}
@@ -142,7 +140,7 @@ public class UserController {
 		User user = userService.findById(id);
 		if (user != null && !(auth instanceof AnonymousAuthenticationToken)) {
 			user = changePassword(user, password, newPassword, confirmNewPassword);
-			User newUser = userService.addOrUpdate(user);
+			User newUser = userService.updateUser(user);
 			customLoginService.autoLogin(newUser);
 		}
 		//model.addAttribute("user", user);
