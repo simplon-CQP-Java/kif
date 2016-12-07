@@ -27,25 +27,25 @@ import co.simplon.kif.core.service.authentication.ICustomLoginService;
 public class UserController {
 	@Autowired
 	public UserService userService;
-  
+
 	@Autowired
 	public 	ICustomLoginService customLoginService;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-  
+
 	public UserController(UserService userService) {
 		super();
 		this.userService = userService;
 	}
-  
+
 	@RequestMapping
 	public ModelAndView getList(ModelMap model) {
 		List<User> userList = userService.getAll();
 		model.addAttribute("users", userList);
 		return new ModelAndView("users/users", model);
 	}
-	
+
 	@RequestMapping("/userById")
 	public ModelAndView userById(@RequestParam("id") Integer id, ModelMap model) {
 		if (id == null) {
@@ -89,6 +89,31 @@ public class UserController {
 		return new ModelAndView("redirect:/login");
 	}
 
+	@RequestMapping("/edit")
+	public ModelAndView edit(@RequestParam("id") Integer id, @RequestParam("username") String username, ModelMap model,
+			@RequestParam("password") String password, @RequestParam("newPassword") String newPassword,
+			@RequestParam("confirmNewPassword") String confirmNewPassword, @RequestParam("role") Role role,
+			HttpServletRequest request, HttpServletResponse response) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (username == null || role == null) {
+			if (id == null) return new ModelAndView("redirect:/users", model);
+			return new ModelAndView("redirect:/users/userById?id=" + id, model);
+		}
+		User user = new User();
+		if (user != null && !(auth instanceof AnonymousAuthenticationToken)) {
+			user = userService.findOneByUsername(auth.getName());
+	        user.setUsername(username);
+	        user.setRole(role);
+	        // Check if password, newPassword, confirmNewPassword are filled then changePassword
+	        if (password != null && newPassword != null && confirmNewPassword != null) {
+	        	user = changePassword(user, password, newPassword, confirmNewPassword);
+	        }
+			User newUser = userService.addOrUpdate(user);
+			customLoginService.autoLogin(newUser);
+		}
+		return new ModelAndView("redirect:/users/userById?id=" + id, model);
+	}
+
 	@RequestMapping("/edit/username")
 	public ModelAndView editUsername(@RequestParam("id") Integer id, @RequestParam("username") String username, ModelMap model,
 			HttpServletRequest request, HttpServletResponse response) {
@@ -105,7 +130,7 @@ public class UserController {
 		}
 		return new ModelAndView("redirect:/users/profil", model);
 	}
-	
+
 	@RequestMapping("/edit/password")
 	public ModelAndView editPassword(@RequestParam("id") Integer id, @RequestParam("password") String password,
 			@RequestParam("newPassword") String newPassword, @RequestParam("confirmNewPassword") String confirmNewPassword,
@@ -114,17 +139,9 @@ public class UserController {
 			return new ModelAndView("redirect:/users/profil", model);
 		}
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (newPassword.equals(confirmNewPassword) == false) {
-			System.out.println("Passwords are not equals");
-			return new ModelAndView("redirect:/users/profil", model);
-		}
 		User user = userService.findById(id);
-		if (passwordEncoder.matches(password, user.getPassword()) == false) {
-			System.out.println("Invalid password");
-			return new ModelAndView("redirect:/users/profil", model);
-		}
 		if (user != null && !(auth instanceof AnonymousAuthenticationToken)) {
-	        user.setPassword(passwordEncoder.encode(newPassword));
+			user = changePassword(user, password, newPassword, confirmNewPassword);
 			User newUser = userService.addOrUpdate(user);
 			customLoginService.autoLogin(newUser);
 		}
@@ -141,7 +158,7 @@ public class UserController {
 		}
 		return new ModelAndView("redirect:/");
 	}
-	
+
 	@RequestMapping("/active")
 	public ModelAndView setEnable(@RequestParam("id") Integer id, ModelMap model) {
 		if (id != null) {
@@ -171,5 +188,28 @@ public class UserController {
 			}
 		}
 		return new ModelAndView("redirect:/", model);
+	}
+
+	// Change the user password
+	public User changePassword(User user, String password, String newPassword, String confirmNewPassword) {
+		if (user == null || password == null || newPassword == null || confirmNewPassword == null) {
+			if (user != null) {
+				return user;
+			}
+			return new User();
+		}
+		if (newPassword.equals(confirmNewPassword) == false) {
+			System.out.println("Passwords are not equals");
+			return user;
+		}
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (passwordEncoder.matches(password, user.getPassword()) == false) {
+			System.out.println("Invalid password");
+			return user;
+		}
+		if (user != null && !(auth instanceof AnonymousAuthenticationToken)) {
+	        user.setPassword(passwordEncoder.encode(newPassword));
+		}
+		return user;
 	}
 }
