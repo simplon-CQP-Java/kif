@@ -41,6 +41,11 @@ public class IndexController {
         return new ModelAndView("redirect:/");
     }
 	
+	@RequestMapping("/contact")
+	public ModelAndView newMessage(ModelMap model) {
+		return new ModelAndView("messages/newMessage", model);
+	}
+	
 	@RequestMapping(value = "/accessDenied")
 	public String accessDeniedPage(ModelMap model) {
 		return "accessDenied";

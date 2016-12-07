@@ -13,6 +13,7 @@
 	<context:annotation-config />
 	
 	<import resource="spring-security-config.xml" />
+	<import resource="mail-bean.xml" />
 	
 	<jpa:repositories base-package="co.simplon.kif.core.repository" />
 
@@ -32,10 +33,10 @@
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="persistenceUnitName" value="spring-jpa" />
+			
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-        <property name="showSql" value="true"/>
-        <property name="generateDdl" value="true"/>
+        		<property name="generateDdl" value="true"/>
 				<property name="database" value="MYSQL" />
 			</bean>
 		</property>
