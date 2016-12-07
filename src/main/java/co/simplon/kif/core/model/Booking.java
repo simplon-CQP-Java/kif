@@ -2,64 +2,54 @@ package co.simplon.kif.core.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import co.simplon.kif.core.model.Computer;
+import co.simplon.kif.core.model.Room;
 
 @Entity
 public class Booking {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private Integer roomId;
-	private Integer computerId;
-	private Integer createdBy;
 	private Date start;
-	private Date End;
-	private Date createdAt;
-
-	public Booking() {
-		super();
-	}
-
-	public Booking(Integer roomId, Integer computerId, Date start, Date end, Date createdAt) {
-		super();
-		this.roomId = roomId;
-		this.computerId = computerId;
-    	this.start = start;
-    	End = end;
-    	this.createdAt = createdAt;
-	}
+	private Date end;
 	
-	public Booking(Integer roomId, Integer computerId, Integer createdBy, Date start, Date end, Date createdAt) {
+	@ManyToOne(cascade = { CascadeType.MERGE }, targetEntity = Computer.class)
+    @JoinColumn(name = "computerId")
+    private Computer computer;
+
+    @ManyToOne(cascade = { CascadeType.MERGE }, targetEntity = Room.class)
+    @JoinColumn(name = "roomId")
+    private Room room;
+	
+	private Integer createdBy;
+	private Date createdAt;
+	
+	public Booking(Integer id, Date start, Date end, Computer computer, Room room, Integer createdBy, Date createdAt) {
 		super();
-		this.roomId = roomId;
-		this.computerId = computerId;
+		this.id = id;
+		this.start = start;
+		this.end = end;
+		this.computer = computer;
+		this.room = room;
 		this.createdBy = createdBy;
-    	this.start = start;
-    	End = end;
-    	this.createdAt = createdAt;
+		this.createdAt = createdAt;
 	}
 
 	public Integer getId() {
 		return id;
 	}
 
-	public Integer getRoomId() {
-		return roomId;
-	}
-
-	public void setRoomId(Integer roomId) {
-		this.roomId = roomId;
-	}
-
-	public Integer getComputerId() {
-		return computerId;
-	}
-
-	public void setComputerId(Integer computerId) {
-		this.computerId = computerId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Date getStart() {
@@ -71,19 +61,27 @@ public class Booking {
 	}
 
 	public Date getEnd() {
-		return End;
+		return end;
 	}
 
 	public void setEnd(Date end) {
-		End = end;
+		this.end = end;
 	}
 
-	public Date getCreatedAt() {
-		return createdAt;
+	public Computer getComputer() {
+		return computer;
 	}
 
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
+	public void setComputer(Computer computer) {
+		this.computer = computer;
+	}
+
+	public Room getRoom() {
+		return room;
+	}
+
+	public void setRoom(Room room) {
+		this.room = room;
 	}
 
 	public Integer getCreatedBy() {
@@ -92,6 +90,14 @@ public class Booking {
 
 	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 	
 }

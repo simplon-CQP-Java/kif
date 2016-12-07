@@ -15,6 +15,7 @@ import co.simplon.kif.core.repository.BookingRepository;
 
 @Service
 public class BookingService {
+	
     @Autowired
     public BookingRepository bookingRepository;
     
@@ -42,8 +43,8 @@ public class BookingService {
     		if (user == null) {
     			throw new UsernameNotFoundException("User name not found");
     		}
-    		if (this.computerIsAvailable(booking.getComputerId(), booking.getStart(), booking.getEnd())
-    			&& this.roomIsAvailable(booking.getRoomId(), booking.getStart(), booking.getEnd())) {
+    		if (this.computerIsAvailable(booking.getComputer(), booking.getStart(), booking.getEnd())
+    			&& this.roomIsAvailable(booking.getRoom(), booking.getStart(), booking.getEnd())) {
         		return bookingRepository.save(booking);
     		}
     	}
