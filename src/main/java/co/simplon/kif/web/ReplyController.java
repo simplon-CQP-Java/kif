@@ -45,25 +45,11 @@ public class ReplyController {
 			// Create Reply in base
 			Reply reply = new Reply(message, content, createdAt, user);
 			// send mail and if return true set sended to reply
-			reply.setSended(sendMail(message, reply));
+			reply.setSended(emailService.sendReplyMail(message, reply));
 			replyService.addOrUpdate(reply);
 		} else {
 			return new ModelAndView("redirect:/login");
 		}
 		return new ModelAndView("redirect:/messages");
 	}
-	
-	// Get informations and send mail
-	public boolean sendMail(Message message, Reply reply) {
-		if (message == null || reply == null) {
-			return false;
-		}
-		String toAddress = message.getEmail();
-		String fromAddress = "simplon.kif@gmail.com";
-		String subject = "RE: " + message.getTitle();
-		String body = "Un administrateur a répondu à votre demande : " + message.getTitle() + ".\n" + reply.getContent();
-		emailService.sendEmail(toAddress, fromAddress, subject, body);
-		return true;
-	}
 }
-

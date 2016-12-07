@@ -19,7 +19,8 @@ public class Message {
 	private Date createdAt;
 	private Boolean readed;
 	private Boolean closed;
-	
+	private Boolean sended;
+
 	public Message() {
 		super();
 	}
@@ -32,6 +33,14 @@ public class Message {
 		this.createdAt = createdAt;
 		this.readed = false;
 		this.closed = false;
+	}
+
+	public Boolean getSended() {
+		return sended;
+	}
+
+	public void setSended(Boolean sended) {
+		this.sended = sended;
 	}
 
 	public String getEmail() {
@@ -49,7 +58,7 @@ public class Message {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	public Boolean getReaded() {
 		return readed;
 	}
