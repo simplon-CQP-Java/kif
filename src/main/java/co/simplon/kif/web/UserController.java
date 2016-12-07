@@ -48,7 +48,6 @@ public class UserController {
 	
 	@RequestMapping("/userById")
 	public ModelAndView userById(@RequestParam("id") Integer id, ModelMap model) {
-		System.out.println("id " + id);
 		if (id == null) {
 			return new ModelAndView("redirect:/users", model);
 		}

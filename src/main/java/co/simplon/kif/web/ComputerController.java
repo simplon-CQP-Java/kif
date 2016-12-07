@@ -5,11 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import co.simplon.kif.core.model.Computer;
 import co.simplon.kif.core.service.ComputerService;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/computers")
@@ -31,7 +32,7 @@ public class ComputerController {
 		}
 		Computer computer = computerService.findById(id);
 		if (computer == null) {
-			model.addAttribute("id", id);			
+			model.addAttribute("id", id);
 		}
 		model.addAttribute("computer", computer);
 		return new ModelAndView("computers/search", model);
