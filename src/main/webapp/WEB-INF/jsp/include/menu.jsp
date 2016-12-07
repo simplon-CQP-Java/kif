@@ -15,10 +15,13 @@
     </div>
     <div class="collapse navbar-collapse" id="navbar-menu">
 		<ul class="nav navbar-nav">
-	    	<li><a href="/computers">Ordinateurs</a></li>
-		  	<li><a href="/rooms">Salles</a></li>
-		  	<li><a href="/bookings">Réservations</a></li>
-		  	<li><a href="/users">Utilisateurs</a></li>
+			<security:authorize access="hasAuthority('ADMIN')">
+				<li><a href="/computers">Ordinateurs</a></li>
+				<li><a href="/rooms">Salles</a></li>
+				<li><a href="/bookings">Réservations</a></li>
+				<li><a href="/users">Utilisateurs</a></li>
+				<li><a href="/messages">Messages</a></li>
+			</security:authorize>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 	        <li class="dropdown">
