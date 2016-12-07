@@ -20,12 +20,16 @@
 			       	<div class="panel panel-primary">
 	    				<div class="panel-heading">${message.title}</div>
 	    				<div class="panel-body">
-	    				<p>${message.email}</p>
+	    				<p>
+	    					<span class="label label-primary">Email</span>
+	    					&nbsp;${message.email}
+	    				</p>
+						<h3>Message</h3>
 						<p>${message.content}</p>
 						<h3>Réponses</h3>
 						<ul class="list-group">
 							<c:forEach items="${replies}" var="reply">
-								<li class="list-group-item">${reply.userId} - ${reply.content}</li>
+								<li class="list-group-item">${reply.content}</li>
 							</c:forEach>
 						</ul>
 					</div>

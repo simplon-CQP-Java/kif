@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import co.simplon.kif.core.model.Message;
 import co.simplon.kif.core.model.Reply;
 import co.simplon.kif.core.model.User;
+import co.simplon.kif.core.service.EmailAPIService;
 import co.simplon.kif.core.service.MessageService;
 import co.simplon.kif.core.service.ReplyService;
 import co.simplon.kif.core.service.UserService;
@@ -27,6 +27,8 @@ public class ReplyController {
 	private UserService userService;
 	@Autowired
 	private MessageService messageService;
+	@Autowired
+	private EmailAPIService emailService;
 
 	@RequestMapping("/add")
 	public ModelAndView addReply(@RequestParam("reply") String content, @RequestParam("id") Integer messageId) {
@@ -42,18 +44,26 @@ public class ReplyController {
 			Date createdAt = new Date();
 			// Create Reply in base
 			Reply reply = new Reply(message, content, createdAt, user);
+			// send mail and if return true set sended to reply
+			reply.setSended(sendMail(message, reply));
 			replyService.addOrUpdate(reply);
+		} else {
+			return new ModelAndView("redirect:/login");
 		}
 		return new ModelAndView("redirect:/messages");
 	}
-
-	@RequestMapping("/delete")
-	public ModelAndView deleteReply(@RequestParam("id") Integer id, ModelMap model) {
-		if (id == null) {
-			return new ModelAndView("redirect:/messages");
+	
+	// Get informations and send mail
+	public boolean sendMail(Message message, Reply reply) {
+		if (message == null || reply == null) {
+			return false;
 		}
-		replyService.delete(id);
-		return new ModelAndView("redirect:/messages");
+		String toAddress = message.getEmail();
+		String fromAddress = "simplon.kif@gmail.com";
+		String subject = "RE: " + message.getTitle();
+		String body = "Un administrateur a répondu à votre demande : " + message.getTitle() + ".\n" + reply.getContent();
+		emailService.sendEmail(toAddress, fromAddress, subject, body);
+		return true;
 	}
 }
 

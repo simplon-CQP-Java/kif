@@ -24,7 +24,7 @@ public class Reply {
     private User user;
 	private String content;
 	private Date createdAt;
-	private boolean readed;
+	private boolean sended;
 
 	public Reply() {
 		super();
@@ -36,7 +36,7 @@ public class Reply {
 		this.content = content;
 		this.createdAt = createdAt;
 		this.user = user;
-		this.readed = false;
+		this.sended = false;
 	}
 
 	public Message getMessage() {
@@ -73,10 +73,10 @@ public class Reply {
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
-	public boolean isReaded() {
-		return readed;
+	public boolean isSended() {
+		return sended;
 	}
-	public void setReaded(boolean readed) {
-		this.readed = readed;
+	public void setSended(boolean sended) {
+		this.sended = sended;
 	}
 }
