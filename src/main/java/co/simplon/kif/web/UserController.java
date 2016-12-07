@@ -78,17 +78,6 @@ public class UserController {
 		return new ModelAndView("redirect:/users");
 	}
 
-	@RequestMapping("/profil")
-	public ModelAndView profile(ModelMap model) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (!(auth instanceof AnonymousAuthenticationToken)) {
-			User user = userService.findOneByUsername(auth.getName());
-			model.addAttribute("user", user);
-			return new ModelAndView("users/profile", model);
-		}
-		return new ModelAndView("redirect:/login");
-	}
-
 	@RequestMapping("/edit")
 	public ModelAndView edit(@RequestParam("id") Integer id, @RequestParam("username") String username, ModelMap model,
 			@RequestParam("password") String password, @RequestParam("newPassword") String newPassword,

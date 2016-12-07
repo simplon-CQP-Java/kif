@@ -3,6 +3,7 @@ package co.simplon.kif.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,8 +13,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import co.simplon.kif.core.model.User;
+import co.simplon.kif.core.service.UserService;
+
 @Controller
 public class IndexController {
+	@Autowired
+	public UserService userService;
 	@RequestMapping(path = "/login")
 	public ModelAndView loginForm(ModelMap model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -44,6 +50,17 @@ public class IndexController {
 	@RequestMapping("/contact")
 	public ModelAndView newMessage(ModelMap model) {
 		return new ModelAndView("messages/newMessage", model);
+	}
+
+	@RequestMapping("/profil")
+	public ModelAndView profile(ModelMap model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+			User user = userService.findOneByUsername(auth.getName());
+			model.addAttribute("user", user);
+			return new ModelAndView("users/profile", model);
+		}
+		return new ModelAndView("redirect:/login");
 	}
 	
 	@RequestMapping(value = "/accessDenied")

@@ -41,7 +41,7 @@
 					<li><a href="/register">Inscription</a></li>
 				</security:authorize>
 				<security:authorize access="isAuthenticated()">
-					<li><a href="/users/profil">Profil</a></li>
+					<li><a href="/profil">Profil</a></li>
 					<li><a href="/logout">Déconnexion</a></li>
 				</security:authorize>
 	          </ul>

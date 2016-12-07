@@ -8,11 +8,10 @@
 		<form-login login-page="/login"
                      username-parameter="username"
                      password-parameter="password"
-                     authentication-failure-url="/accessDenied"
+                     authentication-failure-url="/login"
                      default-target-url="/" />
         <csrf/>
 
-        <intercept-url pattern="/**" access="permitAll" />
 		<intercept-url pattern="/ressources/**" access="permitAll"/>
         <intercept-url pattern="/computers/**" access="hasAuthority('ADMIN')" />
         <intercept-url pattern="/rooms/**" access="hasAuthority('ADMIN')" />
