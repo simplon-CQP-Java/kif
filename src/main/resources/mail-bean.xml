@@ -7,14 +7,14 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
-	<context:property-placeholder />
 	<!-- Production implementation of the JavaMailSender interface, supporting
 		both JavaMail MimeMessages and Spring SimpleMailMessages -->
+	<context:property-placeholder location="classpath:META-INF/env.properties"/>
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.mailgun.org" />
 		<property name="port" value="587" />
-		<property name="username" value="${env.MAIL_USERNAME}" />
-		<property name="password" value="${env.MAIL_PASSWORD}" />
+		<property name="username" value="${mail.username}" />
+		<property name="password" value="${mail.password}" />
 
 		<!-- The name of the property, following JavaBean naming conventions -->
 		<property name="javaMailProperties">
