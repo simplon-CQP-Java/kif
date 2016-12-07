@@ -2,8 +2,11 @@ package co.simplon.kif.web;
 
 import java.util.Date;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,9 +17,11 @@ import org.springframework.web.servlet.ModelAndView;
 import co.simplon.kif.core.model.Booking;
 import co.simplon.kif.core.model.Computer;
 import co.simplon.kif.core.model.Room;
+import co.simplon.kif.core.model.User;
 import co.simplon.kif.core.service.BookingService;
 import co.simplon.kif.core.service.ComputerService;
 import co.simplon.kif.core.service.RoomService;
+import co.simplon.kif.core.service.UserService;
 
 @Controller
 @RequestMapping("/bookings")
@@ -27,10 +32,17 @@ public class BookingController {
   public RoomService roomService;
   @Autowired
   public ComputerService computerService;
+  @Autowired
+  public UserService userService;
 
   @RequestMapping
   public ModelAndView getBookingList(ModelMap model) {
-    List<Booking> bookingList = bookingService.getAll();
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	if (auth == null) {
+		return new ModelAndView("redirect:/login");
+	}
+	User user = userService.findOneByUsername(auth.getName());
+	List<Booking> bookingList = bookingService.userBookings(user);
     List<Room> roomList = roomService.getAll();
     List<Computer> computerList = computerService.getAll();
     model.addAttribute("bookings", bookingList);
@@ -41,15 +53,18 @@ public class BookingController {
 
   @RequestMapping("/book")
   public ModelAndView addBooking(
-		  @RequestParam("roomId") Integer roomId,
-		  @RequestParam("computerId") Integer computerId,
+		  @RequestParam(name = "roomId", defaultValue = "-1") Integer roomId,
+		  @RequestParam(name = "computerId", defaultValue = "-1") Integer computerId,
 		  @RequestParam("start") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm") Date start,
 		  @RequestParam("end") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm") Date end) {
     Date createdAt = new Date();
-    if (roomId != null && computerId != null && start != null && end != null) {
-	    Booking booking = new Booking(roomId, computerId, start, end, createdAt);
+    if (roomId == null && computerId == null) return new ModelAndView("redirect:/bookings");
+    if (start != null && end != null) {
+    	Room room = roomService.findById(roomId);
+    	Computer computer = computerService.findById(computerId);
+	    Booking booking = new Booking(room, computer, start, end, createdAt);
 	    try {
-	    	bookingService.addOrUpdate(booking);
+	    	booking = bookingService.addOrUpdate(booking);
 	    } catch(UsernameNotFoundException e) {
 	    	System.out.println("UsernameNotFoundException " + e);
 	        return new ModelAndView("accessDenied");
