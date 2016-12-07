@@ -6,7 +6,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	id="mis" version="2.5">
 
   <display-name>Reservation de salles, ordinateurs - KIF</display-name>
-	
 	<!-- Chargement du filter pour spring security -->
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>

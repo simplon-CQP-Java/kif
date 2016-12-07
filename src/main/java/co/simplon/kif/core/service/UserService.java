@@ -47,6 +47,10 @@ public class UserService {
 		return userRepository.save(new User(username, passwordEncoder.encode(password), role, true));
 	}
 	
+	public User updateUser(User user) {
+		return userRepository.save(user);
+	}
+
 	public User setDisable(String username) {
 		//return userRepository.save(new User(username, passwordEncoder.encode(password), true));
 		return new User(username, null, null, null);
