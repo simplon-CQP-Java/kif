@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -78,17 +79,6 @@ public class UserController {
 		return new ModelAndView("redirect:/users");
 	}
 
-	@RequestMapping("/profil")
-	public ModelAndView profile(ModelMap model) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (!(auth instanceof AnonymousAuthenticationToken)) {
-			User user = userService.findOneByUsername(auth.getName());
-			model.addAttribute("user", user);
-			return new ModelAndView("users/profile", model);
-		}
-		return new ModelAndView("redirect:/login");
-	}
-
 	@RequestMapping("/edit")
 	public ModelAndView edit(@RequestParam("id") Integer id, @RequestParam("username") String username, ModelMap model,
 			@RequestParam("password") String password, @RequestParam("newPassword") String newPassword,
@@ -117,7 +107,7 @@ public class UserController {
 			HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (username == null) {
-			return new ModelAndView("redirect:/users/profil", model);
+			return new ModelAndView("redirect:/profil", model);
 		}
 		User user = new User();
 		if (user != null && !(auth instanceof AnonymousAuthenticationToken)) {
@@ -126,7 +116,7 @@ public class UserController {
 			User newUser = userService.addOrUpdate(user);
 			customLoginService.autoLogin(newUser);
 		}
-		return new ModelAndView("redirect:/users/profil", model);
+		return new ModelAndView("redirect:/profil", model);
 	}
 
 	@RequestMapping("/edit/password")
@@ -134,7 +124,7 @@ public class UserController {
 			@RequestParam("newPassword") String newPassword, @RequestParam("confirmNewPassword") String confirmNewPassword,
 			ModelMap model, HttpServletRequest request, HttpServletResponse response) {
 		if (password == null || newPassword == null || confirmNewPassword == null || id == null) {
-			return new ModelAndView("redirect:/users/profil", model);
+			return new ModelAndView("redirect:/profil", model);
 		}
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findById(id);
@@ -144,15 +134,20 @@ public class UserController {
 			customLoginService.autoLogin(newUser);
 		}
 		//model.addAttribute("user", user);
-		return new ModelAndView("redirect:/users/profil", model);
+		return new ModelAndView("redirect:/profil", model);
 	}
 
-	@RequestMapping("/delete")
-	public ModelAndView setDisable(@RequestParam("id") Integer id, ModelMap model) {
-		if (id != null) {
+	@RequestMapping(value={"/delete", "/edit/delete"})
+	public ModelAndView setDisable(@RequestParam("id") Integer id, ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User currentUser = userService.findOneByUsername(auth.getName());
+		Role admin = Role.ADMIN;
+		// Check if currentUser is Admin or if id is equals to currentUser id
+		if (id != null && (currentUser.getRole() == admin || id.equals(currentUser.getId()))) {
 			User user = userService.findById(id);
 			user.setDisable();
 			userService.addOrUpdate(user);
+			if (id.equals(currentUser.getId())) new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
 		return new ModelAndView("redirect:/");
 	}

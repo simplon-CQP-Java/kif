@@ -26,9 +26,9 @@
 					  	</div>
 						<div class="panel-body">
 						    <ul class="list-group">
-						    	<li class="list-group-item">Identifiant de l'utilisateur : ${booking.createdBy}</li>
-							   	<li class="list-group-item">Identifiant de la salle : ${booking.roomId}</li>
-							   	<li class="list-group-item">Identifiant de l'ordinateur : ${booking.computerId}</li>
+						    	<li class="list-group-item">Réservé par : ${booking.user.username}</li>
+							   	<li class="list-group-item">Nom de la salle : ${booking.room.name}</li>
+							   	<li class="list-group-item">Ordinateur : ${booking.computer.brand} -  ${booking.computer.model}</li>
 							   	<li class="list-group-item">Date de début : ${booking.start}</li>
 							   	<li class="list-group-item">Date de fin : ${booking.end}</li>
 							</ul>
@@ -53,6 +53,7 @@
 							<c:forEach items="${rooms}" var="room">
 								<option value="${room.id}">${room.name}</option>
 							</c:forEach>
+							<option value="">Aucune</option>
 						</select>
 					</div>
 					<div class="form-group">
@@ -61,6 +62,7 @@
 							<c:forEach items="${computers}" var="computer">
 								<option value="${computer.id}">${computer.brand} - ${computer.model}</option>
 							</c:forEach>
+							<option value="">Aucun</option>
 						</select>
 					</div>
 					<div class="form-group">

@@ -8,17 +8,18 @@
 		<form-login login-page="/login"
                      username-parameter="username"
                      password-parameter="password"
-                     authentication-failure-url="/accessDenied"
+                     authentication-failure-url="/login"
                      default-target-url="/" />
         <csrf/>
 
-        <intercept-url pattern="/**" access="permitAll" />
 		<intercept-url pattern="/ressources/**" access="permitAll"/>
         <intercept-url pattern="/computers/**" access="hasAuthority('ADMIN')" />
         <intercept-url pattern="/rooms/**" access="hasAuthority('ADMIN')" />
-        <intercept-url pattern="/bookings/**" access="hasAuthority('ADMIN')" />
         <intercept-url pattern="/messages/**" access="hasAuthority('ADMIN')" />
-        <intercept-url pattern="/users/**" access="hasAuthority('ADMIN')" />
+        <intercept-url pattern="/users*" access="hasAuthority('ADMIN')" />
+
+        <intercept-url pattern="/users/edit/*" access="isAuthenticated()" />
+        <intercept-url pattern="/bookings/**" access="isAuthenticated()" />
         <access-denied-handler error-page="/accessDenied" />
     </http>
 

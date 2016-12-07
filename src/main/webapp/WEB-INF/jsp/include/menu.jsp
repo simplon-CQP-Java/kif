@@ -15,10 +15,12 @@
     </div>
     <div class="collapse navbar-collapse" id="navbar-menu">
 		<ul class="nav navbar-nav">
+			<security:authorize access="isAuthenticated()">
+				<li><a href="/bookings">Réservations</a></li>
+			</security:authorize>
 			<security:authorize access="hasAuthority('ADMIN')">
 				<li><a href="/computers">Ordinateurs</a></li>
 				<li><a href="/rooms">Salles</a></li>
-				<li><a href="/bookings">Réservations</a></li>
 				<li><a href="/users">Utilisateurs</a></li>
 				<li><a href="/messages">Messages</a></li>
 			</security:authorize>
@@ -41,7 +43,7 @@
 					<li><a href="/register">Inscription</a></li>
 				</security:authorize>
 				<security:authorize access="isAuthenticated()">
-					<li><a href="/users/profil">Profil</a></li>
+					<li><a href="/profil">Profil</a></li>
 					<li><a href="/logout">Déconnexion</a></li>
 				</security:authorize>
 	          </ul>
