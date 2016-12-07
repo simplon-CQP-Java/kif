@@ -1,14 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>co.simplon</groupId>
-  <artifactId>kif</artifactId>
-  <packaging>war</packaging>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>kif Maven Webapp</name>
-  <url>http://maven.apache.org</url>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>co.simplon</groupId>
+	<artifactId>kif</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>kif Maven Webapp</name>
+	<url>http://maven.apache.org</url>
 
-  <properties>
+	<properties>
 		<spring.version>4.3.3.RELEASE</spring.version>
 		<spring.data.version>1.10.4.RELEASE</spring.data.version>
 		<jackson.version>2.8.3</jackson.version>
@@ -18,31 +18,31 @@
 		<spring.security.version>4.1.3.RELEASE</spring.security.version>
 	</properties>
 
-  <build>
-    <finalName>kif</finalName>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.5.1</version>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.tomcat.maven</groupId>
-        <artifactId>tomcat7-maven-plugin</artifactId>
-        <version>2.2</version>
-        <configuration>
-          <path>/</path>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+	<build>
+		<finalName>kif</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<path>/</path>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
-  <dependencies>
-    <!-- spring -->
+	<dependencies>
+		<!-- spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
@@ -78,6 +78,23 @@
 			<artifactId>spring-data-jpa</artifactId>
 			<version>${spring.data.version}</version>
 		</dependency>
+		<!-- AngularJs -->
+		<dependency>
+	            <groupId>org.webjars</groupId>
+	            <artifactId>angularjs</artifactId>
+	            <version>1.4.8</version>
+	            <scope>runtime</scope>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.webjars</groupId>
+	            <artifactId>bootstrap</artifactId>
+	            <version>3.3.6</version>
+	            <scope>runtime</scope>
+	        </dependency>
+
+
+
+
 
 		<!-- jackson -->
 		<dependency>
@@ -96,14 +113,14 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
-	    	<scope>provided</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
-		   <groupId>javax.servlet.jsp</groupId>
-		   <artifactId>javax.servlet.jsp-api</artifactId>
-		   <version>2.2.1</version>
-		   <scope>provided</scope>
-  		</dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<version>2.2.1</version>
+			<scope>provided</scope>
+		</dependency>
 
 
 		<!-- database -->
@@ -140,7 +157,7 @@
 			<version>${spring.security.version}</version>
 		</dependency>
 		
-    	<!-- tests -->
+		<!-- tests -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -166,9 +183,9 @@
 		</dependency>
 		
 		<dependency>
-		    <groupId>org.webjars</groupId>
-		    <artifactId>webjars-locator</artifactId>
-		    <version>0.1</version>
+			<groupId>org.webjars</groupId>
+			<artifactId>webjars-locator</artifactId>
+			<version>0.1</version>
 		</dependency>  
-  </dependencies>
+	</dependencies>
 </project>

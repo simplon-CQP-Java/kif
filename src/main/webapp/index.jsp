@@ -17,5 +17,10 @@
 				<p>Gestion de salles et ordinateurs</p>
 			</div>
 		</div>
+    <script src="./webjars/angularjs/1.4.8/angular.js"></script>
+  <script src="./webjars/angularjs/1.4.8/angular-resource.js"></script>
+  <script src="./webjars/angularjs/1.4.8/angular-route.js"></script>
+  <script src="../resources/static/js/app.js"></script>
+  <script src="../resources/static/js/controller.js"></script>
     </jsp:body>
 </t:genericpage>

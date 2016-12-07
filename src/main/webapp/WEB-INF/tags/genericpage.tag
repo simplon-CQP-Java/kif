@@ -2,7 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ attribute name="header" fragment="true" %>
 <%@ attribute name="footer" fragment="true" %>
-<html>
+<html >
 	<head>
 		<spring:url value="/ressources/css/lib/bootstrap.min.css" var="bootstrapCss" />
 		<spring:url value="/ressources/css/lib/bootstrap-theme.min.css" var="bootstrapThemeCss" />
@@ -21,6 +21,15 @@
 		<script type="text/javascript" src="/ressources/js/lib/moment.min.js"></script>
 		<script type="text/javascript" src="/ressources/js/lib/bootstrap-datetimepicker.js"></script>
 		<script type="text/javascript" src="/ressources/js/layout.js"></script>
+			<script type="text/javascript" src="webjars/jquery/2.1.1/jquery.js"></script>
+<script type="text/javascript" src="webjars/angularjs/1.3.8/angular.min.js"></script>
+<script type="text/javascript" src="webjars/angularjs/1.3.8/angular-resource.min.js"></script>
+
+
+    <script src="lib/angular.min.js"></script>
+    
+    <script src="lib/ng-grid.min.js"></script>
+
 	</head>
   	<body>
 	    <header>
@@ -32,5 +41,8 @@
 	    <footer>
 	      	<jsp:invoke fragment="footer"/>
 		</footer>
+			<script type="text/javascript" src="webjars/jquery/2.1.1/jquery.js"></script>
+<script type="text/javascript" src="webjars/angularjs/1.3.8/angular.min.js"></script>
+<script type="text/javascript" src="webjars/angularjs/1.3.8/angular-resource.min.js"></script>
 	</body>
 </html>

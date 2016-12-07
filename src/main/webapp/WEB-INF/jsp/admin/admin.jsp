@@ -1,87 +1,54 @@
-<%@ page contentType="text/html;" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<head>
-	<title>Admin</title>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags"   %>
+<html ng-app="myApp">
+<head >
+	<title>{{headingTitle}}</title>
 </head>
 
 <t:genericpage>
-    <jsp:attribute name="header">
-      <%@ include file="/WEB-INF/jsp/include/menu.jsp" %>
-    </jsp:attribute>
+<jsp:attribute name="header">
+<%@ include file="/WEB-INF/jsp/include/menu.jsp" %>
+</jsp:attribute>
 
-    <jsp:attribute name="footer">
-      <%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
-    </jsp:attribute>
-    <jsp:body>
-   		<div id="admin" class="row">
-        	<div class="jumbotron">
-			  <h3>Utilisateurs</h3>
-			</div>
-        	<div id="list" class="col-md-6">
-        		<c:forEach items="${users}" var="user">
-		        	<div class="panel panel-default">
-						<div class="panel-heading">
-					   		<h3 class="panel-title">${user.id}</h3>
-					  	</div>
-					  	<div class="panel-body">
-					    <ul class="list-group">
-					    	<li class="list-group-item">Nom : ${user.username}</li>
-						   	<li class="list-group-item">Email : ${user.email}</li>
-						   	<li class="list-group-item">Rôle : ${user.role}</li>
-					    </ul>
-					  	</div>
-					  	<div class="panel-footer">
-						  	<form action="/users/delete">
-								<input name="id" value="${user.id}" type="hidden" />
-								<button type="submit" class="btn btn-danger">Supprimer</button>
-							</form>
-					  	</div>
-					</div>
-				</c:forEach>
-			</div>
-			<div class="col-md-6">
-				<div class="page-header">
-					<h5>Ajouter un utilisateur</h5>
-				</div>
-				<form method="get" action="/users/add">
-					<div class="form-group">
-					    <label for="add-username-input">Nom</label>
-						<input name="username" placeholder="Nom" type="text" class="form-control" id="add-username-input">
-					</div>
-					<div class="form-group">
-					    <label for="add-password-input">Mot de passe</label>
-						<input name="password" placeholder="Mot de passe" type="password" class="form-control" id="add-password-input">
-					</div>
-					<div class="form-group">
-					    <label for="add-confirm-password-input">Confirmer votre mot de passe</label>
-						<input name="confirmPassword" placeholder="Mot de passe" type="password" class="form-control" id="add-confirm-password-input">
-					</div>
-					<div class="form-group">
-					    <label for="add-email-input">Email</label>
-						<input name="email" placeholder="Email" type="email" class="form-control" id="add-email-input">
-					</div>
-					<div class="form-group">
-					    <label for="add-role-input">Rôle</label>
-						<select name="role" class="form-control" id="add-role-input">
-							<option value="USER" selected>Utilisateur</option>
-							<option value="ADMIN">Administrateur</option>
-						</select>
-					</div>
-					<button type="submit" class="btn btn-success">Ajouter</button>
-				</form>
+<jsp:attribute name="footer">
+<%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
+</jsp:attribute>
+<jsp:body>
+<div id="admin" class="row"  >
+	<div >
+    <div ng-controller="UsersController">
+        <div class="block">
+            <select ng-model="selection">  
+                <option value="area1" >Taipei</option>  
+                <option value="area2">Taoyuan</option>  
+            </select>
+            <div ng-show="selection=='area1'">This is Taipei</div>
+            <div ng-show="selection=='area2'">This is Taoyuan</div>
+        </div><!--block-->
+        <div class="block">
+            <input type="checkbox" ng-model="showDom"> 
+            <span ng-show="showDom">Show me</span>
+        </div>
+        <div class="block">
+             <input type="checkbox" ng-model="hideDom"> 
+            <span ng-hide="hideDom">Hide me</span>            
+        </div>
+        <div class="block"><div>
+            <button class="" ng-click="showCon('con1')">Button1</button>   
+            <button class="" ng-click="showCon('con2')">Button2</button> 
+            <button class="" ng-click="showCon('con3')">Button3</button> 
+            </div>
+            <div ng-show="clickOn=='con1'">con1</div>
+            <div ng-show="clickOn=='con2'">con2</div>
+            <div ng-show="clickOn=='con3'">con3</div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="webjars/jquery/2.1.1/jquery.js"></script>
+<script type="text/javascript" src="webjars/angularjs/1.3.8/angular.min.js"></script>
+<script type="text/javascript" src="webjars/angularjs/1.3.8/angular-resource.min.js"></script>
 
-				<div class="page-header">
-					<h5>Rechercher un utilisateur par son identifiant</h5>
-				</div>
-				<form method="get" action="/users/userByUsername">
-					<div class="form-group">
-					    <label for="user-by-username-input">Nom d'utilisateur</label>
-						<input name="username" placeholder="Nom d'utilisateur" type="text" class="form-control" id="user-by-username-input">
-					</div>
-					<button type="submit" class="btn btn-primary">Rechercher</button>
-				</form>
-			</div>
-		</div>
-    </jsp:body>
+</jsp:body>
 </t:genericpage>
+</html>
