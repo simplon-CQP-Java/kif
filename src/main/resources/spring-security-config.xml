@@ -15,9 +15,11 @@
 		<intercept-url pattern="/ressources/**" access="permitAll"/>
         <intercept-url pattern="/computers/**" access="hasAuthority('ADMIN')" />
         <intercept-url pattern="/rooms/**" access="hasAuthority('ADMIN')" />
-        <intercept-url pattern="/bookings/**" access="hasAuthority('ADMIN')" />
         <intercept-url pattern="/messages/**" access="hasAuthority('ADMIN')" />
-        <intercept-url pattern="/users/**" access="hasAuthority('ADMIN')" />
+        <intercept-url pattern="/users*" access="hasAuthority('ADMIN')" />
+
+        <intercept-url pattern="/users/edit/*" access="isAuthenticated()" />
+        <intercept-url pattern="/bookings/**" access="isAuthenticated()" />
         <access-denied-handler error-page="/accessDenied" />
     </http>
 

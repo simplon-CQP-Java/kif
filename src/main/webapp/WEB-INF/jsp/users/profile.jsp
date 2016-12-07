@@ -86,7 +86,7 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <form method="get" action="/users/delete">
+		        <form method="get" action="/users/edit/delete">
 					<input name="id" value="${user.id}" type="hidden" >
 					<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
 						Oui, supprimer mon compte
