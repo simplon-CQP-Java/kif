@@ -19,15 +19,15 @@ public class Booking {
 	@Expose
 	private Integer id;
 	@ManyToOne(cascade = { CascadeType.MERGE }, targetEntity = Room.class)
-    @JoinColumn(name = "roomId")
+	@JoinColumn(name = "roomId")
 	@Expose
 	private Room room;
 	@ManyToOne(cascade = { CascadeType.MERGE }, targetEntity = Computer.class)
-    @JoinColumn(name = "computerId")
+	@JoinColumn(name = "computerId")
 	@Expose
 	private Computer computer;
 	@ManyToOne(cascade = { CascadeType.MERGE }, targetEntity = User.class)
-    @JoinColumn(name = "userId")
+	@JoinColumn(name = "userId")
 	@Expose
 	private User user;
 	@Expose
@@ -36,6 +36,8 @@ public class Booking {
 	private Date end;
 	@Expose
 	private Date createdAt;
+	@Expose
+	private String title;
 
 	public Booking() {
 		super();
@@ -45,19 +47,33 @@ public class Booking {
 		super();
 		this.room = room;
 		this.computer = computer;
-    	this.start = start;
-    	this.end = end;
-    	this.createdAt = createdAt;
+		this.start = start;
+		this.end = end;
+		this.createdAt = createdAt;
+		this.title = "";
+		if (room != null) {
+			this.title += room.getName();
+		}
+		if (computer != null) {
+			this.title += " - " + computer.getBrand() + " " + computer.getModel();
+		}
 	}
-	
+
 	public Booking(Room room, Computer computer, User user, Date start, Date end, Date createdAt) {
 		super();
 		this.room = room;
 		this.computer = computer;
 		this.user = user;
-    	this.start = start;
-    	this.end = end;
-    	this.createdAt = createdAt;
+		this.start = start;
+		this.end = end;
+		this.createdAt = createdAt;
+		this.title = "";
+		if (room != null) {
+			this.title += room.getName();
+		}
+		if (computer != null) {
+			this.title += " - " + computer.getBrand() + " " + computer.getModel();
+		}
 	}
 
 	public Integer getId() {
@@ -110,5 +126,13 @@ public class Booking {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 }
