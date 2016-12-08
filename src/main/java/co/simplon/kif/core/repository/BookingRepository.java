@@ -16,4 +16,7 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
 
 	@Query("select id from Booking where roomId=?1 and not(?2>=ends or starts>=?3)")
 	public List<Booking> findBookingRoom(Integer roomId, Date start, Date end);
+	
+	 @Query("select id from Booking where user.id=?1")
+	 public List<Booking> userBooking(Integer userId);
 }

@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import co.simplon.kif.core.model.Booking;
+import co.simplon.kif.core.model.Computer;
+import co.simplon.kif.core.model.Room;
 import co.simplon.kif.core.model.User;
 import co.simplon.kif.core.repository.BookingRepository;
 
@@ -34,18 +36,18 @@ public class BookingService {
     	if (booking != null) {
     		User user = new User();
     		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    		if (booking.getCreatedBy() == null && auth != null) {
+    		if (booking.getUser() == null && auth != null) {
     			user = userService.findOneByUsername(auth.getName());
-    			booking.setCreatedBy(user.getId());
+    			booking.setUser(user);
     		} else {
-    			user = userService.findById(booking.getCreatedBy());
+    			user = userService.findById(booking.getUser().getId());
     		}
     		if (user == null) {
     			throw new UsernameNotFoundException("User name not found");
     		}
-    		if (this.computerIsAvailable(booking.getComputer(), booking.getStart(), booking.getEnd())
-    			&& this.roomIsAvailable(booking.getRoom(), booking.getStart(), booking.getEnd())) {
-        		return bookingRepository.save(booking);
+    		if ((booking.getComputer() != null && this.computerIsAvailable(booking.getComputer(), booking.getStart(), booking.getEnd())) ||
+        			(booking.getRoom() != null && this.roomIsAvailable(booking.getRoom(), booking.getStart(), booking.getEnd()))) {
+                    return bookingRepository.save(booking);
     		}
     	}
     	return booking;
@@ -55,8 +57,8 @@ public class BookingService {
       bookingRepository.delete(id);
     }
     
-    public boolean computerIsAvailable(int id, Date start, Date end) {
-		List<Integer> list = bookingRepository.findBookingComputer(id);
+    public boolean computerIsAvailable(Computer computer, Date start, Date end) {
+		List<Integer> list = bookingRepository.findBookingComputer(computer.getId());
 		boolean isAvailable = false;
 		if (list == null || list.size() < 1) {
 			return true;
@@ -73,8 +75,8 @@ public class BookingService {
 		return isAvailable;
 	}
 
-	public boolean roomIsAvailable(int id, Date start, Date end) {
-		List<Integer> list = bookingRepository.findBookingRoom(id);
+	public boolean roomIsAvailable(Room room, Date start, Date end) {
+		List<Integer> list = bookingRepository.findBookingRoom(room.getId());
 		boolean isAvailable = false;
 			
 		if (list == null || list.size() < 1) {

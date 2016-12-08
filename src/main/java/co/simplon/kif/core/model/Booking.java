@@ -21,6 +21,7 @@ public class Booking {
 	private Integer id;
 	private Date start;
 	private Date end;
+	private Date createdAt;
 	
 	@ManyToOne(cascade = { CascadeType.MERGE }, targetEntity = Computer.class)
     @JoinColumn(name = "computerId")
@@ -29,19 +30,23 @@ public class Booking {
     @ManyToOne(cascade = { CascadeType.MERGE }, targetEntity = Room.class)
     @JoinColumn(name = "roomId")
     private Room room;
-	
-	private Integer createdBy;
-	private Date createdAt;
-	
-	public Booking(Integer id, Date start, Date end, Computer computer, Room room, Integer createdBy, Date createdAt) {
+    
+    @ManyToOne(cascade = { CascadeType.MERGE }, targetEntity = User.class)
+    @JoinColumn(name = "userId")
+    private User user;
+
+    public Booking() {
+    	
+    }
+    
+	public Booking(Date start, Date end, Date createdAt, Computer computer, Room room, User user) {
 		super();
-		this.id = id;
 		this.start = start;
 		this.end = end;
+		this.createdAt = createdAt;
 		this.computer = computer;
 		this.room = room;
-		this.createdBy = createdBy;
-		this.createdAt = createdAt;
+		this.user = user;
 	}
 
 	public Integer getId() {
@@ -68,6 +73,14 @@ public class Booking {
 		this.end = end;
 	}
 
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
 	public Computer getComputer() {
 		return computer;
 	}
@@ -84,20 +97,12 @@ public class Booking {
 		this.room = room;
 	}
 
-	public Integer getCreatedBy() {
-		return createdBy;
+	public User getUser() {
+		return user;
 	}
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 }
