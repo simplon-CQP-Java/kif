@@ -4,15 +4,24 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import co.simplon.kif.core.model.Booking;
+import co.simplon.kif.core.model.Computer;
+import co.simplon.kif.core.model.Room;
+import co.simplon.kif.core.model.User;
 import co.simplon.kif.core.repository.BookingRepository;
 
 @Service
 public class BookingService {
     @Autowired
     public BookingRepository bookingRepository;
+    
+    @Autowired
+    public UserService userService;
 
     public List<Booking> getAll() {
       return bookingRepository.findAll();
@@ -22,10 +31,21 @@ public class BookingService {
       return bookingRepository.findOne(id);
     }
 
-    public Booking addOrUpdate(Booking booking) {
+    public Booking addOrUpdate(Booking booking) throws UsernameNotFoundException {
     	if (booking != null) {
-    		if (this.computerIsAvailable(booking.getComputerId(), booking.getStart(), booking.getEnd())
-    			&& this.roomIsAvailable(booking.getRoomId(), booking.getStart(), booking.getEnd())) {
+    		User user = new User();
+    		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    		if (booking.getUser() == null && auth != null) {
+    			user = userService.findOneByUsername(auth.getName());
+    			booking.setUser(user);
+    		} else {
+    			user = userService.findById(booking.getUser().getId());
+    		}
+    		if (user == null) {
+    			throw new UsernameNotFoundException("User name not found");
+    		}
+    		if ((booking.getComputer() != null && this.computerIsAvailable(booking.getComputer(), booking.getStart(), booking.getEnd())) ||
+    			(booking.getRoom() != null && this.roomIsAvailable(booking.getRoom(), booking.getStart(), booking.getEnd()))) {
         		return bookingRepository.save(booking);
     		}
     	}
@@ -35,11 +55,15 @@ public class BookingService {
     public void delete(Integer id) {
       bookingRepository.delete(id);
     }
-    
-    public boolean computerIsAvailable(int id, Date start, Date end) {
-		List<Integer> list = bookingRepository.findBookingComputer(id);
+
+    public List<Booking> userBookings(User user) {
+    	return bookingRepository.userBookings(user.getId());
+    }
+
+    public boolean computerIsAvailable(Computer computer, Date start, Date end) {
+		List<Integer> list = bookingRepository.findBookingComputer(computer.getId());
 		boolean isAvailable = false;
-		if (list == null) {
+		if (list == null || list.size() < 1) {
 			return true;
 		}
 		for (int i = 0; i < list.size(); i++) {
@@ -54,11 +78,11 @@ public class BookingService {
 		return isAvailable;
 	}
 
-	public boolean roomIsAvailable(int id, Date start, Date end) {
-		List<Integer> list = bookingRepository.findBookingRoom(id);
+	public boolean roomIsAvailable(Room room, Date start, Date end) {
+		List<Integer> list = bookingRepository.findBookingRoom(room.getId());
 		boolean isAvailable = false;
 			
-		if (list == null) {
+		if (list == null || list.size() < 1) {
 			return true;
 		}
 		for (int i = 0; i < list.size(); i++) {

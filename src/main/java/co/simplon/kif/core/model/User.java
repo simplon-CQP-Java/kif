@@ -1,68 +1,88 @@
 package co.simplon.kif.core.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 
 @Entity
 public class User {
-  public enum Role {
-	 USER, ADMIN
-  }
+	public enum Role {
+		USER, ADMIN
+	}
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
-  private String username;
-  private String password;
-  private String email;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
   
-  @Enumerated(EnumType.STRING)
-  private Role role;
+	@Column(unique=true)
+	private String username;
+	private String password;
+	@Enumerated(EnumType.STRING)
+	private Role role;
+	private Boolean enabled;
 
-  public User() {
-    super();
-  }
+	public User() {
+		super();
+	}
 
-  public User(String username, String password, String email, Role role) {
-    super();
-    this.username = username;
-    this.password = password;
-    this.email = email;
-    this.role = role;
-  }
+	public User(String username, String password, Role role, Boolean enabled) {
+		super();
+		this.username = username;
+		this.password = password;
+    	this.role = role;
+    	this.enabled = enabled;
+	}
 
-  public Integer getId() {
-    return id;
-  }
+	public Boolean isEnabled() {
+		return enabled;
+	}
 
-  public String getUsername() {
-    return username;
-  }
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
+	public Integer getId() {
+		return id;
+	}
+	
+	public Boolean getEnabled() {
+		return enabled;
+	}
 
-  public String getPassword() {
-    return password;
-  }
+	public String getUsername() {
+		return username;
+	}
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-  public String getEmail() {
-    return email;
-  }
+	public String getPassword() {
+		return password;
+	}
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-  public Role getRole() {
-    return role;
-  }
+	public Role getRole() {
+		return role;
+	}
 
-  public void setRole(Role role) {
-    this.role = role;
-  }
+  	public void setRole(Role role) {
+  		this.role = role;
+  	}
+
+  	public void setId(Integer id) {
+  		this.id = id;
+  	}
+
+	public void setDisable() {
+		this.enabled = false;
+	}
 }

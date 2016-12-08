@@ -1,0 +1,11 @@
+language: java
+jdk:
+ - oraclejdk8
+
+script: mvn install -DskipTests=true
+
+notifications:
+  email:
+    - fab-oger@live.fr
+    - iris.courrina@gmail.com
+    - lemaire_kevin@hotmail.fr

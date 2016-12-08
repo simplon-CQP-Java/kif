@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <head>
@@ -26,9 +26,9 @@
 					  	</div>
 					  	<div class="panel-body">
 					  	<ul class="list-group">
-  							<li class="list-group-item">Marque : ${room.name}</li>
-						   	<li class="list-group-item">Modèle : ${room.places}</li>
-						   	<li class="list-group-item">description : ${room.description}</li>
+  							<li class="list-group-item">Nom : ${room.name}</li>
+						   	<li class="list-group-item">Places : ${room.places}</li>
+						   	<li class="list-group-item">Description : ${room.description}</li>
 					    </ul>
 					  	</div>
 					  	<div class="panel-footer">

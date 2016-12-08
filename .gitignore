@@ -4,3 +4,5 @@
 .settings
 *.log
 /bin/
+
+/src/main/resources/META-INF/env.properties
