@@ -1,19 +1,19 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <head>
-	<title>Réservations</title>
+<title>Réservations</title>
 </head>
 
 <t:genericpage>
-    <jsp:attribute name="header">
-      <%@ include file="/WEB-INF/jsp/include/menu.jsp" %>
+	<jsp:attribute name="header">
+      <%@ include file="/WEB-INF/jsp/include/menu.jsp"%>
     </jsp:attribute>
 
-    <jsp:attribute name="footer">
-      <%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
+	<jsp:attribute name="footer">
+      <%@ include file="/WEB-INF/jsp/include/footer.jsp"%>
     </jsp:attribute>
-    <jsp:body>
+	<jsp:body>
     	<div id="bookings" class="row">
         	<div class="jumbotron">
 			  <h3>Réservations</h3>
@@ -26,6 +26,7 @@
 					  	</div>
 						<div class="panel-body">
 						    <ul class="list-group">
+								<li class="list-group-item">Titre : ${booking.title}</li>
 						    	<li class="list-group-item">Réservé par : ${booking.user.username}</li>
 							   	<li class="list-group-item">Nom de la salle : ${booking.room.name}</li>
 							   	<li class="list-group-item">Ordinateur : ${booking.computer.brand} -  ${booking.computer.model}</li>
@@ -58,7 +59,8 @@
 					</div>
 					<div class="form-group">
 					    <label for="add-computer-select">Sélectionner un ordinateur</label>
-						<select name="computerId" class="form-control" id="add-computer-select">
+						<select name="computerId" class="form-control"
+							id="add-computer-select">
 							<c:forEach items="${computers}" var="computer">
 								<option value="${computer.id}">${computer.brand} - ${computer.model}</option>
 							</c:forEach>
@@ -68,7 +70,8 @@
 					<div class="form-group">
 					    <label for="book-start-input">Date de début</label>
 						<div class="input-group date" id="book-start">
-			                <input type='text' name="start" class="form-control" placeholder="Date de début" id="book-start-input" />
+			                <input type='text' name="start" class="form-control"
+								placeholder="Date de début" id="book-start-input" />
 			                <span class="input-group-addon">
 			                    <span class="glyphicon glyphicon-calendar"></span>
 			                </span>
@@ -77,7 +80,8 @@
 					<div class="form-group">
 					    <label for="book-end-input">Date de fin</label>
 						<div class="input-group date" id="book-end">
-			                <input type='text' name="end" class="form-control" placeholder="Date de fin" id="book-end-input" />
+			                <input type='text' name="end" class="form-control"
+								placeholder="Date de fin" id="book-end-input" />
 			                <span class="input-group-addon">
 			                    <span class="glyphicon glyphicon-calendar"></span>
 			                </span>

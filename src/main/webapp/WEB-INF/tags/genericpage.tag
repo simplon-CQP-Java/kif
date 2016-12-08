@@ -7,12 +7,14 @@
 		<spring:url value="/ressources/css/lib/bootstrap.min.css" var="bootstrapCss" />
 		<spring:url value="/ressources/css/lib/bootstrap-theme.min.css" var="bootstrapThemeCss" />
 		<spring:url value="/ressources/css/lib/bootstrap-datetimepicker.min.css" var="bootstrapDateTimePickerCss" />
+		<spring:url value="/ressources/css/lib/fullcalendar.min.css" var="fullCalendarPickerCss" />
 		<spring:url value="/ressources/css/style.css" var="styleCss" />
 
 		<!-- Bootstrap -->
 		<link rel="stylesheet" type="text/css" href="${bootstrapCss}"/>
 		<link rel="stylesheet" type="text/css" href="${bootstrapThemeCss}"/>
 		<link rel="stylesheet" type="text/css" href="${bootstrapDateTimePickerCss}"/>
+		<link rel="stylesheet" type="text/css" href="${fullCalendarPickerCss}"/>
 		<link rel="stylesheet" type="text/css" href="${styleCss}"/>
 
 		<!-- JS Dependencies -->

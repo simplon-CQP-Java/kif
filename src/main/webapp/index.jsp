@@ -16,6 +16,9 @@
 				<h1>KIF Projet</h1>
 				<p>Gestion de salles et ordinateurs</p>
 			</div>
+			<div class="container-fluid">
+				<%@ include file="/WEB-INF/jsp/bookings/bookingsCalendar.jsp" %>
+			</div>
 		</div>
     <script src="./webjars/angularjs/1.4.8/angular.js"></script>
   <script src="./webjars/angularjs/1.4.8/angular-resource.js"></script>
