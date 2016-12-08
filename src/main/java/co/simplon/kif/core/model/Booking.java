@@ -25,7 +25,7 @@ public class Booking {
     @JoinColumn(name = "userId")
 	private User user;
 	private Date start;
-	private Date End;
+	private Date end;
 	private Date createdAt;
 
 	public Booking() {
@@ -37,7 +37,7 @@ public class Booking {
 		this.room = room;
 		this.computer = computer;
     	this.start = start;
-    	End = end;
+    	this.end = end;
     	this.createdAt = createdAt;
 	}
 	
@@ -47,7 +47,7 @@ public class Booking {
 		this.computer = computer;
 		this.user = user;
     	this.start = start;
-    	End = end;
+    	this.end = end;
     	this.createdAt = createdAt;
 	}
 
@@ -64,11 +64,11 @@ public class Booking {
 	}
 
 	public Date getEnd() {
-		return End;
+		return end;
 	}
 
 	public void setEnd(Date end) {
-		End = end;
+		this.end = end;
 	}
 
 	public Date getCreatedAt() {
