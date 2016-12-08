@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <div id="bookings-calendar" class="row">
 	<div class="col-md-12">
 		<h2>Calendrier des réservations de salles et ordinateurs</h2>
