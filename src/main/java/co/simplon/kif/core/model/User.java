@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.google.gson.annotations.Expose;
+
 
 @Entity
 public class User {
@@ -17,13 +19,17 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Expose
 	private Integer id;
   
 	@Column(unique=true)
+	@Expose
 	private String username;
 	private String password;
 	@Enumerated(EnumType.STRING)
+	@Expose
 	private Role role;
+	@Expose
 	private Boolean enabled;
 
 	public User() {

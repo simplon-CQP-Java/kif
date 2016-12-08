@@ -10,22 +10,31 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 public class Booking {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Expose
 	private Integer id;
 	@ManyToOne(cascade = { CascadeType.MERGE }, targetEntity = Room.class)
     @JoinColumn(name = "roomId")
+	@Expose
 	private Room room;
 	@ManyToOne(cascade = { CascadeType.MERGE }, targetEntity = Computer.class)
     @JoinColumn(name = "computerId")
+	@Expose
 	private Computer computer;
 	@ManyToOne(cascade = { CascadeType.MERGE }, targetEntity = User.class)
     @JoinColumn(name = "userId")
+	@Expose
 	private User user;
+	@Expose
 	private Date start;
+	@Expose
 	private Date end;
+	@Expose
 	private Date createdAt;
 
 	public Booking() {
