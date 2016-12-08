@@ -19,6 +19,7 @@
         <intercept-url pattern="/users*" access="hasAuthority('ADMIN')" />
 
         <intercept-url pattern="/users/edit/*" access="isAuthenticated()" />
+        <intercept-url pattern="/bookings/getCalendarBookings" access="permitAll" />
         <intercept-url pattern="/bookings/**" access="isAuthenticated()" />
         <access-denied-handler error-page="/accessDenied" />
     </http>

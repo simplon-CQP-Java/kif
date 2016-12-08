@@ -5,13 +5,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 public class Room {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Expose
 	private Integer id;
+	@Expose
 	private String name;
+	@Expose
 	private Integer places;
+	@Expose
 	private String description;
 
 	public Room() {

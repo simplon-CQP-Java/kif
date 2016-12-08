@@ -5,13 +5,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 public class Computer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Expose
 	private Integer id;
+	@Expose
 	private String brand;
+	@Expose
 	private String model;
+	@Expose
 	private Integer serial;
 
 	public Computer() {
