@@ -57,6 +57,10 @@ public class BookingService {
       bookingRepository.delete(id);
     }
     
+    public List<Booking> userBookings(User user) {
+    	return bookingRepository.userBooking(user.getId());
+    }
+    
     public boolean computerIsAvailable(Computer computer, Date start, Date end) {
 		List<Integer> list = bookingRepository.findBookingComputer(computer.getId());
 		boolean isAvailable = false;
