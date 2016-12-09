@@ -56,23 +56,24 @@ public class AdminController {
 	@RequestMapping
 	public ModelAndView getList(ModelMap model){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findOneByUsername(auth.getName());
-		if (auth == null || user.getRole() != Role.ADMIN) {
+		if (auth == null) {
 			return new ModelAndView("redirect:/login");
+		}else{
+			User user = userService.findOneByUsername(auth.getName());
+			List<User> userList = userService.getAll();
+			List<Room> roomsList = roomService.getAll();
+			List<Computer> computersList = computerService.getAll();
+			List<Booking> bookingList = bookingService.userBookings(user);
+			if (user.getRole() == Role.ADMIN) {
+				bookingList = bookingService.getAll();
+			}
+			model.addAttribute("users",userList);
+			model.addAttribute("rooms",roomsList);
+			model.addAttribute("computers",computersList);
+			model.addAttribute("bookings", bookingList);
+			return new ModelAndView("admin/admin",model);
 		}
-
-		List<User> userList = userService.getAll();
-		List<Room> roomsList = roomService.getAll();
-		List<Computer> computersList = computerService.getAll();
-		List<Booking> bookingList = bookingService.userBookings(user);
-		if (user.getRole() == Role.ADMIN) {
-			bookingList = bookingService.getAll();
-		}
-		model.addAttribute("users",userList);
-		model.addAttribute("rooms",roomsList);
-		model.addAttribute("computers",computersList);
-		model.addAttribute("bookings", bookingList);
-		return new ModelAndView("admin/admin",model);
+		
 	}
 }
 
