@@ -40,16 +40,12 @@ import co.simplon.kif.core.service.UserService;
 @RequestMapping("/admin")
 public class AdminController {
 
-
 	@Autowired
 	public UserService userService;
-
 	@Autowired
 	public RoomService roomService;
-
 	@Autowired
 	public ComputerService computerService;
-
 	@Autowired
 	public BookingService bookingService;
 
