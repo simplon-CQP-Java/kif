@@ -1,9 +1,14 @@
 package co.simplon.kif.core.service;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,7 +25,7 @@ import co.simplon.kif.core.repository.BookingRepository;
 public class BookingService {
     @Autowired
     public BookingRepository bookingRepository;
-    
+
     @Autowired
     public UserService userService;
 
@@ -32,13 +37,20 @@ public class BookingService {
       return bookingRepository.findOne(id);
     }
 
-    public Booking addOrUpdate(Booking booking, int userId) throws UsernameNotFoundException {
+    public Booking addOrUpdate(Booking booking, int userId) throws UsernameNotFoundException, IOException {
     	if (booking != null) {
     		User user = new User();
     		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     		if (auth != null) {
-    			user = userService.findOneByUsername(auth.getName());
-    			if (userId != -1 && user.getRole() == Role.ADMIN) {
+    			Resource resource = new ClassPathResource("/META-INF/env.properties");
+    			Properties props = PropertiesLoaderUtils.loadProperties(resource);
+    			if (props == null) {
+    				throw new IOException("Properties not found");
+    			}
+    			if (props.getProperty("admin.name").equals(auth.getName()) == false && user.getRole() != Role.ADMIN) {
+    				user = userService.findOneByUsername(auth.getName());
+    			}
+    			if (user != null && userId != -1 && (user.getRole() == Role.ADMIN || props.getProperty("admin.name").equals(auth.getName()))) {
     				user = userService.findById(userId);
     			}
     			booking.setUser(user);
@@ -83,7 +95,7 @@ public class BookingService {
 	public boolean roomIsAvailable(Room room, Date start, Date end) {
 		List<Integer> list = bookingRepository.findBookingRoom(room.getId());
 		boolean isAvailable = false;
-			
+
 		if (list == null || list.size() < 1) {
 			return true;
 		}

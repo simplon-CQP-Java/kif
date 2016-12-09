@@ -51,9 +51,11 @@ public class BookingController {
 		}
 		// Get Bookings, Rooms, Computers, Users, currentUser
 		User user = userService.findOneByUsername(auth.getName());
-		List<Booking> bookingList = bookingService.userBookings(user);
-		if (user.getRole() == Role.ADMIN) {
+		List<Booking> bookingList;
+		if (user == null || user.getRole() == Role.ADMIN) {
 			bookingList = bookingService.getAll();
+		} else {
+			bookingList = bookingService.userBookings(user);
 		}
 		List<User> userList = userService.getAll();
 		List<Room> roomList = roomService.getAll();
@@ -71,7 +73,7 @@ public class BookingController {
 			@RequestParam(name = "computerId", defaultValue = "-1") Integer computerId,
 			@RequestParam("start") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") Date start,
 			@RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") Date end,
-			@RequestParam(name = "userId", defaultValue = "-1") Integer userId) {
+			@RequestParam(name = "userId", defaultValue = "-1") Integer userId) throws IOException {
 		Date createdAt = new Date();
 		if (roomId == null && computerId == null)
 			return new ModelAndView("redirect:/bookings");
