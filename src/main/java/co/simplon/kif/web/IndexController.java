@@ -1,5 +1,7 @@
 package co.simplon.kif.web;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,15 +13,24 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import co.simplon.kif.core.model.Message;
 import co.simplon.kif.core.model.User;
+import co.simplon.kif.core.service.EmailAPIService;
+import co.simplon.kif.core.service.MessageService;
 import co.simplon.kif.core.service.UserService;
 
 @Controller
 public class IndexController {
 	@Autowired
-	public UserService userService;
+	private MessageService messageService;
+	@Autowired
+	private EmailAPIService emailService;
+	@Autowired
+	private UserService userService;
+
 	@RequestMapping(path = "/login")
 	public ModelAndView loginForm(ModelMap model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -61,6 +72,22 @@ public class IndexController {
 			return new ModelAndView("users/profile", model);
 		}
 		return new ModelAndView("redirect:/login");
+	}
+	@RequestMapping("/contactSubmit")
+	public ModelAndView addMessage(@RequestParam("title") String title, @RequestParam("content") String content,
+			@RequestParam("email") String email) {
+		if (title == null || content == null || email == null) {
+			return new ModelAndView("redirect:/messages");
+		}
+		Date createdAt = new Date();
+		Message message = new Message(title, content, email, createdAt);
+		// send mail and if return true set sended to reply
+		message.setSended(emailService.sendMailToAdmin(message));
+		if (message.getSended() == true) {
+			emailService.sendConfirmationMail(message);
+		}
+		messageService.addOrUpdate(message);
+		return new ModelAndView("redirect:/contact");
 	}
 	
 	@RequestMapping(value = "/accessDenied")

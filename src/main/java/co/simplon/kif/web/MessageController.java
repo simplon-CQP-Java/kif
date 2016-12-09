@@ -1,6 +1,5 @@
 package co.simplon.kif.web;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import co.simplon.kif.core.model.Message;
 import co.simplon.kif.core.model.Reply;
-import co.simplon.kif.core.service.EmailAPIService;
 import co.simplon.kif.core.service.MessageService;
 import co.simplon.kif.core.service.ReplyService;
 
@@ -24,9 +22,6 @@ public class MessageController {
 	private MessageService messageService;
 	@Autowired
 	private ReplyService replyService;
-	@Autowired
-	private EmailAPIService emailService;
-
 	@RequestMapping
 	public ModelAndView getMessageList(ModelMap model) {
 		List<Message> messageList = messageService.getAll();
@@ -37,23 +32,6 @@ public class MessageController {
 	@RequestMapping("/new")
 	public ModelAndView newMessage(ModelMap model) {
 		return new ModelAndView("messages/newMessage", model);
-	}
-
-	@RequestMapping("/add")
-	public ModelAndView addMessage(@RequestParam("title") String title, @RequestParam("content") String content,
-			@RequestParam("email") String email) {
-		if (title == null || content == null || email == null) {
-			return new ModelAndView("redirect:/messages");
-		}
-		Date createdAt = new Date();
-		Message message = new Message(title, content, email, createdAt);
-		// send mail and if return true set sended to reply
-		message.setSended(emailService.sendMailToAdmin(message));
-		if (message.getSended() == true) {
-			emailService.sendConfirmationMail(message);
-		}
-		messageService.addOrUpdate(message);
-		return new ModelAndView("redirect:/contact");
 	}
 
 	@RequestMapping("/messageById/{id}")
