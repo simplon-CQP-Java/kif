@@ -20,7 +20,7 @@ import co.simplon.kif.core.repository.BookingRepository;
 public class BookingService {
     @Autowired
     public BookingRepository bookingRepository;
-    
+
     @Autowired
     public UserService userService;
 
@@ -38,7 +38,7 @@ public class BookingService {
     		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     		if (auth != null) {
     			user = userService.findOneByUsername(auth.getName());
-    			if (userId != -1 && user.getRole() == Role.ADMIN) {
+			if (user != null && userId != -1 && user.getRole() == Role.ADMIN) {
     				user = userService.findById(userId);
     			}
     			booking.setUser(user);
@@ -83,7 +83,7 @@ public class BookingService {
 	public boolean roomIsAvailable(Room room, Date start, Date end) {
 		List<Integer> list = bookingRepository.findBookingRoom(room.getId());
 		boolean isAvailable = false;
-			
+
 		if (list == null || list.size() < 1) {
 			return true;
 		}

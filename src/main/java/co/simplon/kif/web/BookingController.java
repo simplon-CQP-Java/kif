@@ -51,9 +51,11 @@ public class BookingController {
 		}
 		// Get Bookings, Rooms, Computers, Users, currentUser
 		User user = userService.findOneByUsername(auth.getName());
-		List<Booking> bookingList = bookingService.userBookings(user);
-		if (user.getRole() == Role.ADMIN) {
+		List<Booking> bookingList;
+		if (user == null || user.getRole() == Role.ADMIN) {
 			bookingList = bookingService.getAll();
+		} else {
+			bookingList = bookingService.userBookings(user);
 		}
 		List<User> userList = userService.getAll();
 		List<Room> roomList = roomService.getAll();
