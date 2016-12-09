@@ -32,8 +32,9 @@
 					    </ul>
 					  	</div>
 					  	<div class="panel-footer">
-						  	<form action="/rooms/delete">
+							<form method="post" action="/rooms/delete">
 								<input name="id" value="${room.id}" type="hidden" />
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 								<button type="submit" class="btn btn-danger">Supprimer</button>
 							</form>
 					  	</div>
@@ -44,7 +45,7 @@
 				<div class="page-header">
 					<h5>Ajouter une salle</h5>
 				</div>
-				<form method="get" action="/rooms/add">
+				<form method="post" action="/rooms/add">
 					<div class="form-group">
 					    <label for="add-name-input">Nom</label>
 						<input name="name" placeholder="Nom" type="text" class="form-control" id="add-name-input">
@@ -57,17 +58,19 @@
 					    <label for="add-description-input">Description</label>
 						<input name="description" placeholder="Description" type="text" class="form-control" id="add-description-input">
 					</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<button type="submit" class="btn btn-success">Ajouter</button>
 				</form>
 
 				<div class="page-header">
 					<h5>Rechercher une salle par son identifiant</h5>
 				</div>
-				<form method="get" action="/rooms/roomById">
+				<form method="post" action="/rooms/roomById">
 					<div class="form-group">
 					    <label for="room-by-id-input">Id</label>
 						<input name="id" placeholder="Id" type="number" class="form-control" id="room-by-id-input">
 					</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<button type="submit" class="btn btn-primary">Rechercher</button>
 				</form>
 			</div>

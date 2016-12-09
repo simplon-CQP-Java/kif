@@ -30,8 +30,9 @@
 						    </ul>
 						  	</div>
 						  	<div class="panel-footer">
-							  	<form action="/rooms/delete">
+								<form method="post" action="/rooms/delete">
 									<input name="id" value="${room.id}" type="hidden" />
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<button type="submit" class="btn btn-danger">Supprimer</button>
 								</form>
 						  	</div>

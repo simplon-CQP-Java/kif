@@ -24,15 +24,16 @@
 						</button>
 				    </c:if>
 				    <c:if test="${user.enabled == 'false'}">
-				        <form action="/users/active" class="inline pull-right">
+				        <form method="post" action="/users/active" class="inline pull-right">
 							<input name="id" value="${user.id}" type="hidden" />
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 							<button type="submit" class="btn btn-success">Activer</button>
 						</form>
 				    </c:if>
 			  	</h3>
 			</div>
 			<div class="col-md-8 col-md-offset-2">
-				<form method="get" action="/users/edit" class="panel panel-primary">
+				<form method="post" action="/users/edit" class="panel panel-primary">
 					<div class="panel-heading">Modifier l'utilisateur</div>
 					<div class="panel-body">
 						<input name="id" value="${user.id}" type="hidden" />
@@ -60,6 +61,7 @@
 							</select>
 						</div>
 					</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<div class="panel-footer">
 						<button type="submit" class="btn btn-success">Enregistrer</button>
 					</div>
@@ -70,7 +72,7 @@
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
 		        <h4 class="modal-title">Supprimer l'utilisateur ${user.username}</h4>
 		      </div>
 		      <div class="modal-body">
@@ -85,8 +87,9 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <form method="get" action="/users/delete">
+		        <form method="post" action="/users/delete">
 					<input name="id" value="${user.id}" type="hidden" >
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
 						Oui, supprimer mon compte
 					</button>

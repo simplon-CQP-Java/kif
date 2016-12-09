@@ -36,8 +36,9 @@
 							</ul>
 						</div>
 						<div class="panel-footer">
-							<form action="/bookings/delete">
+							<form method="post" action="/bookings/delete">
 								<input name="id" value="${booking.id}" type="hidden" />
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 								<button type="submit" class="btn btn-danger">Supprimer</button>
 							</form>
 						</div>
@@ -48,7 +49,7 @@
 				<div class="page-header">
 					<h5>Réserver</h5>
 				</div>
-				<form method="get" action="/bookings/book">
+				<form method="post" action="/bookings/book">
 					<security:authorize access="hasAuthority('ADMIN')">
 						<div class="form-group">
 						    <label for="add-user-select">Sélectionner pour un utilisateur</label>
@@ -99,6 +100,7 @@
 			                </span>
 			            </div>
 					</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<button type="submit" class="btn btn-primary">Réserver</button>
 				</form>
 			</div>

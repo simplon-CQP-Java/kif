@@ -32,8 +32,9 @@
 					    </ul>
 					  	</div>
 					  	<div class="panel-footer">
-						  	<form action="/computers/delete">
+							<form method="post" action="/computers/delete">
 								<input name="id" value="${computer.id}" type="hidden" />
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 								<button type="submit" class="btn btn-danger">Supprimer</button>
 							</form>
 					  	</div>
@@ -44,7 +45,7 @@
 				<div class="page-header">
 					<h5>Ajouter un ordinateur</h5>
 				</div>
-				<form method="get" action="/computers/add">
+				<form method="post" action="/computers/add">
 					<div class="form-group">
 					    <label for="add-brand-input">Marque</label>
 						<input name="brand" placeholder="Marque" type="text" class="form-control" id="add-brand-input">
@@ -57,17 +58,19 @@
 					    <label for="add-serial-input">Serial</label>
 						<input name="serial" placeholder="Serial" type="number" class="form-control" id="add-serial-input">
 					</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<button type="submit" class="btn btn-success">Ajouter</button>
 				</form>
 
 				<div class="page-header">
 					<h5>Rechercher un ordinateur par son identifiant</h5>
 				</div>
-				<form method="get" action="/computers/computerById">
+				<form method="post" action="/computers/computerById">
 					<div class="form-group">
 					    <label for="computer-by-id-input">Id</label>
 						<input name="id" placeholder="Id" type="number" class="form-control" id="computer-by-id-input">
 					</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<button type="submit" class="btn btn-primary">Rechercher</button>
 				</form>
 			</div>

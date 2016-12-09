@@ -15,7 +15,7 @@
     <jsp:body>
       <div id="register" class="row">
         <div class="col-md-6 col-md-offset-3">
-          <form method="get" action="/users/register">
+          <form method="post" action="/users/register">
             <div class="form-group">
 			  <label for="register-username-input">Nom</label>
 			  <input name="username" placeholder="Nom" type="text" class="form-control" id="register-username-input">
@@ -28,6 +28,7 @@
               <label for="register-confirm-password">Confirmer le mot de passe</label>
               <input name="confirmPassword" type="password" id="register-confirm-password" class="form-control" placeholder="Mot de passe" />
             </div>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <button type="submit" class="btn btn-success">Inscription</button>
             <a href="/login" class="pull-right">Connexion</a>
           </form>
