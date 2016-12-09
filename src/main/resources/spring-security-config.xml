@@ -1,39 +1,48 @@
 <beans:beans xmlns="http://www.springframework.org/schema/security"
-             xmlns:beans="http://www.springframework.org/schema/beans"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
-    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.1.xsd">
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.1.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <http auto-config="true"  >
-		<form-login login-page="/login"
-                     username-parameter="username"
-                     password-parameter="password"
-                     authentication-failure-url="/login"
-                     default-target-url="/" />
-        <csrf/>
+	<context:property-placeholder location="classpath:META-INF/env.properties" />
+	<http auto-config="true">
+		<form-login login-page="/login" username-parameter="username"
+			password-parameter="password" authentication-failure-url="/login"
+			default-target-url="/" />
+		<csrf />
 
-		<intercept-url pattern="/ressources/**" access="permitAll"/>
-        <intercept-url pattern="/computers/**" access="hasAuthority('ADMIN')" />
-        <intercept-url pattern="/rooms/**" access="hasAuthority('ADMIN')" />
-        <intercept-url pattern="/messages/**" access="hasAuthority('ADMIN')" />
-        <intercept-url pattern="/users*" access="hasAuthority('ADMIN')" />
+		<intercept-url pattern="/ressources/**" access="permitAll" />
+		<intercept-url pattern="/computers/**" access="hasAuthority('ADMIN')" />
+		<intercept-url pattern="/rooms/**" access="hasAuthority('ADMIN')" />
+		<intercept-url pattern="/messages/**" access="hasAuthority('ADMIN')" />
+		<intercept-url pattern="/users*" access="hasAuthority('ADMIN')" />
+		<intercept-url pattern="/users/edit/*" access="isAuthenticated()" />
+		<intercept-url pattern="/bookings/getCalendarBookings"
+			access="permitAll" />
+		<intercept-url pattern="/bookings/**" access="isAuthenticated()" />
+		<access-denied-handler error-page="/accessDenied" />
+	</http>
+	<authentication-manager>
+		<authentication-provider ref="daoAuthenticationProvider" />
+		<authentication-provider>
+			<user-service>
+				<user name="${admin.name}" password="${admin.password}" authorities="ADMIN" />
+			</user-service>
+		</authentication-provider>
+	</authentication-manager>
 
-        <intercept-url pattern="/users/edit/*" access="isAuthenticated()" />
-        <intercept-url pattern="/bookings/getCalendarBookings" access="permitAll" />
-        <intercept-url pattern="/bookings/**" access="isAuthenticated()" />
-        <access-denied-handler error-page="/accessDenied" />
-    </http>
+	<beans:bean
+		class="org.springframework.security.authentication.dao.DaoAuthenticationProvider"
+		id="daoAuthenticationProvider">
+		<beans:property name="userDetailsService" ref="customLoginService" />
+		<beans:property name="passwordEncoder" ref="passwordEncoder" />
+	</beans:bean>
 
-    <authentication-manager>
-        <authentication-provider ref="daoAuthenticationProvider" />
-    </authentication-manager>
-
-    <beans:bean class="org.springframework.security.authentication.dao.DaoAuthenticationProvider" id="daoAuthenticationProvider">
-        <beans:property name="userDetailsService" ref="customLoginService" />
-        <beans:property name="passwordEncoder" ref="passwordEncoder" />
-    </beans:bean>
-
-    <beans:bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" id="passwordEncoder" >
-        <beans:constructor-arg value="11"/>
-    </beans:bean>
+	<beans:bean
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"
+		id="passwordEncoder">
+		<beans:constructor-arg value="11" />
+	</beans:bean>
 </beans:beans>

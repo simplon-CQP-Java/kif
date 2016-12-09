@@ -10,11 +10,12 @@
             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<context:component-scan base-package="co.simplon.kif.core" />
+	<context:property-placeholder location="classpath:META-INF/env.properties"/>
 	<context:annotation-config />
-	
+
 	<import resource="spring-security-config.xml" />
 	<import resource="mail-bean.xml" />
-	
+
 	<jpa:repositories base-package="co.simplon.kif.core.repository" />
 
 
@@ -24,18 +25,15 @@
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/kif"/>
-		<!--<property name="username" value="kif"/>
-    	<property name="password" value="kif_password"/> -->
-    	<property name="username" value="root"/>
-    	<property name="password" value="root"/>
+		<property name="url" value="${mysql.url}"/>
+		<property name="username" value="${mysql.username}"/>
+		<property name="password" value="${mysql.password}"/>
 	</bean>
 
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="persistenceUnitName" value="spring-jpa" />
-			
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
         		<property name="generateDdl" value="true"/>

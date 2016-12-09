@@ -32,23 +32,25 @@
 					    </ul>
 					  	</div>
 					  	<div class="panel-footer">
-							<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#quick-reply" aria-expanded="false" aria-controls="quick-reply">
+							<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#quick-reply-${message.id}" aria-expanded="false" aria-controls="quick-reply">
 							  Réponse rapide
 							</button>
 					  		<a href="/messages/messageById/${message.id}" class="btn btn-primary">Voir</a>
-						  	<form action="/messages/delete">
+							<form method="post" action="/messages/delete">
 								<input name="id" value="${message.id}" type="hidden" />
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 								<button type="submit" class="btn btn-danger">Supprimer</button>
 							</form>
-							<div class="collapse" id="quick-reply">
-								<form action="/replies/add" method="get">
+							<div class="collapse" id="quick-reply-${message.id}">
+								<form method="post" action="/replies/add">
 	    								<input type="hidden" value="${message.id}" name="id">
 	    								<div class="form-group">
 									    	<label for="add-reply">Message</label>
 										<textarea class="form-control" name="reply" id="add-reply" rows="3"></textarea>
 									</div>
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<button type="submit" class="btn btn-success">Envoyer</button>
-			    					</form>
+								</form>
 							</div>
 					  	</div>
 					</div>

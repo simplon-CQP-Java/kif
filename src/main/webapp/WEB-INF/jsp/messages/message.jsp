@@ -35,12 +35,13 @@
 					</div>
 	    				<div class="panel-footer">
 	    					<h3>Réponse rapide</h3>
-	    					<form action="/replies/add" method="get">
+							<form method="post" action="/replies/add">
 	    						<input type="hidden" value="${message.id}" name="id">
 	    						<div class="form-group">
 								    <label for="add-reply">Message</label>
 									<textarea class="form-control" name="reply" id="add-reply" rows="3"></textarea>
 								</div>
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 								<button type="submit" class="btn btn-success">Envoyer</button>
 	    					</form>
 	    				</div>

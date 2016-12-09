@@ -32,12 +32,13 @@
 				<div class="page-header">
 					<h5>Modifier mon nom d'utilisateur</h5>
 				</div>
-				<form method="get" action="/users/edit/username">
+				<form method="post" action="/users/edit/username">
 					<input name="id" value="${user.id}" type="hidden" >
 					<div class="form-group">
 					    <label for="new-username-input">Nom</label>
 						<input name="username" placeholder="Nom" type="text" class="form-control" id="new-username-input">
 					</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<button type="submit" class="btn btn-success">Valider</button>
 				</form>
 				<hr />
@@ -49,7 +50,7 @@
 				<div class="page-header">
 					<h5>Modifier mon mot de passe</h5>
 				</div>
-				<form method="get" action="/users/edit/password">
+				<form method="post" action="/users/edit/password">
 					<input name="id" value="${user.id}" type="hidden" >
 					<div class="form-group">
 					    <label for="password-input">Mot de passe actuel</label>
@@ -63,6 +64,7 @@
 					    <label for="new-confirm-password-input">Confirmer votre mot de passe</label>
 						<input name="confirmNewPassword" placeholder="Mot de passe" type="password" class="form-control" id="new-confirm-password-input">
 					</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<button type="submit" class="btn btn-success">Valider</button>
 				</form>
 			</div>
@@ -71,7 +73,7 @@
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
 		        <h4 class="modal-title">Supprimer votre compte</h4>
 		      </div>
 		      <div class="modal-body">
@@ -86,8 +88,9 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <form method="get" action="/users/edit/delete">
+		        <form method="post" action="/users/edit/delete">
 					<input name="id" value="${user.id}" type="hidden" >
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
 						Oui, supprimer mon compte
 					</button>

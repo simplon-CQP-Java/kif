@@ -32,7 +32,14 @@ public class EmailAPIService {
 		String subject = "RE: " + message.getTitle();
 		String body = "Un administrateur a répondu à votre demande : " + message.getTitle() + ".\n" + reply.getContent();
 		sendEmail(toAddress, fromAddress, subject, body);
+		body = "Un administrateur a répondu à une demande : " + message.getTitle() + ".\nEnvoyé par : " + message.getEmail() + " \n" + reply.getContent();
+		sendConfirmationReply(fromAddress, toAddress, subject, body);
 		return true;
+	}
+
+	public void sendConfirmationReply(String toAddress, String fromAddress, String subject, String body) {
+		// Send Email to admin
+		sendEmail(toAddress, fromAddress, subject, body);
 	}
 	
 	// Send mail to administrator
@@ -43,7 +50,7 @@ public class EmailAPIService {
 		String toAddress = "simplon.kif@gmail.com";
 		String fromAddress = message.getEmail();
 		String subject = "Nouvelle requête utilisateur : " + message.getTitle();
-		String body = "Un utilisateur a envoyé une requête : " + message.getTitle() + ".\n" + message.getContent();
+		String body = "Un utilisateur a envoyé une requête : " + message.getTitle() + ".\nEnvoyé par : " + message.getEmail() + " \n" + message.getContent();
 		sendEmail(toAddress, fromAddress, subject, body);
 		return true;
 	}

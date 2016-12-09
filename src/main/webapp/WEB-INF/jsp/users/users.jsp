@@ -35,14 +35,16 @@
 					  			Modifier
 					  		</a>
 						    <c:if test="${user.enabled == 'true'}">
-						       <form action="/users/delete">
+						       <form method="post" action="/users/delete">
 									<input name="id" value="${user.id}" type="hidden" />
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<button type="submit" class="btn btn-danger">Supprimer</button>
 								</form>
 						    </c:if>
 						    <c:if test="${user.enabled == 'false'}">
-						        <form action="/users/active">
+						        <form method="post" action="/users/active">
 									<input name="id" value="${user.id}" type="hidden" />
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<button type="submit" class="btn btn-success">Activer</button>
 								</form>
 						    </c:if>
@@ -54,7 +56,7 @@
 				<div class="page-header">
 					<h5>Ajouter un utilisateur</h5>
 				</div>
-				<form method="get" action="/users/add">
+				<form method="post" action="/users/add">
 					<div class="form-group">
 					    <label for="add-username-input">Nom</label>
 						<input name="username" placeholder="Nom" type="text" class="form-control" id="add-username-input">
@@ -74,20 +76,21 @@
 							<option value="ADMIN">Administrateur</option>
 						</select>
 					</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<button type="submit" class="btn btn-success">Ajouter</button>
 				</form>
-
-        <div class="page-header">
-          <h5>Rechercher un utilisateur par son identifiant</h5>
-        </div>
-        <form method="get" action="/users/userByUsername">
-          <div class="form-group">
-              <label for="user-by-username-input">Nom d'utilisateur</label>
-            <input name="username" placeholder="Nom d'utilisateur" type="text" class="form-control" id="user-by-username-input">
-          </div>
-          <button type="submit" class="btn btn-primary">Rechercher</button>
-        </form>
-      </div>
-    </div>
+				<div class="page-header">
+					<h5>Rechercher un utilisateur par son identifiant</h5>
+				</div>
+				<form method="post" action="/users/userByUsername">
+					<div class="form-group">
+					    <label for="user-by-username-input">Nom d'utilisateur</label>
+						<input name="username" placeholder="Nom d'utilisateur" type="text" class="form-control" id="user-by-username-input">
+					</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					<button type="submit" class="btn btn-primary">Rechercher</button>
+				</form>
+			</div>
+		</div>
     </jsp:body>
 </t:genericpage>
