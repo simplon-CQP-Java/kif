@@ -73,7 +73,7 @@ public class BookingController {
 			@RequestParam(name = "computerId", defaultValue = "-1") Integer computerId,
 			@RequestParam("start") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") Date start,
 			@RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") Date end,
-			@RequestParam(name = "userId", defaultValue = "-1") Integer userId) {
+			@RequestParam(name = "userId", defaultValue = "-1") Integer userId) throws IOException {
 		Date createdAt = new Date();
 		if (roomId == null && computerId == null)
 			return new ModelAndView("redirect:/bookings");
