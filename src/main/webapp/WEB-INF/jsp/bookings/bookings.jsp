@@ -1,4 +1,5 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <head>
@@ -48,6 +49,17 @@
 					<h5>Réserver</h5>
 				</div>
 				<form method="get" action="/bookings/book">
+					<security:authorize access="hasAuthority('ADMIN')">
+						<div class="form-group">
+						    <label for="add-user-select">Sélectionner pour un utilisateur</label>
+							<select name="userId" class="form-control" id="add-room-select">
+								<c:forEach items="${users}" var="user">
+									<option value="${user.id}">${user.username}</option>
+								</c:forEach>
+								<option value="-1">Aucune</option>
+							</select>
+						</div>
+					</security:authorize>
 					<div class="form-group">
 					    <label for="add-room-select">Sélectionner une salle</label>
 						<select name="roomId" class="form-control" id="add-room-select">

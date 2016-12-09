@@ -25,6 +25,7 @@ import co.simplon.kif.core.model.Booking;
 import co.simplon.kif.core.model.Computer;
 import co.simplon.kif.core.model.Room;
 import co.simplon.kif.core.model.User;
+import co.simplon.kif.core.model.User.Role;
 import co.simplon.kif.core.service.BookingService;
 import co.simplon.kif.core.service.ComputerService;
 import co.simplon.kif.core.service.RoomService;
@@ -48,10 +49,17 @@ public class BookingController {
 		if (auth == null) {
 			return new ModelAndView("redirect:/login");
 		}
+		// Get Bookings, Rooms, Computers, Users, currentUser
 		User user = userService.findOneByUsername(auth.getName());
 		List<Booking> bookingList = bookingService.userBookings(user);
+		if (user.getRole() == Role.ADMIN) {
+			bookingList = bookingService.getAll();
+		}
+		List<User> userList = userService.getAll();
 		List<Room> roomList = roomService.getAll();
 		List<Computer> computerList = computerService.getAll();
+		// Add attribute to model
+		model.addAttribute("users", userList);
 		model.addAttribute("bookings", bookingList);
 		model.addAttribute("rooms", roomList);
 		model.addAttribute("computers", computerList);
@@ -62,7 +70,8 @@ public class BookingController {
 	public ModelAndView addBooking(@RequestParam(name = "roomId", defaultValue = "-1") Integer roomId,
 			@RequestParam(name = "computerId", defaultValue = "-1") Integer computerId,
 			@RequestParam("start") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") Date start,
-			@RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") Date end) {
+			@RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") Date end,
+			@RequestParam(name = "userId", defaultValue = "-1") Integer userId) {
 		Date createdAt = new Date();
 		if (roomId == null && computerId == null)
 			return new ModelAndView("redirect:/bookings");
@@ -71,7 +80,7 @@ public class BookingController {
 			Computer computer = computerService.findById(computerId);
 			Booking booking = new Booking(room, computer, start, end, createdAt);
 			try {
-				booking = bookingService.addOrUpdate(booking);
+				booking = bookingService.addOrUpdate(booking, userId);
 			} catch (UsernameNotFoundException e) {
 				System.out.println("UsernameNotFoundException " + e);
 				return new ModelAndView("accessDenied");

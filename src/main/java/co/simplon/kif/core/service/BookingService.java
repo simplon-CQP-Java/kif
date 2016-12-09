@@ -13,6 +13,7 @@ import co.simplon.kif.core.model.Booking;
 import co.simplon.kif.core.model.Computer;
 import co.simplon.kif.core.model.Room;
 import co.simplon.kif.core.model.User;
+import co.simplon.kif.core.model.User.Role;
 import co.simplon.kif.core.repository.BookingRepository;
 
 @Service
@@ -31,22 +32,23 @@ public class BookingService {
       return bookingRepository.findOne(id);
     }
 
-    public Booking addOrUpdate(Booking booking) throws UsernameNotFoundException {
+    public Booking addOrUpdate(Booking booking, int userId) throws UsernameNotFoundException {
     	if (booking != null) {
     		User user = new User();
     		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    		if (booking.getUser() == null && auth != null) {
+    		if (auth != null) {
     			user = userService.findOneByUsername(auth.getName());
+    			if (userId != -1 && user.getRole() == Role.ADMIN) {
+    				user = userService.findById(userId);
+    			}
     			booking.setUser(user);
-    		} else {
-    			user = userService.findById(booking.getUser().getId());
     		}
     		if (user == null) {
     			throw new UsernameNotFoundException("User name not found");
     		}
     		if ((booking.getComputer() != null && this.computerIsAvailable(booking.getComputer(), booking.getStart(), booking.getEnd())) ||
     			(booking.getRoom() != null && this.roomIsAvailable(booking.getRoom(), booking.getStart(), booking.getEnd()))) {
-        		return bookingRepository.save(booking);
+    			return bookingRepository.save(booking);
     		}
     	}
     	return booking;
