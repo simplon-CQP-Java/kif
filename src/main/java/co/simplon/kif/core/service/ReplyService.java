@@ -8,25 +8,9 @@ import co.simplon.kif.core.model.Reply;
 import co.simplon.kif.core.repository.ReplyRepository;
 
 @Service
-public class ReplyService {
+public class ReplyService extends GenericService<Reply, ReplyRepository> {
 	@Autowired
 	public ReplyRepository replyRepository;
-
-	public List<Reply> getAll() {
-		return replyRepository.findAll();
-	}
-
-	public Reply findById(Integer id) {
-		return replyRepository.findOne(id);
-	}
-
-	public Reply addOrUpdate(Reply Reply) {
-		return replyRepository.save(Reply);
-	}
-
-	public void delete(Integer id) {
-		replyRepository.delete(id);
-	}
 
 	public List<Reply> getReplies(Integer id) {
 		return replyRepository.getReplies(id);
