@@ -14,17 +14,17 @@
       <%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
     </jsp:attribute>
     <jsp:body>
-    	<div id="rooms-search" class="row">
+    	<div id="room" class="row">
     		<div class="col-md-8 col-md-offset-2">
 			    <c:choose>
 				    <c:when test="${room != null}">
 				        <div class="panel panel-default">
 							<div class="panel-heading">
-						   		<h3 class="panel-title">${room.id}</h3>
+						   		<h3 class="panel-title"><span class="label label-primary">ID</span> ${room.id}</h3>
 						  	</div>
 						  	<div class="panel-body">
 						  	<ul class="list-group">
-										<li class="list-group-item">Nom : ${room.name}</li>
+								<li class="list-group-item">Nom : ${room.name}</li>
 							   	<li class="list-group-item">Places : ${room.places}</li>
 							   	<li class="list-group-item">Description : ${room.description}</li>
 						    </ul>

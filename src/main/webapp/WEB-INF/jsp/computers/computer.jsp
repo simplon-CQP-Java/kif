@@ -14,13 +14,13 @@
       <%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
     </jsp:attribute>
     <jsp:body>
-    	<div id="computers-search" class="row">
+    	<div id="computer" class="row">
     		<div class="col-md-8 col-md-offset-2">
 		    	<c:choose>
 					<c:when test="${computer != null}">
 				    	<div class="panel panel-default">
 							<div class="panel-heading">
-						   		<h3 class="panel-title">${computer.id}</h3>
+						   		<h3 class="panel-title"><span class="label label-primary">ID</span> ${computer.id}</h3>
 						  	</div>
 						  	<div class="panel-body">
 						  	

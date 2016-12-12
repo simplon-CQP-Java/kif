@@ -22,7 +22,7 @@
         		<c:forEach items="${messages}" var="message">
 		        	<div class="panel panel-default">
 						<div class="panel-heading">
-					   		<h3 class="panel-title">${message.id}</h3>
+					   		<h3 class="panel-title"><span class="label label-primary">ID</span> ${message.id}</h3>
 					  	</div>
 					  	<div class="panel-body">
 					  	<ul class="list-group">

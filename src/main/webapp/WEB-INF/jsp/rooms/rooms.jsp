@@ -22,7 +22,7 @@
         		<c:forEach items="${rooms}" var="room">
 		        	<div class="panel panel-default">
 						<div class="panel-heading">
-					   		<h3 class="panel-title">${room.id}</h3>
+					   		<h3 class="panel-title"><span class="label label-primary">ID</span> ${room.id}</h3>
 					  	</div>
 					  	<div class="panel-body">
 					  	<ul class="list-group">
