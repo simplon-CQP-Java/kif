@@ -30,3 +30,12 @@ form {
 div#message {
 	margin-top: 30px;
 }
+
+/* Panel heading label */
+div.panel div.panel-heading span.label {
+	padding: .2em .6em .2em;
+}
+
+div#room, div#computer, div#booking {
+	margin-top: 15px;
+}

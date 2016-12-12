@@ -22,7 +22,7 @@
         		<c:forEach items="${rooms}" var="room">
 		        	<div class="panel panel-default">
 						<div class="panel-heading">
-					   		<h3 class="panel-title">${room.id}</h3>
+					   		<h3 class="panel-title"><span class="label label-primary">ID</span> ${room.id}</h3>
 					  	</div>
 					  	<div class="panel-body">
 					  	<ul class="list-group">
@@ -32,6 +32,7 @@
 					    </ul>
 					  	</div>
 					  	<div class="panel-footer">
+							<a href="/rooms/roomById?id=${room.id}" class="btn btn-primary">Voir</a>
 							<form method="post" action="/rooms/delete">
 								<input name="id" value="${room.id}" type="hidden" />
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -52,7 +53,7 @@
 					</div>
 					<div class="form-group">
 					    <label for="add-places-input">Places</label>
-						<input name="places" placeholder="Places" type="text" class="form-control" id="add-places-input">
+						<input name="places" placeholder="Places" type="number" class="form-control" id="add-places-input">
 					</div>
 					<div class="form-group">
 					    <label for="add-description-input">Description</label>

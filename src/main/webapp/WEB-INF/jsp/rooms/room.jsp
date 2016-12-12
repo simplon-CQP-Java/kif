@@ -14,27 +14,49 @@
       <%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
     </jsp:attribute>
     <jsp:body>
-    	<div id="rooms-search" class="row">
+    	<div id="room" class="row">
     		<div class="col-md-8 col-md-offset-2">
 			    <c:choose>
 				    <c:when test="${room != null}">
 				        <div class="panel panel-default">
 							<div class="panel-heading">
-						   		<h3 class="panel-title">${room.id}</h3>
+						   		<h3 class="panel-title"><span class="label label-primary">ID</span> ${room.id}</h3>
 						  	</div>
 						  	<div class="panel-body">
 						  	<ul class="list-group">
-										<li class="list-group-item">Marque : ${room.name}</li>
-							   	<li class="list-group-item">Modèle : ${room.places}</li>
-							   	<li class="list-group-item">description : ${room.description}</li>
+								<li class="list-group-item">Nom : ${room.name}</li>
+							   	<li class="list-group-item">Places : ${room.places}</li>
+							   	<li class="list-group-item">Description : ${room.description}</li>
 						    </ul>
 						  	</div>
 						  	<div class="panel-footer">
+						  		<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#update-room" aria-expanded="false" aria-controls="update-room">
+							  		Modifier
+								</button>
 								<form method="post" action="/rooms/delete">
 									<input name="id" value="${room.id}" type="hidden" />
 									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<button type="submit" class="btn btn-danger">Supprimer</button>
 								</form>
+								<div class="collapse" id="update-room">
+							  		<form method="post" action="/rooms/edit">
+								  		<div class="form-group">
+										    <label for="name-input">Nom</label>
+											<input name="name" placeholder="Nom" type="text" class="form-control" id="name-input" value="${room.name}">
+										</div>
+										<div class="form-group">
+										    <label for="places-input">Places</label>
+											<input name="places" placeholder="Places" type="number" class="form-control" id="places-input" value="${room.places}">
+										</div>
+										<div class="form-group">
+										    <label for="description-input">Description</label>
+											<input name="description" placeholder="Description" type="text" class="form-control" id="description-input" value="${room.description}">
+										</div>
+								  		<input name="id" value="${room.id}" type="hidden" />
+										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+										<button type="submit" class="btn btn-success">Modifier</button>
+							  		</form>
+							  	</div>
 						  	</div>
 						</div>
 				    </c:when>

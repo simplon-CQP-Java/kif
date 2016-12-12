@@ -22,16 +22,16 @@
         		<c:forEach items="${computers}" var="computer">
 		        	<div class="panel panel-default">
 						<div class="panel-heading">
-					   		<h3 class="panel-title">${computer.id}</h3>
+					   		<h3 class="panel-title"><span class="label label-primary">ID</span> ${computer.id}</h3>
 					  	</div>
 					  	<div class="panel-body">
 					    <ul class="list-group">
 					    	<li class="list-group-item">Marque : ${computer.brand}</li>
 						   	<li class="list-group-item">Modèle : ${computer.model}</li>
-						   	<li class="list-group-item">Serial : ${computer.serial}</li>
 					    </ul>
 					  	</div>
 					  	<div class="panel-footer">
+					  		<a href="/computers/computerById?id=${computer.id}" class="btn btn-primary">Voir</a>
 							<form method="post" action="/computers/delete">
 								<input name="id" value="${computer.id}" type="hidden" />
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -53,10 +53,6 @@
 					<div class="form-group">
 					    <label for="add-model-input">Modèle</label>
 						<input name="model" placeholder="Modèle" type="text" class="form-control" id="add-model-input">
-					</div>
-					<div class="form-group">
-					    <label for="add-serial-input">Serial</label>
-						<input name="serial" placeholder="Serial" type="number" class="form-control" id="add-serial-input">
 					</div>
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<button type="submit" class="btn btn-success">Ajouter</button>

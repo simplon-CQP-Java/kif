@@ -17,17 +17,14 @@ public class Computer {
 	private String brand;
 	@Expose
 	private String model;
-	@Expose
-	private Integer serial;
 
 	public Computer() {
 		super();
 	}
 
-	public Computer(String brand, String model, Integer serial) {
+	public Computer(String brand, String model) {
 		this.brand = brand;
 		this.model = model;
-		this.serial = serial;
 	}
 
 	public Integer getId() {
@@ -48,13 +45,5 @@ public class Computer {
 
 	public void setModel(String model) {
 		this.model = model;
-	}
-
-	public Integer getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Integer serial) {
-		this.serial = serial;
 	}
 }

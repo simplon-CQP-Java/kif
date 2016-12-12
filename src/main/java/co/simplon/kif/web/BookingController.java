@@ -75,7 +75,7 @@ public class BookingController {
 			@RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") Date end,
 			@RequestParam(name = "userId", defaultValue = "-1") Integer userId) throws IOException {
 		Date createdAt = new Date();
-		if (roomId == null && computerId == null)
+		if (roomId == null || computerId == null)
 			return new ModelAndView("redirect:/bookings");
 		if (start != null && end != null) {
 			Room room = roomService.findById(roomId);
@@ -105,11 +105,69 @@ public class BookingController {
 	public String getCalendarBookings(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		List<Booking> bookings = bookingService.getAll();
 
-        // Convert to JSON string (exclude fields without @Expose).
-        String json = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(bookings);
-        // Write JSON string.
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        return json;
+		// Convert to JSON string (exclude fields without @Expose).
+		String json = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(bookings);
+		// Write JSON string.
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		return json;
+	}
+
+	@RequestMapping("/bookingById")
+	public ModelAndView getById(@RequestParam("id") Integer id, ModelMap model) {
+		if (id == null) {
+			return new ModelAndView("redirect:/bookings");
+		}
+		// Find booking by id and set to attribute on model
+		Booking booking = bookingService.findById(id);
+		List<User> userList = userService.getAll();
+		List<Room> roomList = roomService.getAll();
+		List<Computer> computerList = computerService.getAll();
+		// Add attribute to model
+		model.addAttribute("users", userList);
+		model.addAttribute("rooms", roomList);
+		model.addAttribute("computers", computerList);
+		model.addAttribute("booking", booking);
+		return new ModelAndView("bookings/booking", model);
+	}
+
+	@RequestMapping("/edit")
+	public ModelAndView editBooking(@RequestParam("id") Integer id, ModelMap model,
+			@RequestParam(name = "roomId", defaultValue = "-1") Integer roomId,
+			@RequestParam(name = "computerId", defaultValue = "-1") Integer computerId,
+			@RequestParam("start") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") Date start,
+			@RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") Date end,
+			@RequestParam(name = "userId", defaultValue = "-1") Integer userId) throws IOException {
+		// Check if values are not null
+		if (id == null || roomId == null || computerId == null || start == null || end == null) {
+			return new ModelAndView("redirect:/bookings");
+		}
+		// Get Room, Computer, Booking by Id
+		Room room = roomService.findById(roomId);
+		Computer computer = computerService.findById(computerId);
+		Booking booking = bookingService.findById(id);
+		// Set new title with room name and computer brand / model
+		String title = "";
+		if (room != null) {
+			title += room.getName();
+		}
+		if (computer != null) {
+			title += " - " + computer.getBrand() + " " + computer.getModel();
+		}
+		// Set all new properties to booking
+		booking.setComputer(computer);
+		booking.setRoom(room);
+		booking.setEnd(end);
+		booking.setStart(start);
+		booking.setTitle(title);
+		try {
+			// Save booking
+			booking = bookingService.addOrUpdate(booking, userId);
+		} catch (UsernameNotFoundException e) {
+			System.out.println("UsernameNotFoundException " + e);
+			return new ModelAndView("accessDenied");
+		}
+		model.addAttribute("booking", booking);
+		return new ModelAndView("redirect:/bookings/bookingById?id=" + id, model);
 	}
 }
