@@ -78,7 +78,7 @@ public class IndexController {
 	@RequestMapping("/contactSubmit")
 	public ModelAndView addMessage(@RequestParam("title") String title, @RequestParam("content") String content,
 			@RequestParam("email") String email, RedirectAttributes redirectAttr) {
-		if (title == null || content == null || email == null) {
+		if (title == null || content == null || email == null || email == "" || content == "" || title == "") {
 			redirectAttr.addFlashAttribute("error", "Tous les champs sont requis.");
 			return new ModelAndView("redirect:/contact");
 		}
