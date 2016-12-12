@@ -23,7 +23,7 @@
 				<c:forEach items="${bookings}" var="booking">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-					   		<h3 class="panel-title">${booking.id}</h3>
+							<h3 class="panel-title"><span class="label label-primary">ID</span> ${booking.id}</h3>
 					  	</div>
 						<div class="panel-body">
 						    <ul class="list-group">
@@ -36,6 +36,7 @@
 							</ul>
 						</div>
 						<div class="panel-footer">
+							<a href="/bookings/bookingById?id=${booking.id}" class="btn btn-primary">Modifier</a>
 							<form method="post" action="/bookings/delete">
 								<input name="id" value="${booking.id}" type="hidden" />
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -52,12 +53,12 @@
 				<form method="post" action="/bookings/book">
 					<security:authorize access="hasAuthority('ADMIN')">
 						<div class="form-group">
-						    <label for="add-user-select">Sélectionner pour un utilisateur</label>
+						    <label for="add-user-select">Réserver pour un utilisateur</label>
 							<select name="userId" class="form-control" id="add-room-select">
 								<c:forEach items="${users}" var="user">
 									<option value="${user.id}">${user.username}</option>
 								</c:forEach>
-								<option value="-1">Aucune</option>
+								<option value="-1">Aucun</option>
 							</select>
 						</div>
 					</security:authorize>
