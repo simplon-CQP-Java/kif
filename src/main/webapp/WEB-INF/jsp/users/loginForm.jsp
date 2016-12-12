@@ -14,6 +14,14 @@
     <jsp:body>
       <div id="login" class="row">
         <div class="col-md-6 col-md-offset-3">
+	      <c:if test="${error != null}">
+	      	<div class="alert alert-danger" role="alert">
+	      	  <button type="button" class="close" data-dismiss="alert" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
+	      	  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+			  <span class="sr-only">Error:</span>
+			  ${error}
+			</div>
+	      </c:if>
           <form accept-charset="utf-8" action="/login" method="POST">
             <div class="form-group">
               <label for="username-email">Nom d'utilisateur</label>

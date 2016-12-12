@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.GsonBuilder;
 
@@ -73,7 +74,8 @@ public class BookingController {
 			@RequestParam(name = "computerId", defaultValue = "-1") Integer computerId,
 			@RequestParam("start") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") Date start,
 			@RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") Date end,
-			@RequestParam(name = "userId", defaultValue = "-1") Integer userId) throws IOException {
+			@RequestParam(name = "userId", defaultValue = "-1") Integer userId,
+			RedirectAttributes redirectAttr) throws IOException {
 		Date createdAt = new Date();
 		if (roomId == null || computerId == null)
 			return new ModelAndView("redirect:/bookings");
@@ -83,20 +85,28 @@ public class BookingController {
 			Booking booking = new Booking(room, computer, start, end, createdAt);
 			try {
 				booking = bookingService.addOrUpdate(booking, userId);
+				redirectAttr.addFlashAttribute("success", "Votre réservation à bien été enregistrée.");
 			} catch (UsernameNotFoundException e) {
 				System.out.println("UsernameNotFoundException " + e);
-				return new ModelAndView("accessDenied");
+				redirectAttr.addFlashAttribute("error", "Vous devez vous connecter pour pouvoir réserver.");
+				return new ModelAndView("redirect:/login");
 			}
 		}
 		return new ModelAndView("redirect:/bookings");
 	}
 
 	@RequestMapping("/delete")
-	public ModelAndView deleteBooking(@RequestParam("id") Integer id, ModelMap model) {
+	public ModelAndView deleteBooking(@RequestParam("id") Integer id, ModelMap model,
+			RedirectAttributes redirectAttr) {
 		if (id == null) {
 			return new ModelAndView("redirect:/bookings");
 		}
-		bookingService.delete(id);
+		try {
+			bookingService.delete(id);
+			redirectAttr.addFlashAttribute("success", "Votre réservation à bien été supprimée.");
+		} catch(Exception e) {
+			redirectAttr.addFlashAttribute("error", "Un problème est survenu lors de la suppression de la réservation.");
+		}
 		return new ModelAndView("redirect:/bookings");
 	}
 

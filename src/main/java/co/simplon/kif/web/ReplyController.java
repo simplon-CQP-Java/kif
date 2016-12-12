@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.simplon.kif.core.model.Message;
 import co.simplon.kif.core.model.Reply;
@@ -31,9 +32,11 @@ public class ReplyController {
 	private EmailAPIService emailService;
 
 	@RequestMapping("/add")
-	public ModelAndView addReply(@RequestParam("reply") String content, @RequestParam("id") Integer messageId) {
+	public ModelAndView addReply(@RequestParam("reply") String content, @RequestParam("id") Integer messageId,
+			RedirectAttributes redirectAttr) {
 		// Check if params are not null
 		if (messageId == null || content == null) {
+			redirectAttr.addFlashAttribute("error", "Tous les champs sont requis.");
 			return new ModelAndView("redirect:/messages");
 		}
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -47,7 +50,9 @@ public class ReplyController {
 			// send mail and if return true set sended to reply
 			reply.setSended(emailService.sendReplyMail(message, reply));
 			replyService.addOrUpdate(reply);
+			redirectAttr.addFlashAttribute("success", "Votre réponse à bien été envoyée.");
 		} else {
+			redirectAttr.addFlashAttribute("error", "Vous devez vous connecter pour répondre à un message.");
 			return new ModelAndView("redirect:/login");
 		}
 		return new ModelAndView("redirect:/messages");

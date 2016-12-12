@@ -1,7 +1,5 @@
 package co.simplon.kif.web;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,6 +15,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.simplon.kif.core.model.User;
 import co.simplon.kif.core.model.User.Role;
@@ -42,27 +41,27 @@ public class UserController {
 
 	@RequestMapping
 	public ModelAndView getList(ModelMap model) {
-		List<User> userList = userService.getAll();
-		model.addAttribute("users", userList);
+		model.addAttribute("users", userService.getAll());
 		return new ModelAndView("users/users", model);
 	}
 
 	@RequestMapping("/userById")
-	public ModelAndView userById(@RequestParam("id") Integer id, ModelMap model) {
+	public ModelAndView userById(@RequestParam("id") Integer id, ModelMap model,
+			RedirectAttributes redirectAttr) {
 		if (id == null) {
+			redirectAttr.addFlashAttribute("error", "Aucun utilisateur trouvé.");
 			return new ModelAndView("redirect:/users", model);
 		}
-		User user = userService.findById(id);
-		if (user != null) {
-			model.addAttribute("user", user);
-		}
+		model.addAttribute("user", userService.findById(id));
 		return new ModelAndView("users/user", model);
 	}
 
 	@RequestMapping("/userByUsername")
-	public ModelAndView getById(@RequestParam("username") String username, ModelMap model) {
+	public ModelAndView getById(@RequestParam("username") String username, ModelMap model,
+			RedirectAttributes redirectAttr) {
 		User user = userService.findOneByUsername(username);
 		if (user == null) {
+			redirectAttr.addFlashAttribute("error", "Aucun utilisateur trouvé.");
 			model.addAttribute("username", username);
     	}
 		model.addAttribute("user", user);
@@ -70,11 +69,22 @@ public class UserController {
 	}
 
 	@RequestMapping("/add")
-	public ModelAndView addUser(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("confirmPassword") String confirmPassword, Role role) {
+	public ModelAndView addUser(@RequestParam("username") String username,
+			@RequestParam("password") String password, @RequestParam("confirmPassword") String confirmPassword,
+			Role role, RedirectAttributes redirectAttr) {
 		if (username != null && password != null && confirmPassword != null && role != null) {
 			if (password.equals(confirmPassword)) {
-				userService.addOrUpdate(username, password, role);
+				try {
+					userService.addOrUpdate(username, password, role);
+					redirectAttr.addFlashAttribute("success", "L'utilisateur à bien été ajouté.");
+				} catch(Exception e) {
+					redirectAttr.addFlashAttribute("error", "Le nom d'utilisateur n'est pas disponible.");
+				}
+			} else {
+				redirectAttr.addFlashAttribute("error", "Les mots de passe ne correspondent pas.");
 			}
+		} else {
+			redirectAttr.addFlashAttribute("error", "Tous les champs sont requis.");
 		}
 		return new ModelAndView("redirect:/users");
 	}
@@ -83,10 +93,11 @@ public class UserController {
 	public ModelAndView edit(@RequestParam("id") Integer id, @RequestParam("username") String username, ModelMap model,
 			@RequestParam("password") String password, @RequestParam("newPassword") String newPassword,
 			@RequestParam("confirmNewPassword") String confirmNewPassword, @RequestParam("role") Role role,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttr) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (username == null || role == null) {
 			if (id == null) return new ModelAndView("redirect:/users", model);
+			redirectAttr.addFlashAttribute("error", "Tous les champs sont requis.");
 			return new ModelAndView("redirect:/users/userById?id=" + id, model);
 		}
 		if (!(auth instanceof AnonymousAuthenticationToken)) {
@@ -98,23 +109,25 @@ public class UserController {
 	        	user = changePassword(user, password, newPassword, confirmNewPassword);
 	        }
 			userService.updateUser(user);
+			redirectAttr.addFlashAttribute("success", "L'utilisateur à bien été modifié.");
 		}
 		return new ModelAndView("redirect:/users/userById?id=" + id, model);
 	}
 
 	@RequestMapping("/edit/username")
 	public ModelAndView editUsername(@RequestParam("id") Integer id, @RequestParam("username") String username, ModelMap model,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttr) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (username == null) {
+			redirectAttr.addFlashAttribute("error", "Tous les champs sont requis.");
 			return new ModelAndView("redirect:/profil", model);
 		}
 		User user = new User();
 		if (user != null && !(auth instanceof AnonymousAuthenticationToken)) {
 			user = userService.findOneByUsername(auth.getName());
 	        user.setUsername(username);
-			User newUser = userService.addOrUpdate(user);
-			customLoginService.autoLogin(newUser);
+			customLoginService.autoLogin(userService.addOrUpdate(user));
+			redirectAttr.addFlashAttribute("success", "Votre nom d'utilisateur a bien été modifié.");
 		}
 		return new ModelAndView("redirect:/profil", model);
 	}
@@ -122,8 +135,9 @@ public class UserController {
 	@RequestMapping("/edit/password")
 	public ModelAndView editPassword(@RequestParam("id") Integer id, @RequestParam("password") String password,
 			@RequestParam("newPassword") String newPassword, @RequestParam("confirmNewPassword") String confirmNewPassword,
-			ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+			ModelMap model, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttr) {
 		if (password == null || newPassword == null || confirmNewPassword == null || id == null) {
+			redirectAttr.addFlashAttribute("error", "Tous les champs sont requis.");
 			return new ModelAndView("redirect:/profil", model);
 		}
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -132,13 +146,15 @@ public class UserController {
 			user = changePassword(user, password, newPassword, confirmNewPassword);
 			User newUser = userService.updateUser(user);
 			customLoginService.autoLogin(newUser);
+			redirectAttr.addFlashAttribute("success", "Votre mot de passe à bien été modifié.");
 		}
 		//model.addAttribute("user", user);
 		return new ModelAndView("redirect:/profil", model);
 	}
 
 	@RequestMapping(value={"/delete", "/edit/delete"})
-	public ModelAndView setDisable(@RequestParam("id") Integer id, ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView setDisable(@RequestParam("id") Integer id, ModelMap model, HttpServletRequest request,
+			HttpServletResponse response, RedirectAttributes redirectAttr) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User currentUser = userService.findOneByUsername(auth.getName());
 		Role admin = Role.ADMIN;
@@ -146,7 +162,13 @@ public class UserController {
 		if (id != null && (currentUser.getRole() == admin || id.equals(currentUser.getId()))) {
 			User user = userService.findById(id);
 			user.setDisable();
-			userService.addOrUpdate(user);
+			try {
+				userService.addOrUpdate(user);
+				redirectAttr.addFlashAttribute("success", "L'utilisateur à bien été supprimé.");
+			} catch(Exception e) {
+				redirectAttr.addFlashAttribute("error", "Une erreur est survenue lors de la suppression de l'utilisateur.");
+				return new ModelAndView("redirect:/users", model);
+			}
 			if (id.equals(currentUser.getId())) new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
 		return new ModelAndView("redirect:/");
@@ -159,26 +181,37 @@ public class UserController {
 			user.setEnabled(true);
 			userService.addOrUpdate(user);
 		}
-		return new ModelAndView("redirect:/");
+		return new ModelAndView("redirect:/users");
 	}
 	@RequestMapping("/register")
 	public ModelAndView registerUser(HttpServletRequest request, @RequestParam("username") String username, @RequestParam("password") String password, 
-		  @RequestParam("confirmPassword") String confirmPassword, ModelMap model) {
+		  @RequestParam("confirmPassword") String confirmPassword, ModelMap model, RedirectAttributes redirectAttr) {
 		Role role = Role.USER;
 		if (username != null && password != null && confirmPassword != null && role != null) {
 			if (password.equals(confirmPassword)) {
 				User findUser = userService.findOneByUsername(username);
 				if (findUser != null) {
-					return new ModelAndView("redirect:/", model);
+					redirectAttr.addFlashAttribute("error", "Le nom d'utilisateur n'est pas disponible.");
+					return new ModelAndView("redirect:/register", model);
 				}
-				User newUser = userService.addOrUpdate(username, password, role);
-				if (customLoginService.autoLogin(newUser) != null) {
-					SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-					HttpSession session = request.getSession(true);
-					session.setAttribute("userDetails", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+				try {
+					User newUser = userService.addOrUpdate(username, password, role);
+					if (customLoginService.autoLogin(newUser) != null) {
+						SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+						HttpSession session = request.getSession(true);
+						session.setAttribute("userDetails", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+					}
+				} catch(Exception e) {
+					redirectAttr.addFlashAttribute("error", "Une erreur est survenue lors de l'inscription.");
+					return new ModelAndView("redirect:/register", model);
 				}
 				return new ModelAndView("redirect:/", model);
+			} else {
+				redirectAttr.addFlashAttribute("error", "Les mots de passe ne correspondent pas.");
+				return new ModelAndView("redirect:/register", model);
 			}
+		} else {
+			redirectAttr.addFlashAttribute("error", "Tous les champs sont requis.");
 		}
 		return new ModelAndView("redirect:/", model);
 	}

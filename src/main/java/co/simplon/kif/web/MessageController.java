@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.simplon.kif.core.model.Message;
 import co.simplon.kif.core.model.Reply;
@@ -29,11 +30,6 @@ public class MessageController {
 		return new ModelAndView("messages/messages", model);
 	}
 
-	@RequestMapping("/new")
-	public ModelAndView newMessage(ModelMap model) {
-		return new ModelAndView("messages/newMessage", model);
-	}
-
 	@RequestMapping("/messageById/{id}")
 	public ModelAndView messageById(@PathVariable("id") Integer id, ModelMap model) {
 		if (id == null) {
@@ -49,11 +45,16 @@ public class MessageController {
 	}
 
 	@RequestMapping("/delete")
-	public ModelAndView deleteMessage(@RequestParam("id") Integer id, ModelMap model) {
+	public ModelAndView deleteMessage(@RequestParam("id") Integer id, ModelMap model, RedirectAttributes redirectAttr) {
 		if (id == null) {
 			return new ModelAndView("redirect:/messages");
 		}
-		messageService.delete(id);
+		try {
+			messageService.delete(id);
+			redirectAttr.addFlashAttribute("error", "Le message à bien été supprimé.");
+		} catch(Exception e) {
+			redirectAttr.addFlashAttribute("error", "Une erreur est survenue lors de la suppression du message.");
+		}
 		return new ModelAndView("redirect:/messages");
 	}
 }

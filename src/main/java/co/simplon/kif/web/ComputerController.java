@@ -8,6 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.simplon.kif.core.model.Computer;
 import co.simplon.kif.core.service.ComputerService;
@@ -49,11 +50,16 @@ public class ComputerController {
 	}
 
 	@RequestMapping("/delete")
-	public ModelAndView deleteComputer(@RequestParam("id") Integer id, ModelMap model) {
+	public ModelAndView deleteComputer(@RequestParam("id") Integer id, ModelMap model, RedirectAttributes redirectAttr) {
 		if (id == null) {
 			return new ModelAndView("redirect:/computers");
 		}
-		computerService.delete(id);
+		try {
+			computerService.delete(id);
+			redirectAttr.addFlashAttribute("success", "L'ordinateur à bien été supprimé.");
+		} catch(Exception e) {
+			redirectAttr.addFlashAttribute("error", "L'ordinateur est réservé, il ne peut pas être supprimer pour le moment.");
+		}
 		return new ModelAndView("redirect:/computers");
 	}
 
