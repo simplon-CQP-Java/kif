@@ -4,6 +4,7 @@
 <%@ attribute name="footer" fragment="true" %>
 <html >
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<spring:url value="/ressources/css/lib/bootstrap.min.css" var="bootstrapCss" />
 		<spring:url value="/ressources/css/lib/bootstrap-theme.min.css" var="bootstrapThemeCss" />
 		<spring:url value="/ressources/css/lib/bootstrap-datetimepicker.min.css" var="bootstrapDateTimePickerCss" />
