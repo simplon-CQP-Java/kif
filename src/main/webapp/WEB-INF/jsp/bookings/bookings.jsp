@@ -18,6 +18,23 @@
         	<div class="jumbotron">
 			  <h3>Réservations</h3>
 			</div>
+			<div class="col-md-12">
+	       		<c:if test="${error != null}">
+	       			<div class="alert alert-danger alert-dismissible" role="alert">
+	     				<button type="button" class="close" data-dismiss="alert" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
+	     				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+						<span class="sr-only">Error:</span>
+						${error}
+					</div>
+	       		</c:if>
+	       		<c:if test="${success != null}">
+	       			<div class="alert alert-success alert-dismissible" role="alert">
+	       				<button type="button" class="close" data-dismiss="alert" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
+	       				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+						${success}
+					</div>
+	       		</c:if>
+			</div>
         	<div id="list" class="col-md-6">
 				<c:forEach items="${bookings}" var="booking">
 					<div class="panel panel-default">

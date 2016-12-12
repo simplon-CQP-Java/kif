@@ -20,21 +20,21 @@
 			       	<div class="panel panel-primary">
 	    				<div class="panel-heading">${message.title}</div>
 	    				<div class="panel-body">
-	    				<p>
-	    					<span class="label label-primary">Email</span>
-	    					&nbsp;${message.email}
-	    				</p>
-						<h3>Message</h3>
-						<p>${message.content}</p>
-						<h3>Réponses</h3>
-						<ul class="list-group">
-							<c:forEach items="${replies}" var="reply">
-								<li class="list-group-item">${reply.content}</li>
-							</c:forEach>
-						</ul>
-					</div>
-	    				<div class="panel-footer">
-	    					<h3>Réponse rapide</h3>
+		    				<p>
+		    					<span class="label label-primary">Email</span>
+		    					&nbsp;${message.email}
+		    				</p>
+							<h3>Message</h3>
+							<p>${message.content}</p>
+							<h3>Réponses</h3>
+							<ul class="list-group">
+								<c:forEach items="${replies}" var="reply">
+									<li class="list-group-item">${reply.content}</li>
+								</c:forEach>
+							</ul>
+						</div>
+		    			<div class="panel-footer">
+		    				<h3>Réponse rapide</h3>
 							<form method="post" action="/replies/add">
 	    						<input type="hidden" value="${message.id}" name="id">
 	    						<div class="form-group">

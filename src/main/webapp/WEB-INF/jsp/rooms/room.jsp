@@ -16,6 +16,21 @@
     <jsp:body>
     	<div id="room" class="row">
     		<div class="col-md-8 col-md-offset-2">
+    			<c:if test="${error != null}">
+        			<div class="alert alert-danger alert-dismissible role="alert">
+        				<button type="button" class="close" data-dismiss="alert" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
+        				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  						<span class="sr-only">Error:</span>
+  						${error}
+  					</div>
+        		</c:if>
+				<c:if test="${success != null}">
+					<div class="alert alert-success alert-dismissible" role="alert">
+		        		<button type="button" class="close" data-dismiss="alert" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
+		        		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+		  				${success}
+		  			</div>
+		        </c:if>
 			    <c:choose>
 				    <c:when test="${room != null}">
 				        <div class="panel panel-default">

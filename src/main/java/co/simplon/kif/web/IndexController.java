@@ -15,6 +15,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.simplon.kif.core.model.Message;
 import co.simplon.kif.core.model.User;
@@ -64,20 +65,22 @@ public class IndexController {
 	}
 
 	@RequestMapping("/profil")
-	public ModelAndView profile(ModelMap model) {
+	public ModelAndView profile(ModelMap model, RedirectAttributes redirectAttr) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (!(auth instanceof AnonymousAuthenticationToken)) {
 			User user = userService.findOneByUsername(auth.getName());
 			model.addAttribute("user", user);
 			return new ModelAndView("users/profile", model);
 		}
+		redirectAttr.addFlashAttribute("error", "Vous devez vous connecter pour accéder à cette page.");
 		return new ModelAndView("redirect:/login");
 	}
 	@RequestMapping("/contactSubmit")
 	public ModelAndView addMessage(@RequestParam("title") String title, @RequestParam("content") String content,
-			@RequestParam("email") String email) {
+			@RequestParam("email") String email, RedirectAttributes redirectAttr) {
 		if (title == null || content == null || email == null) {
-			return new ModelAndView("redirect:/messages");
+			redirectAttr.addFlashAttribute("error", "Tous les champs sont requis.");
+			return new ModelAndView("redirect:/contact");
 		}
 		Date createdAt = new Date();
 		Message message = new Message(title, content, email, createdAt);
@@ -87,6 +90,7 @@ public class IndexController {
 			emailService.sendConfirmationMail(message);
 		}
 		messageService.addOrUpdate(message);
+		redirectAttr.addFlashAttribute("success", "Votre demande à bien été envoyée.");
 		return new ModelAndView("redirect:/contact");
 	}
 	

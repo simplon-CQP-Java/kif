@@ -11,7 +11,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import co.simplon.kif.core.model.Booking;
@@ -29,7 +28,7 @@ public class BookingService extends GenericService<Booking, BookingRepository> {
     @Autowired
     public UserService userService;
 
-    public Booking addOrUpdate(Booking booking, int userId) throws UsernameNotFoundException, IOException {
+    public Booking addOrUpdate(Booking booking, int userId) throws Exception {
     	if (booking != null) {
     		User user = new User();
     		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -48,11 +47,13 @@ public class BookingService extends GenericService<Booking, BookingRepository> {
     			booking.setUser(user);
     		}
     		if (user == null) {
-    			throw new UsernameNotFoundException("User name not found");
+    			throw new Exception("User name not found");
     		}
     		if ((booking.getComputer() != null && this.computerIsAvailable(booking.getComputer(), booking.getStart(), booking.getEnd())) ||
     			(booking.getRoom() != null && this.roomIsAvailable(booking.getRoom(), booking.getStart(), booking.getEnd()))) {
     			return bookingRepository.save(booking);
+    		} else {
+    			throw new Exception("Ressource is not available");
     		}
     	}
     	return booking;

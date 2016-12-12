@@ -36,6 +36,21 @@
 				<form method="post" action="/users/edit" class="panel panel-primary">
 					<div class="panel-heading">Modifier l'utilisateur</div>
 					<div class="panel-body">
+						<c:if test="${error != null}">
+		        			<div class="alert alert-danger alert-dismissible" role="alert">
+		        				<button type="button" class="close" data-dismiss="alert" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
+		        				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+		  						<span class="sr-only">Error:</span>
+		  						${error}
+		  					</div>
+		        		</c:if>
+		        		<c:if test="${success != null}">
+		        			<div class="alert alert-success alert-dismissible" role="alert">
+		        				<button type="button" class="close" data-dismiss="alert" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
+		        				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+		  						${success}
+		  					</div>
+		        		</c:if>
 						<input name="id" value="${user.id}" type="hidden" />
 						<div class="form-group">
 						    <label for="username-input">Nom</label>
