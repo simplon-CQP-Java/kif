@@ -35,15 +35,15 @@ public class ComputerController {
 			model.addAttribute("id", id);
 		}
 		model.addAttribute("computer", computer);
-		return new ModelAndView("computers/search", model);
+		return new ModelAndView("computers/computer", model);
 	}
 
 	@RequestMapping("/add")
-	public ModelAndView addComputer(@RequestParam("brand") String brand, @RequestParam("model") String model, Integer serial) {
-		if (brand == null || model == null || serial == null) {
+	public ModelAndView addComputer(@RequestParam("brand") String brand, @RequestParam("model") String model) {
+		if (brand == null || model == null) {
 			return new ModelAndView("redirect:/computers");
 		}
-		Computer computer = new Computer(brand, model, serial);
+		Computer computer = new Computer(brand, model);
 		computerService.addOrUpdate(computer);
 		return new ModelAndView("redirect:/computers");
 	}
@@ -55,5 +55,20 @@ public class ComputerController {
 		}
 		computerService.delete(id);
 		return new ModelAndView("redirect:/computers");
+	}
+
+	@RequestMapping("/edit")
+	public ModelAndView editComputer(@RequestParam("id") Integer id, @RequestParam("brand") String brand, @RequestParam("model") String model, ModelMap modelMap) {
+		if (id == null) {
+			return new ModelAndView("redirect:/computers");
+		}
+		// Get computer by id and set brand & model
+		Computer computer = computerService.findById(id);
+		computer.setBrand(brand);
+		computer.setModel(model);
+		// Update computer and redirect
+		computerService.addOrUpdate(computer);
+		modelMap.addAttribute("computer", computer);
+		return new ModelAndView("redirect:/computers/computerById?id=" + id, modelMap);
 	}
 }
