@@ -20,7 +20,7 @@
 			</div>
         	<div id="list" class="col-md-6">
         		<c:if test="${error != null}">
-        			<div class="alert alert-danger" role="alert">
+        			<div class="alert alert-danger alert-dismissible" role="alert">
         				<button type="button" class="close" data-dismiss="alert" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
         				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
   						<span class="sr-only">Error:</span>

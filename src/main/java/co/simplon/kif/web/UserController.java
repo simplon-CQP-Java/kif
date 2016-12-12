@@ -183,37 +183,37 @@ public class UserController {
 		}
 		return new ModelAndView("redirect:/users");
 	}
+
 	@RequestMapping("/register")
 	public ModelAndView registerUser(HttpServletRequest request, @RequestParam("username") String username, @RequestParam("password") String password, 
 		  @RequestParam("confirmPassword") String confirmPassword, ModelMap model, RedirectAttributes redirectAttr) {
 		Role role = Role.USER;
-		if (username != null && password != null && confirmPassword != null && role != null) {
-			if (password.equals(confirmPassword)) {
-				User findUser = userService.findOneByUsername(username);
-				if (findUser != null) {
-					redirectAttr.addFlashAttribute("error", "Le nom d'utilisateur n'est pas disponible.");
-					return new ModelAndView("redirect:/register", model);
-				}
-				try {
-					User newUser = userService.addOrUpdate(username, password, role);
-					if (customLoginService.autoLogin(newUser) != null) {
-						SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-						HttpSession session = request.getSession(true);
-						session.setAttribute("userDetails", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-					}
-				} catch(Exception e) {
-					redirectAttr.addFlashAttribute("error", "Une erreur est survenue lors de l'inscription.");
-					return new ModelAndView("redirect:/register", model);
-				}
-				return new ModelAndView("redirect:/", model);
-			} else {
-				redirectAttr.addFlashAttribute("error", "Les mots de passe ne correspondent pas.");
+		if (username == null || password == null || confirmPassword == null || role == null || username == "") {
+			redirectAttr.addFlashAttribute("error", "Tous les champs sont requis.");
+			return new ModelAndView("redirect:/register", model);
+		}
+		if (password.equals(confirmPassword)) {
+			User findUser = userService.findOneByUsername(username);
+			if (findUser != null) {
+				redirectAttr.addFlashAttribute("error", "Le nom d'utilisateur n'est pas disponible.");
 				return new ModelAndView("redirect:/register", model);
 			}
+			try {
+				User newUser = userService.addOrUpdate(username, password, role);
+				if (customLoginService.autoLogin(newUser) != null) {
+					SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+					HttpSession session = request.getSession(true);
+					session.setAttribute("userDetails", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+				}
+			} catch(Exception e) {
+				redirectAttr.addFlashAttribute("error", "Une erreur est survenue lors de l'inscription.");
+				return new ModelAndView("redirect:/register", model);
+			}
+			return new ModelAndView("redirect:/", model);
 		} else {
-			redirectAttr.addFlashAttribute("error", "Tous les champs sont requis.");
+			redirectAttr.addFlashAttribute("error", "Les mots de passe ne correspondent pas.");
+			return new ModelAndView("redirect:/register", model);
 		}
-		return new ModelAndView("redirect:/", model);
 	}
 
 	// Change the user password

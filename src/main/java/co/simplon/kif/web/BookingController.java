@@ -75,7 +75,7 @@ public class BookingController {
 			@RequestParam("start") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") Date start,
 			@RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") Date end,
 			@RequestParam(name = "userId", defaultValue = "-1") Integer userId,
-			RedirectAttributes redirectAttr) throws IOException {
+			RedirectAttributes redirectAttr) throws Exception {
 		Date createdAt = new Date();
 		if (roomId == null || computerId == null)
 			return new ModelAndView("redirect:/bookings");
@@ -86,10 +86,9 @@ public class BookingController {
 			try {
 				booking = bookingService.addOrUpdate(booking, userId);
 				redirectAttr.addFlashAttribute("success", "Votre réservation à bien été enregistrée.");
-			} catch (UsernameNotFoundException e) {
-				System.out.println("UsernameNotFoundException " + e);
-				redirectAttr.addFlashAttribute("error", "Vous devez vous connecter pour pouvoir réserver.");
-				return new ModelAndView("redirect:/login");
+			} catch (Exception e) {
+				redirectAttr.addFlashAttribute("error", "Vérifier que la salle et/ou l'ordinateur sont bien disponibles.");
+				return new ModelAndView("redirect:/bookings");
 			}
 		}
 		return new ModelAndView("redirect:/bookings");
@@ -147,7 +146,8 @@ public class BookingController {
 			@RequestParam(name = "computerId", defaultValue = "-1") Integer computerId,
 			@RequestParam("start") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") Date start,
 			@RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") Date end,
-			@RequestParam(name = "userId", defaultValue = "-1") Integer userId) throws IOException {
+			@RequestParam(name = "userId", defaultValue = "-1") Integer userId,
+			RedirectAttributes redirectAttr) throws Exception {
 		// Check if values are not null
 		if (id == null || roomId == null || computerId == null || start == null || end == null) {
 			return new ModelAndView("redirect:/bookings");
@@ -174,8 +174,8 @@ public class BookingController {
 			// Save booking
 			booking = bookingService.addOrUpdate(booking, userId);
 		} catch (UsernameNotFoundException e) {
-			System.out.println("UsernameNotFoundException " + e);
-			return new ModelAndView("accessDenied");
+			redirectAttr.addFlashAttribute("error", "Vérifier que la salle et/ou l'ordinateur sont bien disponibles.");
+			return new ModelAndView("redirect:/bookings");
 		}
 		model.addAttribute("booking", booking);
 		return new ModelAndView("redirect:/bookings/bookingById?id=" + id, model);
