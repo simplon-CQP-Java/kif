@@ -22,20 +22,12 @@ import co.simplon.kif.core.model.User.Role;
 import co.simplon.kif.core.repository.BookingRepository;
 
 @Service
-public class BookingService {
+public class BookingService extends GenericService<Booking, BookingRepository> {
     @Autowired
     public BookingRepository bookingRepository;
 
     @Autowired
     public UserService userService;
-
-    public List<Booking> getAll() {
-      return bookingRepository.findAll();
-    }
-
-    public Booking findById(Integer id) {
-      return bookingRepository.findOne(id);
-    }
 
     public Booking addOrUpdate(Booking booking, int userId) throws UsernameNotFoundException, IOException {
     	if (booking != null) {
@@ -64,10 +56,6 @@ public class BookingService {
     		}
     	}
     	return booking;
-    }
-
-    public void delete(Integer id) {
-      bookingRepository.delete(id);
     }
 
     public List<Booking> userBookings(User user) {
