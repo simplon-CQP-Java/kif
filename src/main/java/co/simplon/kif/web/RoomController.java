@@ -31,15 +31,16 @@ public class RoomController {
 			return new ModelAndView("redirect:/rooms");
 		}
 		Room room = roomService.findById(id);
-		if (room == null) {			
+		if (room == null) {
 			model.addAttribute("id", id);
 		}
 		model.addAttribute("room", room);
-		return new ModelAndView("rooms/search", model);
+		return new ModelAndView("rooms/room", model);
 	}
 
 	@RequestMapping("/add")
-	public ModelAndView addRoom(@RequestParam("name") String name, @RequestParam("places") Integer places, String description) {
+	public ModelAndView addRoom(@RequestParam("name") String name, @RequestParam("places") Integer places,
+			String description) {
 		if (name == null || places == null || description == null) {
 			return new ModelAndView("redirect:/rooms");
 		}
@@ -55,5 +56,22 @@ public class RoomController {
 		}
 		roomService.delete(id);
 		return new ModelAndView("redirect:/rooms");
+	}
+
+	@RequestMapping("/edit")
+	public ModelAndView editComputer(@RequestParam("id") Integer id, @RequestParam("name") String name,
+		@RequestParam("places") Integer places, @RequestParam("description") String description, ModelMap modelMap) {
+		if (id == null || name == null || places == null || description == null) {
+			return new ModelAndView("redirect:/rooms");
+		}
+		// Get computer by id and set brand & model
+		Room room = roomService.findById(id);
+		room.setName(name);
+		room.setPlaces(places);
+		room.setDescription(description);
+		// Update computer and redirect
+		roomService.addOrUpdate(room);
+		modelMap.addAttribute("room", room);
+		return new ModelAndView("redirect:/rooms/roomById?id=" + id, modelMap);
 	}
 }

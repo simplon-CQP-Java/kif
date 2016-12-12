@@ -32,6 +32,7 @@
 					    </ul>
 					  	</div>
 					  	<div class="panel-footer">
+							<a href="/rooms/roomById?id=${room.id}" class="btn btn-primary">Voir</a>
 							<form method="post" action="/rooms/delete">
 								<input name="id" value="${room.id}" type="hidden" />
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -52,7 +53,7 @@
 					</div>
 					<div class="form-group">
 					    <label for="add-places-input">Places</label>
-						<input name="places" placeholder="Places" type="text" class="form-control" id="add-places-input">
+						<input name="places" placeholder="Places" type="number" class="form-control" id="add-places-input">
 					</div>
 					<div class="form-group">
 					    <label for="add-description-input">Description</label>

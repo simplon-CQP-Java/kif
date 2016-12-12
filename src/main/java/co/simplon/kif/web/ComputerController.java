@@ -59,7 +59,7 @@ public class ComputerController {
 
 	@RequestMapping("/edit")
 	public ModelAndView editComputer(@RequestParam("id") Integer id, @RequestParam("brand") String brand, @RequestParam("model") String model, ModelMap modelMap) {
-		if (id == null) {
+		if (id == null || brand == null || model == null) {
 			return new ModelAndView("redirect:/computers");
 		}
 		// Get computer by id and set brand & model
