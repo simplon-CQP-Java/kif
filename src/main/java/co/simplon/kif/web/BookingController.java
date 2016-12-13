@@ -102,7 +102,7 @@ public class BookingController {
 		}
 		try {
 			bookingService.delete(id);
-			redirectAttr.addFlashAttribute("success", "Votre réservation à bien été supprimée.");
+			redirectAttr.addFlashAttribute("success", "La réservation à bien été supprimée.");
 		} catch(Exception e) {
 			redirectAttr.addFlashAttribute("error", "Un problème est survenu lors de la suppression de la réservation.");
 		}

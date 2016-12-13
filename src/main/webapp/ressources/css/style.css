@@ -13,7 +13,7 @@ form {
 
 /* Remove radius */
 .jumbotron, .form-control, .btn, .navbar-inverse, .input-group-addon, .dropdown-menu,
-.list-group-item, .panel, .alert, .modal-content {
+.list-group-item, .panel, .alert, .modal-content, .popover {
 	border-radius: 0 !important;
 }
 
@@ -46,4 +46,14 @@ div#room, div#computer, div#booking {
 
 #profile .col-md-12 .alert {
 	margin-bottom: 0;
+}
+
+/* custom class */
+.bold {
+	font-weight: bold;
+}
+
+/* calendar style */
+.popover-content a.btn-danger {
+	margin-top: 10px;
 }
