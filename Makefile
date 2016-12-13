@@ -17,3 +17,6 @@ rebaseOnMaster:
 dev:
 	mvn clean
 	mvn tomcat7:run
+
+war:
+	mvn clean install
