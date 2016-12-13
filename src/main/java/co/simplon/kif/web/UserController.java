@@ -118,7 +118,7 @@ public class UserController {
 	public ModelAndView editUsername(@RequestParam("id") Integer id, @RequestParam("username") String username, ModelMap model,
 			HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttr) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (username == null) {
+		if (username == null || username == "") {
 			redirectAttr.addFlashAttribute("error", "Tous les champs sont requis.");
 			return new ModelAndView("redirect:/profil", model);
 		}
@@ -126,8 +126,13 @@ public class UserController {
 		if (user != null && !(auth instanceof AnonymousAuthenticationToken)) {
 			user = userService.findOneByUsername(auth.getName());
 	        user.setUsername(username);
-			customLoginService.autoLogin(userService.addOrUpdate(user));
-			redirectAttr.addFlashAttribute("success", "Votre nom d'utilisateur a bien été modifié.");
+	        try {
+	        	customLoginService.autoLogin(userService.addOrUpdate(user));
+	        } catch(Exception e) {
+	        	redirectAttr.addFlashAttribute("error", "Une erreur est survenue lors de la modification du nom d'utilisateur. Il est surement déjà utilisé.");
+	        	return new ModelAndView("redirect:/profil", model);
+	        }
+	        redirectAttr.addFlashAttribute("success", "Votre nom d'utilisateur a bien été modifié.");
 		}
 		return new ModelAndView("redirect:/profil", model);
 	}
@@ -136,12 +141,21 @@ public class UserController {
 	public ModelAndView editPassword(@RequestParam("id") Integer id, @RequestParam("password") String password,
 			@RequestParam("newPassword") String newPassword, @RequestParam("confirmNewPassword") String confirmNewPassword,
 			ModelMap model, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttr) {
-		if (password == null || newPassword == null || confirmNewPassword == null || id == null) {
+		if (password == null || newPassword == null || confirmNewPassword == null || id == null
+				|| password == "" || newPassword == "" || confirmNewPassword == "") {
 			redirectAttr.addFlashAttribute("error", "Tous les champs sont requis.");
 			return new ModelAndView("redirect:/profil", model);
 		}
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findById(id);
+		if (passwordEncoder.matches(password, user.getPassword()) == false) {
+			redirectAttr.addFlashAttribute("error", "Le mot de passe est incorrect.");
+			return new ModelAndView("redirect:/profil", model);
+		}
+		if (newPassword.equals(confirmNewPassword) == false) {
+			redirectAttr.addFlashAttribute("error", "Les mots de passe ne correspondent pas.");
+			return new ModelAndView("redirect:/profil", model);
+		}
 		if (user != null && !(auth instanceof AnonymousAuthenticationToken)) {
 			user = changePassword(user, password, newPassword, confirmNewPassword);
 			User newUser = userService.updateUser(user);
