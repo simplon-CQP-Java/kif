@@ -5,18 +5,13 @@
 <html >
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<spring:url value="/ressources/css/lib/bootstrap.min.css" var="bootstrapCss" />
-		<spring:url value="/ressources/css/lib/bootstrap-theme.min.css" var="bootstrapThemeCss" />
-		<spring:url value="/ressources/css/lib/bootstrap-datetimepicker.min.css" var="bootstrapDateTimePickerCss" />
-		<spring:url value="/ressources/css/lib/fullcalendar.min.css" var="fullCalendarPickerCss" />
-		<spring:url value="/ressources/css/style.css" var="styleCss" />
 
 		<!-- Bootstrap -->
-		<link rel="stylesheet" type="text/css" href="${bootstrapCss}"/>
-		<link rel="stylesheet" type="text/css" href="${bootstrapThemeCss}"/>
-		<link rel="stylesheet" type="text/css" href="${bootstrapDateTimePickerCss}"/>
-		<link rel="stylesheet" type="text/css" href="${fullCalendarPickerCss}"/>
-		<link rel="stylesheet" type="text/css" href="${styleCss}"/>
+		<link rel="stylesheet" type="text/css" href="/ressources/css/lib/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="/ressources/css/lib/bootstrap-theme.min.css"/>
+		<link rel="stylesheet" type="text/css" href="/ressources/css/lib/bootstrap-datetimepicker.min.css"/>
+		<link rel="stylesheet" type="text/css" href="/ressources/css/lib/fullcalendar.min.css"/>
+		<link rel="stylesheet" type="text/css" href="/ressources/css/style.css"/>
 
 		<!-- JS Dependencies -->
 		<script type="text/javascript" src="/ressources/js/lib/jquery-3.1.1.js"></script>

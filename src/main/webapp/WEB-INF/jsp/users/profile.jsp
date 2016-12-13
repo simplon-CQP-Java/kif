@@ -28,6 +28,23 @@
 			  	</h3>
 			  	<p>Mettre à jour les informations de votre compte</p>
 			</div>
+			<div class="col-md-12">
+				<c:if test="${error != null}">
+			      <div class="alert alert-danger alert-dismissible" role="alert">
+			      	<button type="button" class="close" data-dismiss="alert" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
+			      	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+					<span class="sr-only">Error:</span>
+					${error}
+				  </div>
+			    </c:if>
+	       		<c:if test="${success != null}">
+	       			<div class="alert alert-success alert-dismissible" role="alert">
+	       				<button type="button" class="close" data-dismiss="alert" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
+	       				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+						${success}
+					</div>
+	       		</c:if>
+       		</div>
 			<div class="col-md-6">
 				<div class="page-header">
 					<h5>Modifier mon nom d'utilisateur</h5>
@@ -87,7 +104,7 @@
   				</div>
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
 		        <form method="post" action="/users/edit/delete">
 					<input name="id" value="${user.id}" type="hidden" >
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

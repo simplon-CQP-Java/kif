@@ -101,7 +101,7 @@
   				</div>
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
 		        <form method="post" action="/users/delete">
 					<input name="id" value="${user.id}" type="hidden" >
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

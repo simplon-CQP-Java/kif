@@ -2,7 +2,7 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <head>
-	<title>Salles</title>
+	<title>Accès refusé - KIF</title>
 </head>
 
 <t:genericpage>

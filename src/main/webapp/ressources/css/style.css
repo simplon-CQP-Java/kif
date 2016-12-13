@@ -22,6 +22,10 @@ form {
 	margin-bottom: 0;
 }
 
+/* Remove outline */
+.btn:focus {
+  outline: none !important;
+}
 /* Modals */
 .modal .modal-footer form, .panel .panel-footer form, form.inline {
 	display: inline;
@@ -38,4 +42,8 @@ div.panel div.panel-heading span.label {
 
 div#room, div#computer, div#booking {
 	margin-top: 15px;
+}
+
+#profile .col-md-12 .alert {
+	margin-bottom: 0;
 }
