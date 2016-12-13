@@ -22,7 +22,7 @@
 			  ${error}
 			</div>
 	      </c:if>
-          <form accept-charset="utf-8" action="/login" method="POST">
+          <form accept-charset="utf-8" action="${pageContext.request.contextPath}/login" method="POST">
             <div class="form-group">
               <label for="username-email">Nom d'utilisateur</label>
               <input type="text" name="username" id="login-username" class="form-control" placeholder="Username" />
@@ -33,7 +33,7 @@
             </div>
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <button type="submit" class="btn btn-success">Connexion</button>
-            <a href="/register" class="pull-right">Inscription</a>
+            <a href="${pageContext.request.contextPath}/register" class="pull-right">Inscription</a>
           </form>
         </div>
       </div>

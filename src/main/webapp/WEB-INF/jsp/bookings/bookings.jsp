@@ -52,8 +52,8 @@
 							</ul>
 						</div>
 						<div class="panel-footer">
-							<a href="/bookings/bookingById?id=${booking.id}" class="btn btn-primary">Modifier</a>
-							<form method="post" action="/bookings/delete">
+							<a href="${pageContext.request.contextPath}/bookings/bookingById?id=${booking.id}" class="btn btn-primary">Modifier</a>
+							<form method="post" action="${pageContext.request.contextPath}/bookings/delete">
 								<input name="id" value="${booking.id}" type="hidden" />
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 								<button type="submit" class="btn btn-danger">Supprimer</button>
@@ -66,7 +66,7 @@
 				<div class="page-header">
 					<h5>Réserver</h5>
 				</div>
-				<form method="post" action="/bookings/book">
+				<form method="post" action="${pageContext.request.contextPath}/bookings/book">
 					<security:authorize access="hasAuthority('ADMIN')">
 						<div class="form-group">
 						    <label for="add-user-select">Réserver pour un utilisateur</label>
@@ -122,6 +122,6 @@
 				</form>
 			</div>
 		</div>
-		<script type="text/javascript" src="/ressources/js/bookings.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/ressources/js/bookings.js"></script>
 	</jsp:body>
 </t:genericpage>

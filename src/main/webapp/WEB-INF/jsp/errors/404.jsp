@@ -19,7 +19,7 @@
 				<h2>Erreur 404</h2>
 				<p>Page introuvable</p>
 				<p>
-					<a class="btn btn-primary btn-lg" href="/" role="button">
+					<a class="btn btn-primary btn-lg" href="${pageContext.request.contextPath}/" role="button">
 						<span class="glyphicon glyphicon-home"></span>&nbsp;
 						Accueil
 					</a>

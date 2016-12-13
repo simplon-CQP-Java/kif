@@ -49,7 +49,7 @@
 				<div class="page-header">
 					<h5>Modifier mon nom d'utilisateur</h5>
 				</div>
-				<form method="post" action="/users/edit/username">
+				<form method="post" action="${pageContext.request.contextPath}/users/edit/username">
 					<input name="id" value="${user.id}" type="hidden" >
 					<div class="form-group">
 					    <label for="new-username-input">Nom</label>
@@ -67,7 +67,7 @@
 				<div class="page-header">
 					<h5>Modifier mon mot de passe</h5>
 				</div>
-				<form method="post" action="/users/edit/password">
+				<form method="post" action="${pageContext.request.contextPath}/users/edit/password">
 					<input name="id" value="${user.id}" type="hidden" >
 					<div class="form-group">
 					    <label for="password-input">Mot de passe actuel</label>
@@ -105,7 +105,7 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-		        <form method="post" action="/users/edit/delete">
+		        <form method="post" action="${pageContext.request.contextPath}/users/edit/delete">
 					<input name="id" value="${user.id}" type="hidden" >
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">

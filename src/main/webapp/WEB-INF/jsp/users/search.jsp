@@ -30,7 +30,7 @@
 						    </ul>
 						  	</div>
 						  	<div class="panel-footer">
-								<form method="post" action="/users/delete">
+								<form method="post" action="${pageContext.request.contextPath}/users/delete">
 									<input name="id" value="${user.id}" type="hidden" />
 									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<button type="submit" class="btn btn-danger">Supprimer</button>
@@ -46,7 +46,7 @@
 				        </div>
 				    </c:otherwise>
 				</c:choose>
-				<a class="btn btn-primary" href="/users">
+				<a class="btn btn-primary" href="${pageContext.request.contextPath}/users">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					Liste des utilisateurs
 				</a>

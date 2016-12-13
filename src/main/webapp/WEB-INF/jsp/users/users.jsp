@@ -48,18 +48,18 @@
 					    </ul>
 					  	</div>
 					  	<div class="panel-footer">
-					  		<a href="/users/userById?id=${user.id}" class="btn btn-primary">
+					  		<a href="${pageContext.request.contextPath}/users/userById?id=${user.id}" class="btn btn-primary">
 					  			Modifier
 					  		</a>
 						    <c:if test="${user.enabled == 'true'}">
-						       <form method="post" action="/users/delete">
+						       <form method="post" action="${pageContext.request.contextPath}/users/delete">
 									<input name="id" value="${user.id}" type="hidden" />
 									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<button type="submit" class="btn btn-danger">Supprimer</button>
 								</form>
 						    </c:if>
 						    <c:if test="${user.enabled == 'false'}">
-						        <form method="post" action="/users/active">
+						        <form method="post" action="${pageContext.request.contextPath}/users/active">
 									<input name="id" value="${user.id}" type="hidden" />
 									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<button type="submit" class="btn btn-success">Activer</button>
@@ -73,7 +73,7 @@
 				<div class="page-header">
 					<h5>Ajouter un utilisateur</h5>
 				</div>
-				<form method="post" action="/users/add">
+				<form method="post" action="${pageContext.request.contextPath}/users/add">
 					<div class="form-group">
 					    <label for="add-username-input">Nom</label>
 						<input name="username" placeholder="Nom" type="text" class="form-control" id="add-username-input">
@@ -99,7 +99,7 @@
 				<div class="page-header">
 					<h5>Rechercher un utilisateur par son identifiant</h5>
 				</div>
-				<form method="post" action="/users/userByUsername">
+				<form method="post" action="${pageContext.request.contextPath}/users/userByUsername">
 					<div class="form-group">
 					    <label for="user-by-username-input">Nom d'utilisateur</label>
 						<input name="username" placeholder="Nom d'utilisateur" type="text" class="form-control" id="user-by-username-input">

@@ -23,7 +23,7 @@
 			  ${error}
 			</div>
 	      </c:if>
-          <form method="post" action="/users/register">
+          <form method="post" action="${pageContext.request.contextPath}/users/register">
             <div class="form-group">
 			  <label for="register-username-input">Nom</label>
 			  <input name="username" placeholder="Nom" type="text" class="form-control" id="register-username-input">
@@ -38,7 +38,7 @@
             </div>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <button type="submit" class="btn btn-success">Inscription</button>
-            <a href="/login" class="pull-right">Connexion</a>
+            <a href="${pageContext.request.contextPath}/login" class="pull-right">Connexion</a>
           </form>
         </div>
       </div>

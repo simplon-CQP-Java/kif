@@ -33,13 +33,13 @@
 						  		<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#update-computer" aria-expanded="false" aria-controls="update-computer">
 							  		Modifier
 								</button>
-								<form method="post" action="/computers/delete">
+								<form method="post" action="${pageContext.request.contextPath}/computers/delete">
 									<input name="id" value="${computer.id}" type="hidden" />
 									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<button type="submit" class="btn btn-danger">Supprimer</button>
 								</form>
 								<div class="collapse" id="update-computer">
-							  		<form method="post" action="/computers/edit">
+							  		<form method="post" action="${pageContext.request.contextPath}/computers/edit">
 								  		<div class="form-group">
 								    		<label for="brand-input">Marque</label>
 											<input name="brand" placeholder="Marque" type="text" class="form-control" id="brand-input" value="${computer.brand}">
@@ -64,7 +64,7 @@
 				        </div>
 				    </c:otherwise>
 				</c:choose>
-				<a class="btn btn-primary" href="/computers">
+				<a class="btn btn-primary" href="${pageContext.request.contextPath}/computers">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					Liste des ordinateurs
 				</a>

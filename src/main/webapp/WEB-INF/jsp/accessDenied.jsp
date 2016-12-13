@@ -17,6 +17,6 @@
     	<div class="page-header">
 	    	<h2>Accès refusé</h2>
     	</div>
-    	<a href="/login" class="btn btn-danger">Connexion</a>
+    	<a href="${pageContext.request.contextPath}/login" class="btn btn-danger">Connexion</a>
     </jsp:body>
 </t:genericpage>
