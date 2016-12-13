@@ -35,7 +35,7 @@
 						</div>
 		    			<div class="panel-footer">
 		    				<h3>Réponse rapide</h3>
-							<form method="post" action="/replies/add">
+							<form method="post" action="${pageContext.request.contextPath}/replies/add">
 	    						<input type="hidden" value="${message.id}" name="id">
 	    						<div class="form-group">
 								    <label for="add-reply">Message</label>

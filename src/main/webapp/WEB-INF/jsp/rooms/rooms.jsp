@@ -47,8 +47,8 @@
 					    </ul>
 					  	</div>
 					  	<div class="panel-footer">
-							<a href="/rooms/roomById?id=${room.id}" class="btn btn-primary">Voir</a>
-							<form method="post" action="/rooms/delete">
+							<a href="${pageContext.request.contextPath}/rooms/roomById?id=${room.id}" class="btn btn-primary">Voir</a>
+							<form method="post" action="${pageContext.request.contextPath}/rooms/delete">
 								<input name="id" value="${room.id}" type="hidden" />
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 								<button type="submit" class="btn btn-danger">Supprimer</button>
@@ -61,7 +61,7 @@
 				<div class="page-header">
 					<h5>Ajouter une salle</h5>
 				</div>
-				<form method="post" action="/rooms/add">
+				<form method="post" action="${pageContext.request.contextPath}/rooms/add">
 					<div class="form-group">
 					    <label for="add-name-input">Nom</label>
 						<input name="name" placeholder="Nom" type="text" class="form-control" id="add-name-input">
@@ -81,7 +81,7 @@
 				<div class="page-header">
 					<h5>Rechercher une salle par son identifiant</h5>
 				</div>
-				<form method="post" action="/rooms/roomById">
+				<form method="post" action="${pageContext.request.contextPath}/rooms/roomById">
 					<div class="form-group">
 					    <label for="room-by-id-input">Id</label>
 						<input name="id" placeholder="Id" type="number" class="form-control" id="room-by-id-input">

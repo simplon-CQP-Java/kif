@@ -38,14 +38,14 @@
 									aria-expanded="false" aria-controls="update-booking">
 							  		Modifier
 								</button>
-								<form method="post" action="/bookings/delete">
+								<form method="post" action="${pageContext.request.contextPath}/bookings/delete">
 									<input name="id" value="${booking.id}" type="hidden" />
 									<input type="hidden" name="${_csrf.parameterName}"
 										value="${_csrf.token}" />
 									<button type="submit" class="btn btn-danger">Supprimer</button>
 								</form>
 								<div class="collapse" id="update-booking">
-							  		<form method="post" action="/bookings/edit">
+							  		<form method="post" action="${pageContext.request.contextPath}/bookings/edit">
 										<security:authorize access="hasAuthority('ADMIN')">
 											<div class="form-group">
 											    <label for="edit-user-select">Réserver pour un utilisateur</label>
@@ -118,7 +118,7 @@
 				        </div>
 				    </c:otherwise>
 				</c:choose>
-				<a class="btn btn-primary" href="/bookings">
+				<a class="btn btn-primary" href="${pageContext.request.contextPath}/bookings">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					Liste des réservations
 				</a>

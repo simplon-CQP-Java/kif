@@ -34,7 +34,7 @@
   						${success}
   					</div>
         		</c:if>
-				<form method="post" action="/contactSubmit">
+				<form method="post" action="${pageContext.request.contextPath}/contactSubmit">
 					<div class="form-group">
 					    <label for="add-title-input">Titre</label>
 						<input name="title" placeholder="Titre" type="text" class="form-control" id="add-title-input">

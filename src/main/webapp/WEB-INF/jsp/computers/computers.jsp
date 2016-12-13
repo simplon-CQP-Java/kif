@@ -46,8 +46,8 @@
 					    </ul>
 					  	</div>
 					  	<div class="panel-footer">
-					  		<a href="/computers/computerById?id=${computer.id}" class="btn btn-primary">Voir</a>
-							<form method="post" action="/computers/delete">
+					  		<a href="${pageContext.request.contextPath}/computers/computerById?id=${computer.id}" class="btn btn-primary">Voir</a>
+							<form method="post" action="${pageContext.request.contextPath}/computers/delete">
 								<input name="id" value="${computer.id}" type="hidden" />
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 								<button type="submit" class="btn btn-danger">Supprimer</button>
@@ -60,7 +60,7 @@
 				<div class="page-header">
 					<h5>Ajouter un ordinateur</h5>
 				</div>
-				<form method="post" action="/computers/add">
+				<form method="post" action="${pageContext.request.contextPath}/computers/add">
 					<div class="form-group">
 					    <label for="add-brand-input">Marque</label>
 						<input name="brand" placeholder="Marque" type="text" class="form-control" id="add-brand-input">
@@ -76,7 +76,7 @@
 				<div class="page-header">
 					<h5>Rechercher un ordinateur par son identifiant</h5>
 				</div>
-				<form method="post" action="/computers/computerById">
+				<form method="post" action="${pageContext.request.contextPath}/computers/computerById">
 					<div class="form-group">
 					    <label for="computer-by-id-input">Id</label>
 						<input name="id" placeholder="Id" type="number" class="form-control" id="computer-by-id-input">

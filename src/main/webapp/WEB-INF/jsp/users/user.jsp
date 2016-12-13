@@ -24,7 +24,7 @@
 						</button>
 				    </c:if>
 				    <c:if test="${user.enabled == 'false'}">
-				        <form method="post" action="/users/active" class="inline pull-right">
+				        <form method="post" action="${pageContext.request.contextPath}/users/active" class="inline pull-right">
 							<input name="id" value="${user.id}" type="hidden" />
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 							<button type="submit" class="btn btn-success">Activer</button>
@@ -33,7 +33,7 @@
 			  	</h3>
 			</div>
 			<div class="col-md-8 col-md-offset-2">
-				<form method="post" action="/users/edit" class="panel panel-primary">
+				<form method="post" action="${pageContext.request.contextPath}/users/edit" class="panel panel-primary">
 					<div class="panel-heading">Modifier l'utilisateur</div>
 					<div class="panel-body">
 						<c:if test="${error != null}">
@@ -102,7 +102,7 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-		        <form method="post" action="/users/delete">
+		        <form method="post" action="${pageContext.request.contextPath}/users/delete">
 					<input name="id" value="${user.id}" type="hidden" >
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">

@@ -12,18 +12,18 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="/">KIF</a>
+			<a class="navbar-brand" href="${pageContext.request.contextPath}/">KIF</a>
 		</div>
 		<div class="collapse navbar-collapse" id="navbar-menu">
 		<ul class="nav navbar-nav">
 			<security:authorize access="isAuthenticated()">
-				<li><a href="/bookings">Réservations</a></li>
+				<li><a href="${pageContext.request.contextPath}/bookings">Réservations</a></li>
 			</security:authorize>
 			<security:authorize access="hasAuthority('ADMIN')">
-				<li><a href="/computers">Ordinateurs</a></li>
-				<li><a href="/rooms">Salles</a></li>
-				<li><a href="/users">Utilisateurs</a></li>
-				<li><a href="/messages">Messages</a></li>
+				<li><a href="${pageContext.request.contextPath}/computers">Ordinateurs</a></li>
+				<li><a href="${pageContext.request.contextPath}/rooms">Salles</a></li>
+				<li><a href="${pageContext.request.contextPath}/users">Utilisateurs</a></li>
+				<li><a href="${pageContext.request.contextPath}/messages">Messages</a></li>
 			</security:authorize>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
@@ -38,14 +38,14 @@
 	          	<span class="caret"></span>
 	          </a>
 	          <ul class="dropdown-menu">
-	          	<li><a href="/contact">Contact</a></li>
+	          	<li><a href="${pageContext.request.contextPath}/contact">Contact</a></li>
 				<security:authorize access="!isAuthenticated()">
-					<li><a href="/login">Connexion</a></li>
-					<li><a href="/register">Inscription</a></li>
+					<li><a href="${pageContext.request.contextPath}/login">Connexion</a></li>
+					<li><a href="${pageContext.request.contextPath}/register">Inscription</a></li>
 				</security:authorize>
 				<security:authorize access="isAuthenticated()">
-					<li><a href="/profil">Profil</a></li>
-					<li><a href="/logout">Déconnexion</a></li>
+					<li><a href="${pageContext.request.contextPath}/profil">Profil</a></li>
+					<li><a href="${pageContext.request.contextPath}/logout">Déconnexion</a></li>
 				</security:authorize>
 	          </ul>
 	        </li>

@@ -48,13 +48,13 @@
 						  		<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#update-room" aria-expanded="false" aria-controls="update-room">
 							  		Modifier
 								</button>
-								<form method="post" action="/rooms/delete">
+								<form method="post" action="${pageContext.request.contextPath}/rooms/delete">
 									<input name="id" value="${room.id}" type="hidden" />
 									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<button type="submit" class="btn btn-danger">Supprimer</button>
 								</form>
 								<div class="collapse" id="update-room">
-							  		<form method="post" action="/rooms/edit">
+							  		<form method="post" action="${pageContext.request.contextPath}/rooms/edit">
 								  		<div class="form-group">
 										    <label for="name-input">Nom</label>
 											<input name="name" placeholder="Nom" type="text" class="form-control" id="name-input" value="${room.name}">
@@ -83,7 +83,7 @@
 				        </div>
 				    </c:otherwise>
 				</c:choose>
-				<a class="btn btn-primary" href="/rooms">
+				<a class="btn btn-primary" href="${pageContext.request.contextPath}/rooms">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					Liste des salles
 				</a>

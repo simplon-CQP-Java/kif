@@ -50,14 +50,14 @@
 							<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#quick-reply-${message.id}" aria-expanded="false" aria-controls="quick-reply">
 							  Réponse rapide
 							</button>
-					  		<a href="/messages/messageById/${message.id}" class="btn btn-primary">Voir</a>
-							<form method="post" action="/messages/delete">
+					  		<a href="${pageContext.request.contextPath}/messages/messageById/${message.id}" class="btn btn-primary">Voir</a>
+							<form method="post" action="${pageContext.request.contextPath}/messages/delete">
 								<input name="id" value="${message.id}" type="hidden" />
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 								<button type="submit" class="btn btn-danger">Supprimer</button>
 							</form>
 							<div class="collapse" id="quick-reply-${message.id}">
-								<form method="post" action="/replies/add">
+								<form method="post" action="${pageContext.request.contextPath}/replies/add">
 	    								<input type="hidden" value="${message.id}" name="id">
 	    								<div class="form-group">
 									    	<label for="add-reply">Message</label>
