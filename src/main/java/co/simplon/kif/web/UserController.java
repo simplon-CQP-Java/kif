@@ -73,6 +73,10 @@ public class UserController {
 			@RequestParam("password") String password, @RequestParam("confirmPassword") String confirmPassword,
 			Role role, RedirectAttributes redirectAttr) {
 		if (username != null && password != null && confirmPassword != null && role != null) {
+			if (password.length() < 6) {
+				redirectAttr.addFlashAttribute("error", "Le mot de passe doit contenir au moins 6 caractères.");
+				return new ModelAndView("redirect:/users");
+			}
 			if (password.equals(confirmPassword)) {
 				try {
 					userService.addOrUpdate(username, password, role);
@@ -106,7 +110,16 @@ public class UserController {
 	        user.setRole(role);
 	        // Check if password, newPassword, confirmNewPassword are filled then changePassword
 	        if (password != null && newPassword != null && confirmNewPassword != null) {
-	        	user = changePassword(user, password, newPassword, confirmNewPassword);
+	        	if (newPassword.length() >= 6) {
+	        		if (newPassword.equals(confirmNewPassword)) {
+	        			user = changePassword(user, password, newPassword, confirmNewPassword);
+	        		} else {
+	        			redirectAttr.addFlashAttribute("error", "Les mots de passe ne correspondent pas.");
+	        		}
+	        	} else {
+	        		redirectAttr.addFlashAttribute("error", "Le mot de passe doit contenir au moins 6 caractères.");
+	        	}
+	        } else {
 	        }
 			userService.updateUser(user);
 			redirectAttr.addFlashAttribute("success", "L'utilisateur à bien été modifié.");
@@ -145,6 +158,10 @@ public class UserController {
 				|| password == "" || newPassword == "" || confirmNewPassword == "") {
 			redirectAttr.addFlashAttribute("error", "Tous les champs sont requis.");
 			return new ModelAndView("redirect:/profil", model);
+		}
+		if (newPassword.length() < 6) {
+			redirectAttr.addFlashAttribute("error", "Le mot de passe doit contenir au moins 6 caractères.");
+			return new ModelAndView("redirect:/profil");
 		}
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findById(id);
@@ -205,6 +222,10 @@ public class UserController {
 		if (username == null || password == null || confirmPassword == null || role == null || username == "") {
 			redirectAttr.addFlashAttribute("error", "Tous les champs sont requis.");
 			return new ModelAndView("redirect:/register", model);
+		}
+		if (password.length() < 6) {
+			redirectAttr.addFlashAttribute("error", "Le mot de passe doit contenir au moins 6 caractères.");
+			return new ModelAndView("redirect:/register");
 		}
 		if (password.equals(confirmPassword)) {
 			User findUser = userService.findOneByUsername(username);
