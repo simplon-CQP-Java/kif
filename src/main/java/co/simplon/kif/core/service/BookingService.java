@@ -99,4 +99,8 @@ public class BookingService extends GenericService<Booking, BookingRepository> {
 		}
 		return isAvailable;
 	}
+	
+	public List<Booking> findAll() {
+		return bookingRepository.findAll();
+	}
 }

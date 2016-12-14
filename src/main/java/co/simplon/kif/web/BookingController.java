@@ -180,4 +180,11 @@ public class BookingController {
 		model.addAttribute("booking", booking);
 		return new ModelAndView("redirect:/bookings/bookingById?id=" + id, model);
 	}
+	
+	@RequestMapping("/history")
+	public ModelAndView findAll(ModelMap model) {
+		List<Booking> list = bookingService.findAll();
+		model.addAttribute("history", list);
+		return new ModelAndView("/history", model);
+	}
 }

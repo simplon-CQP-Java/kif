@@ -1,8 +1,7 @@
-<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <div id="bookings-calendar" class="row">
 	<div class="col-md-12">
-		<h2>Calendrier des rÃ©servations de salles et ordinateurs</h2>
+		<h2>Calendrier des réservations de salles et ordinateurs</h2>
 	</div>
 	<div id="calendar" class="col-md-12"></div>
 </div>
@@ -27,7 +26,7 @@
 	            	placement: 'top',
 	            	trigger: 'focus',
 	            	html: true,
-	            	content: '<div><span class="bold">RÃ©servÃ© de</span> ' + moment(e.start).format('LLLL') + ' Ã  ' + moment(e.end).format('LLLL') + ' par <span class="bold">' + e.user.username + '</span></div>'
+	            	content: '<div><span class="bold">Réservé de</span> ' + moment(e.start).format('LLLL') + ' à ' + moment(e.end).format('LLLL') + ' par <span class="bold">' + e.user.username + '</span></div>'
 		    	};
 				if (userRole == "[ADMIN]") {
 					popoverOptions.content += '<a class="btn btn-block btn-danger" href="${pageContext.request.contextPath}/bookings/delete?id=' + e._id + '">Supprimer</a>';
