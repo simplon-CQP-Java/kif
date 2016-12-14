@@ -14,6 +14,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		var userRole = "${user.authorities}";
+		var userName = "${user.username}";
 		var calendar = $('#calendar').fullCalendar({
 			locale: 'fr',
 			events: '${pageContext.request.contextPath}/bookings/getCalendarBookings',
@@ -29,7 +30,7 @@
 	            	html: true,
 	            	content: '<div><span class="bold">Réservé de</span> ' + moment(e.start).format('LLLL') + ' à ' + moment(e.end).format('LLLL') + ' par <span class="bold">' + e.user.username + '</span></div>'
 		    	};
-				if (userRole == "[ADMIN]") {
+				if (userRole == "[ADMIN]" || userName == e.user.username) {
 					popoverOptions.content += '<a class="btn btn-block btn-primary" href="${pageContext.request.contextPath}/bookings/bookingById?id=' + e._id + '">Modifier</a>';
 					popoverOptions.content += '<a class="btn btn-block btn-danger" href="${pageContext.request.contextPath}/bookings/delete?id=' + e._id + '">Supprimer</a>';
 				}
