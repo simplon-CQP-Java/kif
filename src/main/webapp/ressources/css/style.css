@@ -54,6 +54,6 @@ div#room, div#computer, div#booking {
 }
 
 /* calendar style */
-.popover-content a.btn-danger {
+.popover-content a.btn-primary {
 	margin-top: 10px;
 }

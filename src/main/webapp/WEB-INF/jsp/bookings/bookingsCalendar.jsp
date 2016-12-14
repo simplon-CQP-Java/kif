@@ -30,6 +30,7 @@
 	            	content: '<div><span class="bold">Réservé de</span> ' + moment(e.start).format('LLLL') + ' à ' + moment(e.end).format('LLLL') + ' par <span class="bold">' + e.user.username + '</span></div>'
 		    	};
 				if (userRole == "[ADMIN]") {
+					popoverOptions.content += '<a class="btn btn-block btn-primary" href="${pageContext.request.contextPath}/bookings/bookingById?id=' + e._id + '">Modifier</a>';
 					popoverOptions.content += '<a class="btn btn-block btn-danger" href="${pageContext.request.contextPath}/bookings/delete?id=' + e._id + '">Supprimer</a>';
 				}
 		    	$(element.currentTarget).popover(popoverOptions);
