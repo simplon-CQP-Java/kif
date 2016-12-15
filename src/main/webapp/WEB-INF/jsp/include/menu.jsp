@@ -24,6 +24,7 @@
 				<li><a href="${pageContext.request.contextPath}/rooms">Salles</a></li>
 				<li><a href="${pageContext.request.contextPath}/users">Utilisateurs</a></li>
 				<li><a href="${pageContext.request.contextPath}/messages">Messages</a></li>
+				<li><a href="${pageContext.request.contextPath}/history">Historique des réservations</a></li>
 			</security:authorize>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
