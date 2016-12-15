@@ -14,8 +14,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import co.simplon.kif.core.model.Booking;
-import co.simplon.kif.core.model.Computer;
-import co.simplon.kif.core.model.Room;
 import co.simplon.kif.core.model.User;
 import co.simplon.kif.core.model.User.Role;
 import co.simplon.kif.core.repository.BookingRepository;
@@ -49,8 +47,8 @@ public class BookingService extends GenericService<Booking, BookingRepository> {
     		if (user == null) {
     			throw new Exception("User name not found");
     		}
-    		if ((booking.getComputer() != null && this.computerIsAvailable(booking.getComputer(), booking.getStart(), booking.getEnd())) ||
-    			(booking.getRoom() != null && this.roomIsAvailable(booking.getRoom(), booking.getStart(), booking.getEnd()))) {
+    		if ((booking.getComputer() != null && this.computerIsAvailable(booking.getComputer().getId(), booking.getStart(), booking.getEnd())) ||
+    			(booking.getRoom() != null && this.roomIsAvailable(booking.getRoom().getId(), booking.getStart(), booking.getEnd()))) {
     			return bookingRepository.save(booking);
     		} else {
     			throw new Exception("Ressource is not available");
@@ -63,41 +61,27 @@ public class BookingService extends GenericService<Booking, BookingRepository> {
     	return bookingRepository.userBookings(user.getId());
     }
 
-    public boolean computerIsAvailable(Computer computer, Date start, Date end) {
-		List<Integer> list = bookingRepository.findBookingComputer(computer.getId());
-		boolean isAvailable = false;
-		if (list == null || list.size() < 1) {
+    public List<Booking> getAllBookings() {
+    	return bookingRepository.getAllBookings();
+    }
+
+    // Check if computer is available for start Date and end Date
+    public boolean computerIsAvailable(Integer id, Date start, Date end) {
+    	List<Booking> list = bookingRepository.getBookingsComputer(id, start, end);
+		if (list.isEmpty()) {
 			return true;
+    	} else {
+			return false;
 		}
-		for (int i = 0; i < list.size(); i++) {
-			Booking book = bookingRepository.findOne(list.get(i));
-			if ((start.before(book.getStart()) && end.before(book.getStart()))
-				|| (book.getEnd().before(start) && book.getEnd().before(end))) {
-				isAvailable = true;
-			} else {
-				return false;
-			}
-		}
-		return isAvailable;
 	}
-
-	public boolean roomIsAvailable(Room room, Date start, Date end) {
-		List<Integer> list = bookingRepository.findBookingRoom(room.getId());
-		boolean isAvailable = false;
-
-		if (list == null || list.size() < 1) {
+    // Check if room is available for start Date and end Date
+	public boolean roomIsAvailable(Integer id, Date start, Date end) {
+		List<Booking> list = bookingRepository.getBookingsRoom(id, start, end);
+		if (list.isEmpty()) {
 			return true;
+		} else {
+			return false;
 		}
-		for (int i = 0; i < list.size(); i++) {
-			Booking book = bookingRepository.findOne(list.get(i));
-			if ((start.before(book.getStart()) && end.before(book.getStart()))
-				|| (book.getEnd().before(start) && book.getEnd().before(end))) {
-				isAvailable = true;
-			} else {
-				return false;
-			}
-		}
-		return isAvailable;
 	}
 	
 	public List<Booking> findAll() {

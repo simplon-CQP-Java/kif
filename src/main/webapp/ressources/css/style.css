@@ -1,12 +1,79 @@
 
 @CHARSET "UTF-8";
 
+html, body {
+    height: 100%;
+    margin: 0; padding: 0;
+}
+
+body {
+    display: table;
+    width: 100%;
+}
+
+div#main {
+	margin-bottom: 15px;
+}
+
+footer {
+    display: table-row;
+    height: 50px;
+    background-color: #1D2E4C;
+    color: #FFF;
+}
+
+footer p {
+	margin: 15px 0;
+}
+
+footer p a {
+	color: #FFF;
+}
+
+footer p a:hover {
+	color: #FFF;
+	cursor: pointer;
+}
+
 div#computers-search, div#rooms-search, div#users-search, div#login, div#register {
 	margin-top: 15px;
 }
 
 form {
 	margin-bottom: 0;
+}
+
+#menu.nav {
+	background-color: #1D2E4C;
+}
+
+#menu.nav a {
+	color: #FFF;
+}
+
+#menu.nav li a:hover {
+	color: #1D2E4C;
+}
+
+#menu.nav button.navbar-toggle span.icon-bar {
+	background-color: #FFF;
+}
+#menu.nav .dropdown-menu {
+	background-color: #1D2E4C;
+}
+
+#menu.nav .dropdown-toggle {
+	background-color: #1D2E4C;
+}
+
+#menu.nav .dropdown-toggle:hover {
+	background-color: #1D2E4C;
+	color: #FFF;
+}
+
+#menu.nav .dropdown-menu a:hover {
+	background-color: #FFF;
+	color: #1D2E4C;
 }
 
 /* Remove bootstrap styles */
@@ -44,7 +111,7 @@ div#room, div#computer, div#booking {
 	margin-top: 15px;
 }
 
-.col-md-12 .alert {
+#profile .col-md-12 .alert {
 	margin-bottom: 0;
 }
 
