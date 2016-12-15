@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,22 +49,19 @@ public class BookingController {
 		if (auth == null) {
 			return new ModelAndView("redirect:/login");
 		}
-		// Get Bookings, Rooms, Computers, Users, currentUser
+		// Get Bookings, Users
 		User user = userService.findOneByUsername(auth.getName());
 		List<Booking> bookingList;
 		if (user == null || user.getRole() == Role.ADMIN) {
-			bookingList = bookingService.getAll();
+			bookingList = bookingService.getAllBookings();
+			model.addAttribute("users", userService.getAll());
 		} else {
 			bookingList = bookingService.userBookings(user);
 		}
-		List<User> userList = userService.getAll();
-		List<Room> roomList = roomService.getAll();
-		List<Computer> computerList = computerService.getAll();
 		// Add attribute to model
-		model.addAttribute("users", userList);
 		model.addAttribute("bookings", bookingList);
-		model.addAttribute("rooms", roomList);
-		model.addAttribute("computers", computerList);
+		model.addAttribute("rooms", roomService.getAll());
+		model.addAttribute("computers", computerService.getAll());
 		return new ModelAndView("bookings/bookings", model);
 	}
 
@@ -175,9 +171,9 @@ public class BookingController {
 		try {
 			// Save booking
 			booking = bookingService.addOrUpdate(booking, userId);
-		} catch (UsernameNotFoundException e) {
+		} catch (Exception e) {
 			redirectAttr.addFlashAttribute("error", "Vérifier que la salle et/ou l'ordinateur sont bien disponibles.");
-			return new ModelAndView("redirect:/bookings");
+			return new ModelAndView("redirect:/bookings/bookingById?id=" + id, model);
 		}
 		model.addAttribute("booking", booking);
 		return new ModelAndView("redirect:/bookings/bookingById?id=" + id, model);
