@@ -6,7 +6,7 @@
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<!-- Bootstrap -->
+		<!-- CSS Dependencies -->
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/ressources/css/lib/bootstrap.min.css"/>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/ressources/css/lib/bootstrap-theme.min.css"/>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/ressources/css/lib/bootstrap-datetimepicker.min.css"/>
@@ -14,11 +14,6 @@
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/ressources/css/style.css"/>
 
 		<!-- JS Dependencies -->
-		<script type="text/javascript" src="/ressources/js/lib/jquery-3.1.1.js"></script>
-		<script type="text/javascript" src="/ressources/js/lib/bootstrap.min.js"></script>
-		<script type="text/javascript" src="/ressources/js/lib/moment.min.js"></script>
-		<script type="text/javascript" src="/ressources/js/lib/bootstrap-datetimepicker.js"></script>
-		<script type="text/javascript" src="/ressources/js/layout.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/ressources/js/lib/jquery-3.1.1.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/ressources/js/lib/bootstrap.min.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/ressources/js/lib/moment.min.js"></script>
