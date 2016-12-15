@@ -49,22 +49,19 @@ public class BookingController {
 		if (auth == null) {
 			return new ModelAndView("redirect:/login");
 		}
-		// Get Bookings, Rooms, Computers, Users, currentUser
+		// Get Bookings, Users
 		User user = userService.findOneByUsername(auth.getName());
 		List<Booking> bookingList;
 		if (user == null || user.getRole() == Role.ADMIN) {
-			bookingList = bookingService.getAll();
+			bookingList = bookingService.getAllBookings();
+			model.addAttribute("users", userService.getAll());
 		} else {
 			bookingList = bookingService.userBookings(user);
 		}
-		List<User> userList = userService.getAll();
-		List<Room> roomList = roomService.getAll();
-		List<Computer> computerList = computerService.getAll();
 		// Add attribute to model
-		model.addAttribute("users", userList);
 		model.addAttribute("bookings", bookingList);
-		model.addAttribute("rooms", roomList);
-		model.addAttribute("computers", computerList);
+		model.addAttribute("rooms", roomService.getAll());
+		model.addAttribute("computers", computerService.getAll());
 		return new ModelAndView("bookings/bookings", model);
 	}
 

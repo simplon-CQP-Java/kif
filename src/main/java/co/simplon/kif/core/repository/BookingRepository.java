@@ -12,13 +12,11 @@ import co.simplon.kif.core.model.Booking;
 
 @Resource
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
-	@Query("select id from Booking where computerId=?1")
-	public List<Integer> findBookingComputer(Integer computerId);
-
-	@Query("select id from Booking where roomId=?1")
-	public List<Integer> findBookingRoom(Integer roomId);
-
-	@Query("select r from Booking r where r.user.id =?1")
+	// Get user bookings and order by id descendant
+	@Query("select r from Booking r ORDER BY r.id DESC")
+	public List<Booking> getAllBookings();
+	// Get user bookings and order by id descendant
+	@Query("select r from Booking r where r.user.id =?1 ORDER BY r.id DESC")
 	public List<Booking> userBookings(Integer userId);
 	
 	// Return a list of Bookings for Computer which overlap with current booking

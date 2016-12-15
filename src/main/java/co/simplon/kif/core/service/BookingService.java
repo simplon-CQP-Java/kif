@@ -60,6 +60,11 @@ public class BookingService extends GenericService<Booking, BookingRepository> {
     public List<Booking> userBookings(User user) {
     	return bookingRepository.userBookings(user.getId());
     }
+
+    public List<Booking> getAllBookings() {
+    	return bookingRepository.getAllBookings();
+    }
+
     // Check if computer is available for start Date and end Date
     public boolean computerIsAvailable(Integer id, Date start, Date end) {
     	List<Booking> list = bookingRepository.getBookingsComputer(id, start, end);
