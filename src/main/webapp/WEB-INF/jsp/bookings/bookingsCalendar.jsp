@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div id="bookings-calendar" class="row">
 	<div class="col-md-12">
-		<h2>Calendrier des r�servations de salles et ordinateurs</h2>
+		<h2>Calendrier des réservations de salles et ordinateurs</h2>
 	</div>
 	<div id="calendar" class="col-md-12"></div>
 </div>
@@ -29,7 +29,7 @@
 	            	placement: 'top',
 	            	trigger: 'focus',
 	            	html: true,
-	            	content: '<div><span class="bold">R�serv� de</span> ' + moment(e.start).format('LLLL') + ' � ' + moment(e.end).format('LLLL') + ' par <span class="bold">' + e.user.username + '</span></div>'
+	            	content: '<div><span class="bold">Réservé de</span> ' + moment(e.start).format('LLLL') + ' à ' + moment(e.end).format('LLLL') + ' par <span class="bold">' + e.user.username + '</span></div>'
 		    	};
 				if (userRole == "[ADMIN]" || userName == e.user.username) {
 					popoverOptions.content += '<a class="btn btn-block btn-primary" href="${pageContext.request.contextPath}/bookings/bookingById?id=' + e._id + '">Modifier</a>';

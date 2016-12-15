@@ -15,18 +15,16 @@
     </jsp:attribute>
     
     <jsp:body>
-    
+    <table class="table">
         <c:forEach items="${history}" var="booking">
-            <table>
                  <tr>
-                    <td><p>${booking.user}</p></td>
+                    <td><p>${booking.user.username}</p></td>
                     <td><p>${booking.start}</p></td>
                     <td><p>${booking.end}</p></td>
-                    <td><p>${booking.room}</p></td>
-                    <td><p>${booking.computer}</p></td>
+                    <td><p>${booking.room.name}</p></td>
+                    <td><p>${booking.computer.brand}</p></td>
                  </tr>
-            </table>
         </c:forEach>
-        
+    </table>    
     </jsp:body>
 </t:genericpage>

@@ -187,6 +187,6 @@ public class BookingController {
 	public ModelAndView findAll(ModelMap model) {
 		List<Booking> list = bookingService.findAll();
 		model.addAttribute("history", list);
-		return new ModelAndView("/history", model);
+		return new ModelAndView("bookings/history", model);
 	}
 }
