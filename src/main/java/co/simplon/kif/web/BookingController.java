@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -173,9 +172,9 @@ public class BookingController {
 		try {
 			// Save booking
 			booking = bookingService.addOrUpdate(booking, userId);
-		} catch (UsernameNotFoundException e) {
+		} catch (Exception e) {
 			redirectAttr.addFlashAttribute("error", "Vérifier que la salle et/ou l'ordinateur sont bien disponibles.");
-			return new ModelAndView("redirect:/bookings");
+			return new ModelAndView("redirect:/bookings/bookingById?id=" + id, model);
 		}
 		model.addAttribute("booking", booking);
 		return new ModelAndView("redirect:/bookings/bookingById?id=" + id, model);

@@ -16,6 +16,21 @@
 	<jsp:body>
     	<div id="booking" class="row">
     		<div class="col-md-8 col-md-offset-2">
+	       		<c:if test="${error != null}">
+	       			<div class="alert alert-danger alert-dismissible" role="alert">
+	     				<button type="button" class="close" data-dismiss="alert" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
+	     				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+						<span class="sr-only">Error:</span>
+						${error}
+					</div>
+	       		</c:if>
+	       		<c:if test="${success != null}">
+	       			<div class="alert alert-success alert-dismissible" role="alert">
+	       				<button type="button" class="close" data-dismiss="alert" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
+	       				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+						${success}
+					</div>
+	       		</c:if>
 		    	<c:choose>
 					<c:when test="${booking != null}">
 				    	<div class="panel panel-default">
@@ -52,7 +67,9 @@
 												<select name="userId" class="form-control"
 													id="edit-room-select">
 													<c:forEach items="${users}" var="user">
-														<option value="${user.id}">${user.username}</option>
+														<option value="${user.id}" <c:if test="${booking.user.id == user.id}">selected</c:if>>
+															${user.username}
+														</option>
 													</c:forEach>
 													<option value="-1">Aucune</option>
 												</select>
@@ -62,10 +79,12 @@
 										    <label for="edit-room-select">Sélectionner une salle</label>
 											<select name="roomId" class="form-control"
 												id="edit-room-select">
-												<c:forEach items="${rooms}" var="room">
-													<option value="${room.id}">${room.name}</option>
-												</c:forEach>
 												<option value="">Aucune</option>
+												<c:forEach items="${rooms}" var="room">
+													<option value="${room.id}" <c:if test="${booking.room.id == room.id}">selected</c:if>>
+														${room.name}
+													</option>
+												</c:forEach>
 											</select>
 										</div>
 										<div class="form-group">
@@ -73,9 +92,11 @@
 											<select name="computerId" class="form-control"
 												id="edit-computer-select">
 												<c:forEach items="${computers}" var="computer">
-													<option value="${computer.id}">${computer.brand} - ${computer.model}</option>
+													<option value="">Aucun</option>
+													<option value="${computer.id}" <c:if test="${booking.room.id == room.id}">selected</c:if>>
+														${computer.brand} - ${computer.model}
+													</option>
 												</c:forEach>
-												<option value="">Aucun</option>
 											</select>
 										</div>
 										<div class="form-group">
