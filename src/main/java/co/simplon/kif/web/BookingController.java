@@ -77,8 +77,10 @@ public class BookingController {
 			@RequestParam(name = "userId", defaultValue = "-1") Integer userId,
 			RedirectAttributes redirectAttr) throws Exception {
 		Date createdAt = new Date();
-		if (roomId == null || computerId == null)
+		if (roomId == null || computerId == null) {
+			redirectAttr.addFlashAttribute("error", "Tous les champs sont requis.");
 			return new ModelAndView("redirect:/bookings");
+		}
 		if (start != null && end != null) {
 			Room room = roomService.findById(roomId);
 			Computer computer = computerService.findById(computerId);

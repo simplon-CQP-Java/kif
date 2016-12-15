@@ -44,7 +44,7 @@ div#room, div#computer, div#booking {
 	margin-top: 15px;
 }
 
-#profile .col-md-12 .alert {
+.col-md-12 .alert {
 	margin-bottom: 0;
 }
 
@@ -54,6 +54,6 @@ div#room, div#computer, div#booking {
 }
 
 /* calendar style */
-.popover-content a.btn-danger {
+.popover-content a.btn-primary {
 	margin-top: 10px;
 }

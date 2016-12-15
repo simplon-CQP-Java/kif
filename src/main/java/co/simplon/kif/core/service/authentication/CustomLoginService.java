@@ -3,9 +3,6 @@ package co.simplon.kif.core.service.authentication;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.simplon.kif.core.model.User;
-import co.simplon.kif.core.service.UserService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -19,6 +16,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import co.simplon.kif.core.model.User;
+import co.simplon.kif.core.service.UserService;
+
 
 @Service
 public class CustomLoginService implements UserDetailsService, ICustomLoginService {

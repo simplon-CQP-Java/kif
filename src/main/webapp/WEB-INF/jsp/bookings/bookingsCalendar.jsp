@@ -1,17 +1,20 @@
+<%@ page pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div id="bookings-calendar" class="row">
 	<div class="col-md-12">
-		<h2>Calendrier des réservations de salles et ordinateurs</h2>
+		<h2>Calendrier des rï¿½servations de salles et ordinateurs</h2>
 	</div>
 	<div id="calendar" class="col-md-12"></div>
 </div>
-<security:authorize access="isAuthenticated()">
-	<security:authentication var="user" property="principal" />
-</security:authorize>
+<c:set var="user" value="${pageContext.request.userPrincipal}" />
+
 <script type="text/javascript" src="${pageContext.request.contextPath}/ressources/js/lib/fullcalendar.min.js"></script>
 <script type="text/javascript" src='${pageContext.request.contextPath}/ressources/js/lib/fc-locale-all.js'></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		var user = "${user}";
+		var userName = "${user.name}";
 		var userRole = "${user.authorities}";
 		var calendar = $('#calendar').fullCalendar({
 			locale: 'fr',
@@ -26,9 +29,10 @@
 	            	placement: 'top',
 	            	trigger: 'focus',
 	            	html: true,
-	            	content: '<div><span class="bold">Réservé de</span> ' + moment(e.start).format('LLLL') + ' à ' + moment(e.end).format('LLLL') + ' par <span class="bold">' + e.user.username + '</span></div>'
+	            	content: '<div><span class="bold">Rï¿½servï¿½ de</span> ' + moment(e.start).format('LLLL') + ' ï¿½ ' + moment(e.end).format('LLLL') + ' par <span class="bold">' + e.user.username + '</span></div>'
 		    	};
-				if (userRole == "[ADMIN]") {
+				if (userRole == "[ADMIN]" || userName == e.user.username) {
+					popoverOptions.content += '<a class="btn btn-block btn-primary" href="${pageContext.request.contextPath}/bookings/bookingById?id=' + e._id + '">Modifier</a>';
 					popoverOptions.content += '<a class="btn btn-block btn-danger" href="${pageContext.request.contextPath}/bookings/delete?id=' + e._id + '">Supprimer</a>';
 				}
 		    	$(element.currentTarget).popover(popoverOptions);
