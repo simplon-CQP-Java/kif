@@ -25,7 +25,7 @@ public class MessageController {
 	private ReplyService replyService;
 	@RequestMapping
 	public ModelAndView getMessageList(ModelMap model) {
-		List<Message> messageList = messageService.getAll();
+		List<Message> messageList = messageService.getAllMessages();
 		model.addAttribute("messages", messageList);
 		return new ModelAndView("messages/messages", model);
 	}
