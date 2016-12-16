@@ -18,8 +18,8 @@
         	<div class="jumbotron">
 			  <h3>Ordinateurs</h3>
 			</div>
-        	<div id="list" class="col-md-6">
-        		<c:if test="${error != null}">
+			<div class="col-md-12">
+				<c:if test="${error != null}">
         			<div class="alert alert-danger alert-dismissible" role="alert">
         				<button type="button" class="close" data-dismiss="alert" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
         				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -33,6 +33,14 @@
         				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
   						${success}
   					</div>
+        		</c:if>
+        	</div>
+        	<div id="list" class="col-md-6">
+        		<c:if test="${empty computers}">
+        			<div class="alert alert-warning" role="alert">
+        				<button type="button" class="close" data-dismiss="alert" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
+        				Aucun ordinateur n'a été trouvé.
+        			</div>
         		</c:if>
         		<c:forEach items="${computers}" var="computer">
 		        	<div class="panel panel-default">

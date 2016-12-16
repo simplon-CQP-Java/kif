@@ -3,7 +3,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div id="bookings-calendar" class="row">
 	<div class="col-md-12">
-		<h2>Calendrier des réservations de salles et ordinateurs</h2>
+		<h2>
+			Calendrier des réservations de salles et ordinateurs
+			<a href="${pageContext.request.contextPath}/bookings" class="btn btn-primary pull-right">Nouvelle réservation</a>
+		</h2>
+		<div class="legend">
+			<h4>Légende</h4>
+			<span class="label label-room-computer">Salle et ordinateur</span>
+			<span class="label label-room">Salle</span>
+			<span class="label label-computer">Ordinateur</span>
+		</div>
 	</div>
 	<div id="calendar" class="col-md-12"></div>
 </div>

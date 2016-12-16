@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -133,7 +134,7 @@ public class UserController {
 	public ModelAndView editUsername(@RequestParam("id") Integer id, @RequestParam("username") String username, ModelMap model,
 			HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttr) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (username == null || username == "") {
+		if (StringUtils.isBlank(username)) {
 			redirectAttr.addFlashAttribute("error", "Tous les champs sont requis.");
 			return new ModelAndView("redirect:/profil", model);
 		}
@@ -167,7 +168,7 @@ public class UserController {
 		}
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findById(id);
-		if (passwordEncoder.matches(password, user.getPassword()) == false) {
+		if (user != null && !passwordEncoder.matches(password, user.getPassword())) {
 			redirectAttr.addFlashAttribute("error", "Le mot de passe est incorrect.");
 			return new ModelAndView("redirect:/profil", model);
 		}
