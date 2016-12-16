@@ -2,6 +2,7 @@ package co.simplon.kif.core.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -30,10 +31,12 @@ public class BookingService extends GenericService<Booking, BookingRepository> {
     		User user = new User();
     		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     		if (auth != null) {
-    			if (auth.getName().equals("ADMIN") == false && user.getRole() != Role.ADMIN) {
+    			Map<String, String> env = System.getenv();
+    			String adminName = env.get("ADMIN_NAME");
+    			if (auth.getName().equals(adminName) == false && user.getRole() != Role.ADMIN) {
     				user = userService.findOneByUsername(auth.getName());
     			}
-    			if (user != null && userId != -1 && (user.getRole() == Role.ADMIN || auth.getName().equals("ADMIN"))) {
+    			if (user != null && userId != -1 && (user.getRole() == Role.ADMIN || auth.getName().equals(adminName))) {
     				user = userService.findById(userId);
     			}
     			booking.setUser(user);
