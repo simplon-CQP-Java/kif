@@ -1,14 +1,9 @@
 package co.simplon.kif.core.service;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -28,18 +23,17 @@ public class BookingService extends GenericService<Booking, BookingRepository> {
 
     public Booking addOrUpdate(Booking booking, int userId) throws Exception {
     	if (booking != null) {
+    		boolean computerIsAvailable = true;
+    		boolean roomIsAvailable = true;
+    		if (booking.getComputer() != null) computerIsAvailable = this.computerIsAvailable(booking.getComputer().getId(), booking.getStart(), booking.getEnd());
+    		if (booking.getRoom() != null) roomIsAvailable = this.roomIsAvailable(booking.getRoom().getId(), booking.getStart(), booking.getEnd());
     		User user = new User();
     		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     		if (auth != null) {
-    			Resource resource = new ClassPathResource("/META-INF/env.properties");
-    			Properties props = PropertiesLoaderUtils.loadProperties(resource);
-    			if (props == null) {
-    				throw new IOException("Properties not found");
-    			}
-    			if (props.getProperty("admin.name").equals(auth.getName()) == false && user.getRole() != Role.ADMIN) {
+    			if (auth.getName().equals("ADMIN") == false && user.getRole() != Role.ADMIN) {
     				user = userService.findOneByUsername(auth.getName());
     			}
-    			if (user != null && userId != -1 && (user.getRole() == Role.ADMIN || props.getProperty("admin.name").equals(auth.getName()))) {
+    			if (user != null && userId != -1 && (user.getRole() == Role.ADMIN || auth.getName().equals("ADMIN"))) {
     				user = userService.findById(userId);
     			}
     			booking.setUser(user);
@@ -47,8 +41,7 @@ public class BookingService extends GenericService<Booking, BookingRepository> {
     		if (user == null) {
     			throw new Exception("User name not found");
     		}
-    		if ((booking.getComputer() != null && this.computerIsAvailable(booking.getComputer().getId(), booking.getStart(), booking.getEnd())) ||
-    			(booking.getRoom() != null && this.roomIsAvailable(booking.getRoom().getId(), booking.getStart(), booking.getEnd()))) {
+    		if (computerIsAvailable && roomIsAvailable) {
     			return bookingRepository.save(booking);
     		} else {
     			throw new Exception("Ressource is not available");
