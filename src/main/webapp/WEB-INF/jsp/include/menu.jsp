@@ -16,6 +16,7 @@
 		</div>
 		<div class="collapse navbar-collapse" id="navbar-menu">
 		<ul class="nav navbar-nav">
+			<li><a href="${pageContext.request.contextPath}/">Calendrier</a></li>
 			<security:authorize access="isAuthenticated()">
 				<li><a href="${pageContext.request.contextPath}/bookings">Réservations</a></li>
 			</security:authorize>

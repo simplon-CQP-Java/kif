@@ -85,7 +85,11 @@ public class BookingController {
 				booking = bookingService.addOrUpdate(booking, userId);
 				redirectAttr.addFlashAttribute("success", "Votre réservation à bien été enregistrée.");
 			} catch (Exception e) {
-				redirectAttr.addFlashAttribute("error", "Vérifier que la salle et/ou l'ordinateur sont bien disponibles.");
+				if (e.getMessage().equals("room_computer_null")) {
+					redirectAttr.addFlashAttribute("error", "Vous devez sélectionnez un ordinateur et/ou une salle.");
+				} else {
+					redirectAttr.addFlashAttribute("error", "Vérifier que la salle et/ou l'ordinateur sont bien disponibles.");
+				}
 				return new ModelAndView("redirect:/bookings");
 			}
 		}
@@ -173,7 +177,11 @@ public class BookingController {
 			booking = bookingService.addOrUpdate(booking, userId);
 			redirectAttr.addFlashAttribute("success", "La réservation à bien été modifiée.");
 		} catch (Exception e) {
-			redirectAttr.addFlashAttribute("error", "Vérifier que la salle et/ou l'ordinateur sont bien disponibles.");
+			if (e.getMessage().equals("room_computer_null")) {
+				redirectAttr.addFlashAttribute("error", "Vous devez sélectionnez un ordinateur et/ou une salle.");
+			} else {
+				redirectAttr.addFlashAttribute("error", "Vérifier que la salle et/ou l'ordinateur sont bien disponibles.");
+			}
 			return new ModelAndView("redirect:/bookings/bookingById?id=" + id, model);
 		}
 		redirectAttr.addFlashAttribute("booking", booking);

@@ -17,7 +17,12 @@
 	<jsp:body>
     	<div id="bookings" class="row">
         	<div class="jumbotron">
-			  <h3>Réservations</h3>
+			  	<h3>
+					Réservations
+					<a href="/" class="pull-right btn btn-primary">
+						Calendrier
+					</a>
+			  	</h3>
 			</div>
 			<div class="col-md-12">
 	       		<c:if test="${error != null}">
