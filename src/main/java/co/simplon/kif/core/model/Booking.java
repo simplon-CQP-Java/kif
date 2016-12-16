@@ -52,13 +52,6 @@ public class Booking {
 		this.start = start;
 		this.end = end;
 		this.createdAt = createdAt;
-		this.title = "";
-		if (room != null) {
-			this.title += room.getName();
-		}
-		if (computer != null) {
-			this.title += " - " + computer.getBrand() + " " + computer.getModel();
-		}
 	}
 
 	public Booking(Room room, Computer computer, User user, Date start, Date end, Date createdAt) {
@@ -69,13 +62,6 @@ public class Booking {
 		this.start = start;
 		this.end = end;
 		this.createdAt = createdAt;
-		this.title = "";
-		if (room != null) {
-			this.title += room.getName();
-		}
-		if (computer != null) {
-			this.title += " - " + computer.getBrand() + " " + computer.getModel();
-		}
 	}
 
 	public Integer getId() {
