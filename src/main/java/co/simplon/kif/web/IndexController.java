@@ -68,12 +68,17 @@ public class IndexController {
 	@RequestMapping("/profil")
 	public ModelAndView profile(ModelMap model, RedirectAttributes redirectAttr) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		// Check if user is logged in
 		if (!(auth instanceof AnonymousAuthenticationToken)) {
+			// Find user with current name
 			User user = userService.findOneByUsername(auth.getName());
-			model.addAttribute("user", user);
-			return new ModelAndView("users/profile", model);
+			// Check if user is not null
+			if (user != null) {
+				model.addAttribute("user", user);
+				return new ModelAndView("users/profile", model);
+			}
 		}
-		redirectAttr.addFlashAttribute("error", "Vous devez vous connecter pour accéder à cette page.");
+		//redirectAttr.addFlashAttribute("error", "Vous devez vous connecter pour accéder à cette page.");
 		return new ModelAndView("redirect:/login");
 	}
 	@RequestMapping("/contactSubmit")
