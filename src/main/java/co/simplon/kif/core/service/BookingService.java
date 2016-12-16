@@ -48,6 +48,7 @@ public class BookingService extends GenericService<Booking, BookingRepository> {
     			throw new Exception("User name not found");
     		}
     		if (computerIsAvailable && roomIsAvailable) {
+    			booking = setBookingTitle(booking);
     			booking = setBookingColor(booking);
     			return bookingRepository.save(booking);
     		} else {
@@ -94,6 +95,20 @@ public class BookingService extends GenericService<Booking, BookingRepository> {
 		} else {
 			booking.setColor("#DB1414");
 		}
+		return booking;
+	}
+
+	// Set booking title
+	public Booking setBookingTitle(Booking booking) {
+		String title = "";
+		if (booking.getRoom() != null) {
+			title += booking.getRoom().getName();
+		}
+		if (booking.getComputer() != null) {
+			title += " - " + booking.getComputer().getBrand() + " " + booking.getComputer().getModel();
+		}
+		title += " réservée par " + booking.getUser().getUsername();
+		booking.setTitle(title);
 		return booking;
 	}
 }
