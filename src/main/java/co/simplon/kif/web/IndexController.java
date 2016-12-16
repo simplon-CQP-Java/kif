@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -78,7 +79,7 @@ public class IndexController {
 	@RequestMapping("/contactSubmit")
 	public ModelAndView addMessage(@RequestParam("title") String title, @RequestParam("content") String content,
 			@RequestParam("email") String email, RedirectAttributes redirectAttr) {
-		if (title == null || content == null || email == null || email == "" || content == "" || title == "") {
+		if (StringUtils.isBlank(title) || StringUtils.isBlank(content) || StringUtils.isBlank(email)) {
 			redirectAttr.addFlashAttribute("error", "Tous les champs sont requis.");
 			return new ModelAndView("redirect:/contact");
 		}
