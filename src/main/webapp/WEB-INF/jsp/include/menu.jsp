@@ -46,7 +46,12 @@
 					<li><a href="${pageContext.request.contextPath}/register">Inscription</a></li>
 				</security:authorize>
 				<security:authorize access="isAuthenticated()">
-					<li><a href="${pageContext.request.contextPath}/profil">Profil</a></li>
+					<% String adminName = System.getenv().get("ADMIN_NAME"); %>
+					<c:set var="username"><security:authentication property="name" /></c:set>
+					<c:set var="adminName"><%= adminName %></c:set>
+					<c:if test="${adminName != username}">
+						<li><a href="${pageContext.request.contextPath}/profil">Profil</a></li>
+					</c:if>
 					<li><a href="${pageContext.request.contextPath}/logout">Déconnexion</a></li>
 				</security:authorize>
 	          </ul>
