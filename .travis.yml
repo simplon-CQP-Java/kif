@@ -2,7 +2,7 @@ language: java
 jdk:
  - oraclejdk8
 
-script: mvn clean install -DskipTests=true -DTOMCAT_USER=$TOMCAT_USER -DTOMCAT_PASSWORD=$TOMCAT_PASSWORD tomcat7:redeploy
+script: mvn clean install -DskipTests=true -DTOMCAT_USER=$TOMCAT_USER -DTOMCAT_PASSWORD=$TOMCAT_PASSWORD -DMYSQL_USER=$MYSQL_USER -DMYSQL_PASSWORD=$MYSQL_PASSWORD -DMAILGUN_PASSWORD=$MAILGUN_PASSWORD -DADMIN_NAME=$ADMIN_NAME -DADMIN_PASSWORD=$ADMIN_PASSWORD tomcat7:redeploy
 
 notifications:
   email:
