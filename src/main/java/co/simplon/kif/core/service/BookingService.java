@@ -24,6 +24,9 @@ public class BookingService extends GenericService<Booking, BookingRepository> {
 
     public Booking addOrUpdate(Booking booking, int userId) throws Exception {
     	if (booking != null) {
+    		if (booking.getComputer() == null && booking.getRoom() == null) {
+    			throw new Exception("room_computer_null");
+    		}
     		boolean computerIsAvailable = true;
     		boolean roomIsAvailable = true;
     		if (booking.getComputer() != null) computerIsAvailable = this.computerIsAvailable(booking.getComputer().getId(), booking.getStart(), booking.getEnd());
