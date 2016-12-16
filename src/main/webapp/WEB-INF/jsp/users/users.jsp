@@ -17,6 +17,7 @@
    		<div id="users" class="row">
         	<div class="jumbotron">
 			  <h3>Utilisateurs</h3>
+			  <p>Liste et gestion des utilisateurs</p>
 			</div>
 			<div class="col-md-12">
 				<c:if test="${error != null}">

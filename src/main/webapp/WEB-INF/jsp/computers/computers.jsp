@@ -17,6 +17,7 @@
     	<div id="computers" class="row">
         	<div class="jumbotron">
 			  <h3>Ordinateurs</h3>
+			  <p>Liste et gestion des ordinateurs</p>
 			</div>
 			<div class="col-md-12">
 				<c:if test="${error != null}">
