@@ -12,8 +12,8 @@ import co.simplon.kif.core.model.Booking;
 
 @Resource
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
-	// Get user bookings and order by id descendant
-	@Query("select r from Booking r ORDER BY r.id DESC")
+	// Get user bookings and order by start descendant
+	@Query("select r from Booking r ORDER BY r.start DESC")
 	public List<Booking> getAllBookings();
 	// Get user bookings and order by id descendant
 	@Query("select r from Booking r where r.user.id =?1 ORDER BY r.id DESC")

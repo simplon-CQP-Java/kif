@@ -22,7 +22,7 @@ public class BookingServiceTest {
 	
 	@Test
 	public void testFindAll() {
-		List<Booking> list = bookingService.findAll();
+		List<Booking> list = bookingService.getAllBookings();
 		System.out.println("Test");
 		for (Booking booking : list ) {
 			System.out.println(booking);
