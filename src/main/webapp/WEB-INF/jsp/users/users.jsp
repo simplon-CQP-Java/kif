@@ -36,6 +36,12 @@
 	       		</c:if>
        		</div>
         	<div id="list" class="col-md-6">
+        		<c:if test="${empty users}">
+        			<div class="alert alert-warning" role="alert">
+        				<button type="button" class="close" data-dismiss="alert" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
+        				Aucun utilisateur n'a été trouvée.
+        			</div>
+        		</c:if>
         		<c:forEach items="${users}" var="user">
 		        	<div class="panel panel-default">
 						<div class="panel-heading">
