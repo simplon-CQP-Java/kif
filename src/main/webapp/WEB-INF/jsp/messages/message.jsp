@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <head>
 	<title>Messages</title>
 </head>
@@ -23,6 +24,10 @@
 		    				<p>
 		    					<span class="label label-primary">Email</span>
 		    					&nbsp;${message.email}
+		    				</p>
+		    				<p>
+		    					<span class="label label-primary">Envoyé le</span>
+		    					&nbsp;<fmt:formatDate value="${message.createdAt}" pattern="dd-MM-yyyy HH:mm:ss" />
 		    				</p>
 							<h3>Message</h3>
 							<p>${message.content}</p>

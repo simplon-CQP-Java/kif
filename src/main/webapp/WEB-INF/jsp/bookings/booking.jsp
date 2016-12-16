@@ -1,6 +1,7 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <head>
 <title>Rechercher un ordinateur</title>
 </head>
@@ -43,8 +44,8 @@
 							    	<li class="list-group-item">Réservé par : ${booking.user.username}</li>
 								   	<li class="list-group-item">Nom de la salle : ${booking.room.name}</li>
 								   	<li class="list-group-item">Ordinateur : ${booking.computer.brand} -  ${booking.computer.model}</li>
-								   	<li class="list-group-item">Date de début : ${booking.start}</li>
-								   	<li class="list-group-item">Date de fin : ${booking.end}</li>
+								   	<li class="list-group-item">Date de début : <fmt:formatDate value="${booking.start}" pattern="dd-MM-yyyy HH:mm:ss" /></li>
+								   	<li class="list-group-item">Date de fin : <fmt:formatDate value="${booking.end}" pattern="dd-MM-yyyy HH:mm:ss" /></li>
 								</ul>
 						  	</div>
 						  	<div class="panel-footer">
