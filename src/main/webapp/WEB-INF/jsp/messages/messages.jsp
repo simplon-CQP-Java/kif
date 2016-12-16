@@ -34,6 +34,12 @@
   						${success}
   					</div>
         		</c:if>
+        		<c:if test="${empty messages}">
+        			<div class="alert alert-warning" role="alert">
+        				<button type="button" class="close" data-dismiss="alert" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
+        				Aucun message pour le moment.
+        			</div>
+        		</c:if>
         		<c:forEach items="${messages}" var="message">
 		        	<div class="panel panel-default">
 						<div class="panel-heading">

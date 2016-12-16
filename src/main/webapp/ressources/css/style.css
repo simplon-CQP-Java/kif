@@ -35,6 +35,19 @@ footer p a:hover {
 	cursor: pointer;
 }
 
+/* Calendar Style */
+div#bookings-calendar .legend .label-room-computer {
+	background-color: #DB1414;
+}
+
+div#bookings-calendar .legend .label-room {
+	background-color: #B4DF37;
+}
+
+div#bookings-calendar .legend .label-computer {
+	background-color: #CFBE27;
+}
+
 div#computers-search, div#rooms-search, div#users-search, div#login, div#register {
 	margin-top: 15px;
 }
@@ -80,8 +93,21 @@ form {
 
 /* Remove radius */
 .jumbotron, .form-control, .btn, .navbar-inverse, .input-group-addon, .dropdown-menu,
-.list-group-item, .panel, .alert, .modal-content, .popover {
+.list-group-item, .panel, .panel-heading, .alert, .modal-content, .popover {
 	border-radius: 0 !important;
+}
+
+/* Override primary color */
+.btn.btn-primary, .panel-primary>.panel-heading {
+	background-image: linear-gradient(to bottom,#1D2E4C 0,#1D2E4C 100%);
+}
+
+.btn.btn-primary:hover, .btn.btn-primary:focus, .label-primary, .panel-primary>.panel-heading {
+	background-color: #1D2E4C;
+}
+
+.panel-primary>.panel-heading, .panel-primary {
+	border-color: #1D2E4C;
 }
 
 /* Remove margins */

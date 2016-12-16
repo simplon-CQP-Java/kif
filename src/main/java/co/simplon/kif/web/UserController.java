@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.mysql.jdbc.StringUtils;
 
 import co.simplon.kif.core.model.User;
 import co.simplon.kif.core.model.User.Role;
@@ -133,7 +132,7 @@ public class UserController {
 	public ModelAndView editUsername(@RequestParam("id") Integer id, @RequestParam("username") String username, ModelMap model,
 			HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttr) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (username == null || username == "") {
+		if (StringUtils.isBlank(username)) {
 			redirectAttr.addFlashAttribute("error", "Tous les champs sont requis.");
 			return new ModelAndView("redirect:/profil", model);
 		}
@@ -167,7 +166,7 @@ public class UserController {
 		}
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findById(id);
-		if (passwordEncoder.matches(password, user.getPassword()) == false) {
+		if (user != null && !passwordEncoder.matches(password, user.getPassword())) {
 			redirectAttr.addFlashAttribute("error", "Le mot de passe est incorrect.");
 			return new ModelAndView("redirect:/profil", model);
 		}
@@ -221,7 +220,7 @@ public class UserController {
 	public ModelAndView registerUser(HttpServletRequest request, @RequestParam("username") String username, @RequestParam("password") String password, 
 		  @RequestParam("confirmPassword") String confirmPassword, ModelMap model, RedirectAttributes redirectAttr) {
 		Role role = Role.USER;
-		if (StringUtils.isNullOrEmpty(username) || StringUtils.isNullOrEmpty(password) || StringUtils.isNullOrEmpty(confirmPassword) || role == null) {
+		if (StringUtils.isBlank(username) || StringUtils.isBlank(password) || StringUtils.isBlank(confirmPassword) || role == null) {
 			redirectAttr.addFlashAttribute("error", "Tous les champs sont requis.");
 			return new ModelAndView("redirect:/register", model);
 		}

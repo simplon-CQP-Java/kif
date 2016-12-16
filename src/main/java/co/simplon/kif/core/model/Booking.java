@@ -38,6 +38,8 @@ public class Booking {
 	private Date createdAt;
 	@Expose
 	private String title;
+	@Expose
+	private String color;
 
 	public Booking() {
 		super();
@@ -56,6 +58,14 @@ public class Booking {
 		}
 		if (computer != null) {
 			this.title += " - " + computer.getBrand() + " " + computer.getModel();
+		}
+		// Set color according to the reserved ressource
+		if (room != null && computer == null) {
+			this.color = "#B4DF37";
+		} else if (computer != null && room == null) {
+			this.color = "#CFBE27";
+		} else {
+			this.color = "#DB1414";
 		}
 	}
 
@@ -140,5 +150,13 @@ public class Booking {
 	public String toString() {
 		return title;
 		
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
 	}
 }
