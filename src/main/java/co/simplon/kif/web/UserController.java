@@ -63,10 +63,10 @@ public class UserController {
 		User user = userService.findOneByUsername(username);
 		if (user == null) {
 			redirectAttr.addFlashAttribute("error", "Aucun utilisateur trouvé.");
-			model.addAttribute("username", username);
-    	}
-		model.addAttribute("user", user);
-		return new ModelAndView("users/search", model);
+		} else {
+			model.addAttribute("id", user.getId());
+		}
+		return new ModelAndView("redirect:/users/userById", model);
 	}
 
 	@RequestMapping("/add")

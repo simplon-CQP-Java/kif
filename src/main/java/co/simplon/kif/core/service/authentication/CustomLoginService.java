@@ -50,7 +50,6 @@ public class CustomLoginService implements UserDetailsService, ICustomLoginServi
   	  try {
           // Must be called from request filtered by Spring Security, otherwise SecurityContextHolder is not updated
           UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
-          //token.setDetails(new WebAuthenticationDetails(request));
           Authentication authentication = this.authenticationProvider.authenticate(token);
           SecurityContextHolder.getContext().setAuthentication(authentication);
   	  } catch (Exception e) {

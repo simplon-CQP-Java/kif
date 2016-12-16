@@ -48,7 +48,7 @@ div#bookings-calendar .legend .label-computer {
 	background-color: #CFBE27;
 }
 
-div#computers-search, div#rooms-search, div#users-search, div#login, div#register {
+div#login, div#register {
 	margin-top: 15px;
 }
 
