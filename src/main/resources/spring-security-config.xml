@@ -9,7 +9,7 @@
 	<context:property-placeholder />
 	<http auto-config="true">
 		<form-login login-page="/login" username-parameter="username"
-			password-parameter="password" authentication-failure-url="/login"
+			password-parameter="password" authentication-failure-url="/login?error=true"
 			default-target-url="/" />
 		<csrf />
 
