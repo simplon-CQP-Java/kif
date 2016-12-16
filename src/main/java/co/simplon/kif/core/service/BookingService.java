@@ -45,6 +45,7 @@ public class BookingService extends GenericService<Booking, BookingRepository> {
     			throw new Exception("User name not found");
     		}
     		if (computerIsAvailable && roomIsAvailable) {
+    			booking = setBookingColor(booking);
     			return bookingRepository.save(booking);
     		} else {
     			throw new Exception("Ressource is not available");
@@ -78,5 +79,18 @@ public class BookingService extends GenericService<Booking, BookingRepository> {
 		} else {
 			return false;
 		}
+	}
+	
+	// Set booking color
+	public Booking setBookingColor(Booking booking) {
+		// Set color according to the reserved ressource
+		if (booking.getRoom() != null && booking.getComputer() == null) {
+			booking.setColor("#B4DF37");
+		} else if (booking.getComputer() != null && booking.getRoom() == null) {
+			booking.setColor("#CFBE27");
+		} else {
+			booking.setColor("#DB1414");
+		}
+		return booking;
 	}
 }

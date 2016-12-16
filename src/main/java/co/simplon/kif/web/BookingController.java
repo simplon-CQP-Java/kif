@@ -169,11 +169,13 @@ public class BookingController {
 		try {
 			// Save booking
 			booking = bookingService.addOrUpdate(booking, userId);
+			redirectAttr.addFlashAttribute("success", "La réservation à bien été modifiée.");
 		} catch (Exception e) {
 			redirectAttr.addFlashAttribute("error", "Vérifier que la salle et/ou l'ordinateur sont bien disponibles.");
 			return new ModelAndView("redirect:/bookings/bookingById?id=" + id, model);
 		}
-		model.addAttribute("booking", booking);
-		return new ModelAndView("redirect:/bookings/bookingById?id=" + id, model);
+		redirectAttr.addFlashAttribute("booking", booking);
+		model.addAttribute("id", id);
+		return new ModelAndView("redirect:/bookings/bookingById", model);
 	}
 }

@@ -59,14 +59,6 @@ public class Booking {
 		if (computer != null) {
 			this.title += " - " + computer.getBrand() + " " + computer.getModel();
 		}
-		// Set color according to the reserved ressource
-		if (room != null && computer == null) {
-			this.color = "#B4DF37";
-		} else if (computer != null && room == null) {
-			this.color = "#CFBE27";
-		} else {
-			this.color = "#DB1414";
-		}
 	}
 
 	public Booking(Room room, Computer computer, User user, Date start, Date end, Date createdAt) {

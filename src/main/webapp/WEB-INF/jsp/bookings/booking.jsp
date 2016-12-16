@@ -91,8 +91,8 @@
 										    <label for="edit-computer-select">Sélectionner un ordinateur</label>
 											<select name="computerId" class="form-control"
 												id="edit-computer-select">
+												<option value="">Aucun</option>
 												<c:forEach items="${computers}" var="computer">
-													<option value="">Aucun</option>
 													<option value="${computer.id}" <c:if test="${booking.room.id == room.id}">selected</c:if>>
 														${computer.brand} - ${computer.model}
 													</option>
