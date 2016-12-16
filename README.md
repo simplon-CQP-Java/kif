@@ -6,17 +6,13 @@ Simply clone the repository :
 git clone https://github.com/simplon-CQP-Java/kif.git && cd kif
 ```
 
-Create env.properties file in src/ressources/META-INF/ like this (replace value in {}):
+Create environments variables before starting application from command line like this (replace value in {}):
 ```
-mail.username={mailgun_username}
-mail.password={mailgun_password}
-
-admin.name={admin_name}
-admin.password={admin_password}
-
-mysql.url=jdbc:mysql://localhost:3306/{DB_NAME}?createDatabaseIfNotExist=true
-mysql.username={mysql_username}
-mysql.password={mysql_password}
+export MAILGUN_PASSWORD={mailgun_password}
+export ADMIN_NAME={admin_name}
+export ADMIN_PASSWORD={admin_password}
+export MYSQL_USER={mysql_username}
+export MYSQL_PASSWORD={mysql_password}
 ```
 
 When the application is launched you may log with {admin_name} and {admin_password}
@@ -29,7 +25,7 @@ mvn clean
 
 Launch with tomcat
 ```
-mvn tomcat7:run
+mvn -DMYSQL_USER=$(MYSQL_USER) -DMYSQL_PASSWORD=$(MYSQL_PASSWORD) -DMAILGUN_PASSWORD=$(MAILGUN_PASSWORD) -DADMIN_NAME=$(ADMIN_NAME) -DADMIN_PASSWORD=$(ADMIN_PASSWORD) tomcat7:run
 ```
 
 ### Launch with make

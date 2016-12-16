@@ -17,6 +17,7 @@
     	<div id="salles" class="row">
         	<div class="jumbotron">
 			  <h3>Salles</h3>
+			  <p>Liste et gestion des salles</p>
 			</div>
 			<div class="col-md-12">
 				<c:if test="${error != null}">

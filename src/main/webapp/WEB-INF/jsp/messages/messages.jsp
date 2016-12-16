@@ -18,6 +18,7 @@
     	<div id="messages" class="row">
     		<div class="jumbotron">
 			  <h3>Messages</h3>
+			  <p>Liste et gestion des demandes utilisateurs</p>
 			</div>
         	<div id="list" class="col-md-8 col-md-offset-2">
         		<c:if test="${error != null}">
