@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.mysql.jdbc.StringUtils;
-
 import co.simplon.kif.core.model.User;
 import co.simplon.kif.core.model.User.Role;
 import co.simplon.kif.core.service.UserService;
@@ -222,7 +220,7 @@ public class UserController {
 	public ModelAndView registerUser(HttpServletRequest request, @RequestParam("username") String username, @RequestParam("password") String password, 
 		  @RequestParam("confirmPassword") String confirmPassword, ModelMap model, RedirectAttributes redirectAttr) {
 		Role role = Role.USER;
-		if (StringUtils.isNullOrEmpty(username) || StringUtils.isNullOrEmpty(password) || StringUtils.isNullOrEmpty(confirmPassword) || role == null) {
+		if (StringUtils.isBlank(username) || StringUtils.isBlank(password) || StringUtils.isBlank(confirmPassword) || role == null) {
 			redirectAttr.addFlashAttribute("error", "Tous les champs sont requis.");
 			return new ModelAndView("redirect:/register", model);
 		}
