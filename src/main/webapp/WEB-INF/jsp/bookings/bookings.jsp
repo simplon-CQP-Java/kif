@@ -57,8 +57,12 @@
 						    <ul class="list-group">
 								<li class="list-group-item">Titre : ${booking.title}</li>
 						    	<li class="list-group-item">Réservé par : ${booking.user.username}</li>
-							   	<li class="list-group-item">Nom de la salle : ${booking.room.name}</li>
-							   	<li class="list-group-item">Ordinateur : ${booking.computer.brand} -  ${booking.computer.model}</li>
+						    	<c:if test="${booking.room != null}">
+							   		<li class="list-group-item">Nom de la salle : ${booking.room.name}</li>
+							   	</c:if>
+							   	<c:if test="${booking.computer != null}">
+								   	<li class="list-group-item">Ordinateur : ${booking.computer.brand} -  ${booking.computer.model}</li>
+							   	</c:if>
 							   	<li class="list-group-item">Date de début : <fmt:formatDate value="${booking.start}" pattern="dd-MM-yyyy HH:mm:ss" /></li>
 							   	<li class="list-group-item">Date de fin : <fmt:formatDate value="${booking.end}" pattern="dd-MM-yyyy HH:mm:ss" /></li>
 							</ul>
