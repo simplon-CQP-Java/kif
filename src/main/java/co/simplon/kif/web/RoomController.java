@@ -83,7 +83,8 @@ public class RoomController {
 		} catch(Exception e) {
 			redirectAttr.addFlashAttribute("error", "Une erreur est survenue lors de la modification de la salle.");
 		}
-		modelMap.addAttribute("room", room);
-		return new ModelAndView("redirect:/rooms/roomById?id=" + id, modelMap);
+		redirectAttr.addFlashAttribute("room", room);
+		modelMap.addAttribute("id", id);
+		return new ModelAndView("redirect:/rooms/roomById?id=", modelMap);
 	}
 }
