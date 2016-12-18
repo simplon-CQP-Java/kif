@@ -64,7 +64,8 @@ public class ComputerController {
 	}
 
 	@RequestMapping("/edit")
-	public ModelAndView editComputer(@RequestParam("id") Integer id, @RequestParam("brand") String brand, @RequestParam("model") String model, ModelMap modelMap) {
+	public ModelAndView editComputer(@RequestParam("id") Integer id, @RequestParam("brand") String brand, @RequestParam("model") String model,
+			ModelMap modelMap, RedirectAttributes redirectAttr) {
 		if (id == null || brand == null || model == null) {
 			return new ModelAndView("redirect:/computers");
 		}
@@ -73,8 +74,14 @@ public class ComputerController {
 		computer.setBrand(brand);
 		computer.setModel(model);
 		// Update computer and redirect
-		computerService.addOrUpdate(computer);
-		modelMap.addAttribute("computer", computer);
-		return new ModelAndView("redirect:/computers/computerById?id=" + id, modelMap);
+		try {
+			computer = computerService.addOrUpdate(computer);
+			redirectAttr.addFlashAttribute("success", "L'ordinateur à bien été modifié.");
+		} catch(Exception e) {
+			redirectAttr.addFlashAttribute("error", "Une erreur est survenue lors de la modification de l'ordinateur.");
+		}
+		redirectAttr.addFlashAttribute("computer", computer);
+		modelMap.addAttribute("id", id);
+		return new ModelAndView("redirect:/computers/computerById", modelMap);
 	}
 }

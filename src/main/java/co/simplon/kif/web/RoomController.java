@@ -71,12 +71,12 @@ public class RoomController {
 		if (id == null || name == null || places == null || description == null) {
 			return new ModelAndView("redirect:/rooms");
 		}
-		// Get computer by id and set brand & model
+		// Get room by id and set brand & model
 		Room room = roomService.findById(id);
 		room.setName(name);
 		room.setPlaces(places);
 		room.setDescription(description);
-		// Update computer and redirect
+		// Update room and redirect
 		try {
 			room = roomService.addOrUpdate(room);
 			redirectAttr.addFlashAttribute("success", "La salle à bien été modifiée.");
@@ -85,6 +85,6 @@ public class RoomController {
 		}
 		redirectAttr.addFlashAttribute("room", room);
 		modelMap.addAttribute("id", id);
-		return new ModelAndView("redirect:/rooms/roomById?id=", modelMap);
+		return new ModelAndView("redirect:/rooms/roomById", modelMap);
 	}
 }

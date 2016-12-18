@@ -196,22 +196,30 @@ public class UserController {
 			user.setDisable();
 			try {
 				userService.addOrUpdate(user);
-				redirectAttr.addFlashAttribute("success", "L'utilisateur à bien été supprimé.");
+				redirectAttr.addFlashAttribute("success", "L'utilisateur à bien été activé.");
 			} catch(Exception e) {
-				redirectAttr.addFlashAttribute("error", "Une erreur est survenue lors de la suppression de l'utilisateur.");
+				redirectAttr.addFlashAttribute("error", "Une erreur est survenue lors de la désactivation de l'utilisateur.");
 				return new ModelAndView("redirect:/users", model);
 			}
-			if (id.equals(currentUser.getId())) new SecurityContextLogoutHandler().logout(request, response, auth);
+			if (id.equals(currentUser.getId())) {
+				new SecurityContextLogoutHandler().logout(request, response, auth);
+				return new ModelAndView("redirect:/");
+			}
 		}
-		return new ModelAndView("redirect:/");
+		return new ModelAndView("redirect:/users");
 	}
 
 	@RequestMapping("/active")
-	public ModelAndView setEnable(@RequestParam("id") Integer id, ModelMap model) {
+	public ModelAndView setEnable(@RequestParam("id") Integer id, ModelMap model, RedirectAttributes redirectAttr) {
 		if (id != null) {
 			User user = userService.findById(id);
 			user.setEnabled(true);
-			userService.addOrUpdate(user);
+			try {
+				userService.addOrUpdate(user);
+				redirectAttr.addFlashAttribute("success", "L'utilisateur à bien été activé.");
+			} catch(Exception e) {
+				redirectAttr.addFlashAttribute("error", "Une erreur est survenue lors de l'activation de l'utilisateur.");
+			}
 		}
 		return new ModelAndView("redirect:/users");
 	}
